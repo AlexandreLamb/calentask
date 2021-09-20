@@ -11,6 +11,11 @@
 # production
 /build
 
+/srv/.env
+/srv/data
+/srv/dist
+/srv/build
+public/DESFAM_F_H98_VENDREDI
 # misc
 .DS_Store
 .env.local
