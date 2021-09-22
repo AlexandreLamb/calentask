@@ -21,11 +21,11 @@ class VideoRate extends React.Component {
         const axios = require('axios').default
         const { rateValue, timeReflexions }  = this.state
         const this_contexte = this
-        axios.post('http://fatigue_sequences:5000/output/subject/rate/', {
+        axios.post('http://fatigue:5000/output/subject/rate/', {
         _rateValue: rateValue,
         _timeReflexions: timeReflexions,
-        _pathToCsv: this_contexte.props.pathToCsv,
-        _videoLetter: this_contexte.props.videoLetter
+        _videoLetter: this_contexte.props.videoLetter,
+        _id : this_contexte.props.documentID
       })
       .then(function (response) {
         const status_code = response.status

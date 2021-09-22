@@ -29,12 +29,16 @@ class TagInput extends React.Component {
         const { tags } = this.state;
         this.setState({
          tags: tags.filter((tag, index) => index !== i),
+        }, function(){
+            this.props.handleTag(this.state.tags)
         });
+
     }
 
     handleAddition(tag) {
-        this.setState(state => ({ tags: [...state.tags, tag] }));
-        console.log(this.state.tags)
+        this.setState(state => ({ tags: [...state.tags, tag] }), function(){
+            this.props.handleTag(this.state.tags)
+        });
     }
 
     handleDrag(tag, currPos, newPos) {
@@ -45,7 +49,10 @@ class TagInput extends React.Component {
         newTags.splice(newPos, 0, tag);
 
         // re-render
-        this.setState({ tags: newTags });
+        this.setState({ tags: newTags }, function(){
+            this.props.handleTag(this.state.tags)
+        });
+
     }
 
     render() {

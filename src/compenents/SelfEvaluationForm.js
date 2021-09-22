@@ -5,7 +5,7 @@ import Card from "react-bootstrap/Card"
 import Row from "react-bootstrap/Row"
 import Col from "react-bootstrap/Col"
 import TagInput from './TagInput';
-import { itemListGender } from './formItems';
+import { commonIndicator } from './formItems';
 
 class SelfEvaluationForm extends React.Component {
     constructor(props) {
@@ -13,12 +13,7 @@ class SelfEvaluationForm extends React.Component {
       this.state = {
         confianceDegree: null, 
         selfIndcator: null,
-        commonIndicator: [
-            {id: 1, value: "Yeux plus ou moins ouverts", isChecked: false},
-            {id: 2, value: "Muscles du visage plus ou moins relâchés Tête plus ou moins baissée", isChecked: false},
-            {id: 3, value: "Clignement des yeux", isChecked: false},
-            {id: 4, value: "Bouche plus ou moins ouverte", isChecked: false}
-          ]
+        commonIndicator : commonIndicator
       };
     }
     handleCheckedElement = (event) => {
@@ -31,7 +26,6 @@ class SelfEvaluationForm extends React.Component {
         this.setState({commonIndicator: commonIndicator})
       }
     handleChange = (event) => {   
-      console.log(itemListGender) 
       const target = event.target;
       console.log(target)
       const value = target.type === 'radio' ? target.id : target.value;
@@ -43,13 +37,13 @@ class SelfEvaluationForm extends React.Component {
     }
     handleSubmit = (event) => {
       const axios = require('axios').default;
-      const { confianceDegree, commonIndicator, selfIndcator} = this.state
+      const { confianceDegree, selfIndcator, commonIndicator} = this.state
       const this_contexte = this
-      axios.post('http://127.0.0.1:5000/output/subject/information/', {
+      axios.post('http://fatigue:5000/output/subject/evaluation/', {
         _confianceDegree: confianceDegree,
         _commonIndicator: commonIndicator,
         _selfIndcator: selfIndcator,
-        _pathToCsv: this_contexte.props.pathToCsv,
+        _id: this_contexte.props.documentID,
       })
       .then(function (response) {
         const status_code = response.status
@@ -58,7 +52,7 @@ class SelfEvaluationForm extends React.Component {
           console.log("form empty")
         }
         else if(parseInt(status_code) === 200) {
-          this_contexte.props.handleSubmit(response.data)
+          this_contexte.props.handleSubmit()
         }
         else {
           console.log("Error")
@@ -71,8 +65,7 @@ class SelfEvaluationForm extends React.Component {
       event.preventDefault()
     }
     render() {
-        const { confianceDegree, commonIndicator, selfIndcator} = this.state
-       
+      const { confianceDegree, selfIndcator, commonIndicator} = this.state 
       return(
             <Card
               style={{
