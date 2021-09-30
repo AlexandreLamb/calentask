@@ -1,3 +1,5 @@
+import os
+
 from flask import Flask
 import pandas as pd
 import flask as fl
@@ -5,12 +7,23 @@ import datetime
 from flask_cors import CORS
 from flask_pymongo import PyMongo
 from bson.objectid import ObjectId
+
 PATH_TO_SAVE = "data/"
 PATH_T0_CSV = ""
 
-app = Flask(__name__, static_folder='../build', static_url_path='/', )
+app = Flask(__name__, static_folder='../build/', static_url_path='/', )
 CORS(app)
+
 app.config["MONGO_URI"] = "mongodb://localhost:27017/fatigueSurvey"
+"""
+app.config['MONGODB_SETTINGS'] = {
+    'host': os.environ['MONGODB_HOST'],
+    'username': os.environ['MONGODB_USERNAME'],
+    'password': os.environ['MONGODB_PASSWORD'],
+    'db': os.environ['MONGODB_DB'],
+    ""
+}
+"""
 mongo = PyMongo(app)
 
 @app.route('/')
@@ -80,3 +93,10 @@ def export_data():
     for col in df.columns:
         data_dict[col] = str(df[col].values)
     return fl.jsonify(data_dict)
+    
+@app.route("/test", methods=["GET"])
+def test():
+    return "testdqsdqs"
+"""
+if __name__ == "__main__":
+    app.run(debug=True, port=5000)"""

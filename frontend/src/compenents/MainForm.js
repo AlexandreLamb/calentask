@@ -101,7 +101,7 @@ class MainForm extends React.Component {
                   fontSize: "2.25rem"
                 }}
               >
-                Questionnaire evaluation de niveau de fatigue grace a des sequences videos 
+                Questionnaire evaluation de niveau de fatigue grace a des sequences videos
               </Card.Title> : null
             }
             {
