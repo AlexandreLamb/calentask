@@ -1,5 +1,5 @@
 # Pull latest official node image
-FROM node:latest
+FROM amd64/node:latest
 
 # Expose ports
 EXPOSE 3000
