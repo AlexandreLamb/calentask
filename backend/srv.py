@@ -5,7 +5,7 @@ import pandas as pd
 import flask as fl
 import datetime
 from flask_cors import CORS
-from flask_pymongo import PyMongo
+from flask_mongoengine import MongoEngine
 from bson.objectid import ObjectId
 
 PATH_TO_SAVE = "data/"
@@ -14,18 +14,34 @@ PATH_T0_CSV = ""
 app = Flask(__name__, static_folder='../build/', static_url_path='/', )
 CORS(app)
 
-app.config["MONGO_URI"] = "mongodb://localhost:27017/fatigueSurvey"
-"""
+
+#app.config["MONGO_URI"] = "mongodb://localhost:27017/"+os.environ['MONGODB_DB']
 app.config['MONGODB_SETTINGS'] = {
     'host': os.environ['MONGODB_HOST'],
     'username': os.environ['MONGODB_USERNAME'],
     'password': os.environ['MONGODB_PASSWORD'],
-    'db': os.environ['MONGODB_DB'],
-    ""
+    'db': os.environ['MONGODB_DB']
 }
-"""
-mongo = PyMongo(app)
 
+db = MongoEngine()
+db.init_app(app)
+
+class UserInformations(db.Document):
+    initialValues = db.StringField(max_length=60)
+    age = db.StringField()
+    gender = db.BooleanField(default=False)
+    studieLevel = db.DateTimeField(default=datetime.datetime.now)
+    studieArea = db.StringField()
+    fatigueLevel = db.StringField()
+    armyLengthOfService = db.StringField()
+    typeOfJob = db.StringField()
+    peopleCommand = db.StringField()
+    headquarters = db.StringField()
+    jobLengthOfService = db.StringField()
+    grade = db.StringField()
+    date = db.StringField()
+
+    
 @app.route('/')
 def index():
     return app.send_static_file('index.html')
@@ -96,6 +112,7 @@ def export_data():
     
 @app.route("/test", methods=["GET"])
 def test():
+    mongo.db.user_information.insert({"test":"test"})
     return "testdqsdqs"
 """
 if __name__ == "__main__":

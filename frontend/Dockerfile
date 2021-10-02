@@ -1,5 +1,4 @@
-# Pull latest official node image
-FROM arm64/node:latest
+FROM node:lts-stretch-slim
 
 # Expose ports
 EXPOSE 3000

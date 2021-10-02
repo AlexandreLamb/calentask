@@ -10,18 +10,18 @@ class InformationForm extends React.Component {
     constructor(props) {
       super(props);
       this.state = {
-        initialValues: "", 
-        age: "",
-        gender: "",
-        studieLevel: "",
-        studieArea: "",
-        fatigueLevel: "",
+        initialValues: "A", 
+        age: "1",
+        gender: "M",
+        studieLevel: "1",
+        studieArea: "dza",
+        fatigueLevel: "3",
         armyLengthOfService: "", 
-        typeOfJob: "",
-        peopleCommand: "",
-        headquarters: "",
-        jobLengthOfService: "",
-        grade: ""
+        typeOfJob: "reze",
+        peopleCommand: "3",
+        headquarters: "azda",
+        jobLengthOfService: "1",
+        grade: "dzad"
 
       };
     }
@@ -63,7 +63,7 @@ class InformationForm extends React.Component {
       } = this.state
       const this_contexte = this
       
-      axios.post('http://fatigue:5000/output/subject/information/', {
+      axios.post('http://pi.local:5000/output/subject/information/', {
         _initialValues: initialValues, 
         _age: age,
         _gender: gender,
