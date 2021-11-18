@@ -44,7 +44,10 @@ class UserInformations(db.Document):
     
 @app.route('/')
 def index():
-    return app.send_static_file('index.html')
+    if os.environ['MODE'] == "PRODUCTION":
+        return app.send_static_file('index.html')
+    else:
+        return None
 
 @app.route("/output/subject/information/", methods=["POST"])
 def put_personal_information():
