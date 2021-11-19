@@ -1,7 +1,7 @@
 pandas
 flask
 flask-cors
-flask-pymongo
 gunicorn
 numpy
-mongoengine
+flask-mongoengine
+python-dotenv

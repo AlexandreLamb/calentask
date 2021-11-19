@@ -7,6 +7,8 @@ import datetime
 from flask_cors import CORS
 from flask_mongoengine import MongoEngine
 from bson.objectid import ObjectId
+from bson import json_util
+import json
 
 PATH_TO_SAVE = "data/"
 PATH_T0_CSV = ""
@@ -18,15 +20,20 @@ CORS(app)
 #app.config["MONGO_URI"] = "mongodb://localhost:27017/"+os.environ['MONGODB_DB']
 app.config['MONGODB_SETTINGS'] = {
     'host': os.environ['MONGODB_HOST'],
-    'username': os.environ['MONGODB_USERNAME'],
-    'password': os.environ['MONGODB_PASSWORD'],
+    'port': int(os.environ['MONGODB_PORT']),
+    
     'db': os.environ['MONGODB_DB']
 }
 
 db = MongoEngine()
 db.init_app(app)
-
-class UserInformations(db.Document):
+class Test(db.Document):
+    test_texte = db.StringField(max_length=100)
+    test_texte2 = db.StringField(max_length=100)
+    
+    def get_id(self):
+        return json.dumps(self.id, default=str)
+class UserInformations(db.DynamicDocument):
     initialValues = db.StringField(max_length=60)
     age = db.StringField()
     gender = db.BooleanField(default=False)
@@ -40,11 +47,13 @@ class UserInformations(db.Document):
     jobLengthOfService = db.StringField()
     grade = db.StringField()
     date = db.StringField()
-
+    
+    def get_id(self):
+        return json.dumps(self.id, default=str)
     
 @app.route('/')
 def index():
-    if os.environ['MODE'] == "PRODUCTION":
+    if os.environ['FLASK_ENV'] == "production":
         return app.send_static_file('index.html')
     else:
         return None
@@ -58,9 +67,10 @@ def put_personal_information():
         response.status_code=204
         return response
     else:
-        _id = mongo.db.user_information.insert(data)
-        response.status_code=200  
-        response.data=str(_id)
+        userInformations = UserInformations(data)
+        userInformations.save()
+        response.status_code = 200  
+        response.data = userInformations.get_id()
         return response
     
 
@@ -74,7 +84,8 @@ def put_personal_evaluation():
         response.status_code=204
         return response
     else:
-        mongo.db.user_information.find_one_and_update({"_id" :ObjectId(data.pop("_id"))},{"$set":data})
+        userInformations_to_update = UserInformations.objects(id=ObjectId(data.pop("_id")))
+        userInformations_to_update.update(**data)
         response.status_code=200  
         return response
     
@@ -82,14 +93,18 @@ def put_personal_evaluation():
 @app.route("/output/subject/rate/", methods=["POST"])
 def put_personal_rate():
     print(fl.request.get_json())
+    response = fl.Response()
     data = check_form(fl.request.get_json())
     data["sequence_" + data.pop("_videoLetter")] = data.pop("_rateValue")
     if data is None:
-        return ("", 204)
+        response.status_code=400
+    
+        response
     else:
-        mongo.db.user_information.find_one_and_update({"_id" :ObjectId(data.pop("_id"))},{"$set":data})
-        
-        return ("", 200)
+        userInformations_to_update = UserInformations.objects(id=ObjectId(data.pop("_id")))
+        userInformations_to_update.update(**data)
+        response.status_code=200
+        return response
     
 
 def check_form(data):
@@ -115,8 +130,30 @@ def export_data():
     
 @app.route("/test", methods=["GET"])
 def test():
-    mongo.db.user_information.insert({"test":"test"})
-    return "testdqsdqs"
+    test = Test(test_texte="test")
+    test.save()
+    return  fl.jsonify(test), 200
+
+@app.route("/testupdate", methods=["GET"])
+def testupdate():
+    test = Test.objects(id=ObjectId('6196e864a99933fb0808da44'))
+    up = {'test_texte2': 'update1'}
+    test.update(**up)
+    return  fl.jsonify(test), 200
+
+ 
+@app.route("/testall", methods=["GET"])
+def testall():   
+    test = Test.objects(id=ObjectId('6196df245ead5ebc0fb36a72'))
+    if not test:
+        return fl.jsonify({'error': 'data not found'})
+    else:
+        to_update = {'update': 'update1','a':'b'}
+        for key, value in to_update.items():
+            setattr(test, key, value)
+        test.save()
+        return fl.jsonify(test)
+
 """
 if __name__ == "__main__":
     app.run(debug=True, port=5000)"""

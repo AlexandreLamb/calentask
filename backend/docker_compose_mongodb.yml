@@ -1,0 +1,18 @@
+version: '3.7'
+
+services:
+    mongodb:
+        image: mongo
+        container_name: mongo
+        restart: unless-stopped
+        command: mongod --auth
+        environment:
+            MONGO_INITDB_ROOT_USERNAME: "fatigue"
+            MONGO_INITDB_ROOT_PASSWORD: "fatigue1234"
+            MONGO_INITDB_DATABASE: fatigueSurvey
+            MONGODB_DATA_DIR: /data/db
+        volumes:
+            - mongodbdata:/data/db
+volumes:
+    mongodbdata:
+        driver: local
