@@ -4,6 +4,7 @@
 /node_modules
 /.pnp
 .pnp.js
+frontend/node_modules
 
 # testing
 /coverage
@@ -18,6 +19,7 @@
 /srv/dist
 /srv/build
 public/DESFAM_F_H98_VENDREDI
+public/DESFAM_F_Sequences
 # misc
 .DS_Store
 .env.local
@@ -28,3 +30,4 @@ public/DESFAM_F_H98_VENDREDI
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+frontend/node_modules/.bin/acorn
