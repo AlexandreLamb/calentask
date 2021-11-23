@@ -1,11 +1,24 @@
 import './App.css';
-import MainDay from './compenents/MainForm.js';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link
+} from "react-router-dom";
+import MainForm from './compenents/MainForm.js';
+import Configuration from './compenents/Configuration';
 
 function App() {
   return (
-      <div>
-        <MainDay videoFolder="/DESFAM_F_H98_VENDREDI"/>
-      </div>
+    <Router>
+      <Route exact path="/">
+        <MainForm videoFolder="/DESFAM_F_H98_VENDREDI"/>
+      </Route>
+      <Route path="/configuration">
+        <Configuration videoFolder="/DESFAM_F_H98_VENDREDI"/>
+      </Route>
+    </Router>
+      
   );
 }
 

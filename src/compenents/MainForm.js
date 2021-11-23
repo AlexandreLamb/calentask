@@ -12,7 +12,7 @@ class MainForm extends React.Component {
         displayInformationForm : true,
         displayVideoForm : false,
         displaySelfEvaluationForm: false,
-        pathToCsv: null,        
+        documentID: null,        
         videoLetter: "A",
         videoNotAvailable: [],
         numberOfView: 1
@@ -21,9 +21,9 @@ class MainForm extends React.Component {
     handleChange = (event) => {    
       this.setState({value: event.target.value});  
     }
-    handleSubmitInformationForm = (path) => {
+    handleSubmitInformationForm = (_documentID) => {
       this.setState({ 
-        pathToCsv: path,
+        documentID: _documentID,
         displayInformationForm: false, 
         displayVideoForm: true
       })
@@ -82,7 +82,7 @@ class MainForm extends React.Component {
         displayInformationForm, 
         displayVideoForm, 
         displaySelfEvaluationForm, 
-        pathToCsv, 
+        documentID, 
         videoLetter,
         numberOfView
       } = this.state
@@ -119,14 +119,14 @@ class MainForm extends React.Component {
                 videoFolder = {this.props.videoFolder}
                 handleEnded = {this.handleEnded}
                 handlePlay = {this.handlePlay}
-                pathToCsv = {pathToCsv}
+                documentID = {documentID}
               /> : null
               }
               {
                 displaySelfEvaluationForm ? 
                 <SelfEvaluationForm
                 handleSubmit={this.handleSubmitSelfEvaluationForm}
-                pathToCsv = {pathToCsv}
+                documentID = {documentID}
                 /> : null
               }
               {

@@ -8,7 +8,6 @@ import {itemListGender, iemListStudieLevel, itemListFatigueLevel, iemListHeadqua
 
 class InformationForm extends React.Component {
     constructor(props) {
-      console.log(itemListGender)
       super(props);
       this.state = {
         initialValues: "", 
@@ -33,6 +32,19 @@ class InformationForm extends React.Component {
       const name = target.name;
       this.setState({[name]: value});  
     }
+    createDateFormat = () => {
+      let today = new Date();
+      let dd = today.getDate();
+      let mm = today.getMonth()+1; 
+      let yyyy = today.getFullYear();
+      if(dd<10){
+          dd='0'+dd;
+      } 
+      if(mm<10){
+          mm='0'+mm;
+      } 
+     return mm+'/'+dd+'/'+yyyy;
+    }
     handleSubmit = (event) => {
       const axios = require('axios').default;
       const {
@@ -50,7 +62,8 @@ class InformationForm extends React.Component {
         grade
       } = this.state
       const this_contexte = this
-      axios.post('http://fatigue_sequences:5000/output/subject/information/', {
+      
+      axios.post('http://fatigue:5000/output/subject/information/', {
         _initialValues: initialValues, 
         _age: age,
         _gender: gender,
@@ -62,7 +75,8 @@ class InformationForm extends React.Component {
         _peopleCommand: peopleCommand,
         _headquarters: headquarters,
         _jobLengthOfService: jobLengthOfService,
-        _grade : grade
+        _grade : grade,
+        _date : this_contexte.createDateFormat()
       })
       .then(function (response) {
         const status_code = response.status

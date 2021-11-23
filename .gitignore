@@ -11,6 +11,8 @@
 # production
 /build
 
+/public
+
 /srv/.env
 /srv/data
 /srv/dist

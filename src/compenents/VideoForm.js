@@ -25,7 +25,8 @@ class VideoForm extends React.Component {
         }
         else if (this.props.numberOfView > 0) {
             this.setState({
-                displayVideoRate: true
+                displayVideoRate: true,
+                isStopWatchingVideo : rateValueChecked.length === 3 ? true : false
             })
         }
         
@@ -41,7 +42,6 @@ class VideoForm extends React.Component {
             rateValueChecked: [...this.state.rateValueChecked, parseInt(rateValue)],
             displayVideoRate: false
         })
-        
         this.props.handleEnded(isStopWatchingVideo, true)
     }
     handleNextVideo = () => {
@@ -106,7 +106,7 @@ class VideoForm extends React.Component {
                     rateValueChecked = {rateValueChecked}
                     handleSubmit = {this.handleSubmit}
                     handleNextvideo = {this.handleNextVideo}
-                    pathToCsv = {this.props.pathToCsv}
+                    documentID = {this.props.documentID}
                     handleNextVideo = {this.handleNextVideo}
                     /> : null
                 } 
