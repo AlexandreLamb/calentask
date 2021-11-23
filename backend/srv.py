@@ -21,8 +21,9 @@ CORS(app)
 app.config['MONGODB_SETTINGS'] = {
     'host': os.environ['MONGODB_HOST'],
     'port': int(os.environ['MONGODB_PORT']),
-    
-    'db': os.environ['MONGODB_DB']
+    'db': os.environ['MONGODB_DB'],
+    'username': os.environ['MONGODB_USERNAME'],
+    'password': os.environ['MONGODB_PASSWORD']
 }
 
 db = MongoEngine()
@@ -62,12 +63,13 @@ def index():
 def put_personal_information():
     data = check_form(fl.request.get_json())
     response = fl.Response()
-    print(response)
+    print(os.environ)
+    print(data)
     if data is None:
         response.status_code=204
         return response
     else:
-        userInformations = UserInformations(data)
+        userInformations = UserInformations(**data)
         userInformations.save()
         response.status_code = 200  
         response.data = userInformations.get_id()
