@@ -19,6 +19,9 @@ frontend/node_modules
 /srv/build
 public/DESFAM_F_H98_VENDREDI
 public/DESFAM_F_Sequences
+backend/__pycache__
+frontend/public
+frontend/build
 # misc
 .DS_Store
 .env.local

@@ -14,7 +14,7 @@ import json
 PATH_TO_SAVE = "data/"
 PATH_T0_CSV = ""
 
-app = Flask(__name__, static_folder='../build/', static_url_path='/', )
+app = Flask(__name__, static_folder='../frontend/build/', static_url_path='/', )
 
 
 
@@ -67,16 +67,18 @@ def put_personal_evaluation():
 
 @app.route("/output/subject/rate/", methods=["POST"])
 def put_personal_rate():
+    print("here")
     print(fl.request.get_json())
     response = fl.Response()
     data = check_form(fl.request.get_json())
-    data["sequence_" + data.pop("_videoLetter")] = data.pop("_rateValue")
+    #data["sequence_" + data.pop("_videoLetter")] = data.pop("_rateValue")
     if data is None:
-        response.status_code=400
-    
-        response
+        response.status_code=400  
+        return  response
     else:
-        db.user_information.find_one_and_update({"_id" :ObjectId(data.pop("_id"))},{"$set":data})
+        print("else")
+        print(data)
+        db.user_information.find_one_and_update({"_id" :ObjectId(data.pop("_id"))},{"$push":data})
         response.status_code=200
         return response
     

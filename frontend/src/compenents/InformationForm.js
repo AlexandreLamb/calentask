@@ -7,6 +7,7 @@ import Col from "react-bootstrap/Col"
 import {itemListGender, iemListStudieLevel, itemListFatigueLevel, iemListHeadquarters} from "./formItems"
 
 const FLASK_URL = "http://127.0.0.1:5000/"
+
 class InformationForm extends React.Component {
     constructor(props) {
       super(props);
