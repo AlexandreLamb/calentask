@@ -2,6 +2,9 @@ import React from 'react';
 import Button from "react-bootstrap/Button"
 import Form from "react-bootstrap/Form"
 import Card from "react-bootstrap/Card"
+
+const FLASK_URL = "http://127.0.0.1:5000/"
+
 class VideoRate extends React.Component {
     constructor(props) {
       super(props);
@@ -21,12 +24,19 @@ class VideoRate extends React.Component {
         const axios = require('axios').default
         const { rateValue, timeReflexions }  = this.state
         const this_contexte = this
-        axios.post('http://fatigue:5000/output/subject/rate/', {
-        _rateValue: rateValue,
-        _timeReflexions: timeReflexions,
-        _videoLetter: this_contexte.props.videoLetter,
-        _id : this_contexte.props.documentID
-      })
+        const videoName = "_"+this.props.videoName
+        const sequenceLetter = "_"+this.props.videoLetter
+        const numberOfView = this.props.sequence[this.props.videoLetter].numberOfViews
+        const data = {}
+        data["_id"]= this_contexte.props.documentID
+        data[videoName] = {}
+        data[videoName][sequenceLetter] = {
+          _rateValuerzeze: rateValue,
+          _timeReflexions: timeReflexions,
+          _numberOfView: numberOfView
+        }
+        console.log(data)
+        axios.post(FLASK_URL+'output/subject/rate/', data)
       .then(function (response) {
         const status_code = response.status
         if (parseInt(status_code) === 204){

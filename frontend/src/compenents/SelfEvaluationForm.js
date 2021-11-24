@@ -7,6 +7,8 @@ import Col from "react-bootstrap/Col"
 import TagInput from './TagInput';
 import { commonIndicator } from './formItems';
 
+const FLASK_URL = "http://127.0.0.1:5000/"
+
 class SelfEvaluationForm extends React.Component {
     constructor(props) {
       super(props);
@@ -39,7 +41,7 @@ class SelfEvaluationForm extends React.Component {
       const axios = require('axios').default;
       const { confianceDegree, selfIndcator, commonIndicator} = this.state
       const this_contexte = this
-      axios.post('http://fatigue:5000/output/subject/evaluation/', {
+      axios.post(FLASK_URL+'output/subject/evaluation/', {
         _confianceDegree: confianceDegree,
         _commonIndicator: commonIndicator,
         _selfIndcator: selfIndcator,
@@ -92,7 +94,7 @@ class SelfEvaluationForm extends React.Component {
                 <Row className="mb-3">
                   <Form.Group>
                     <Form.Label>
-                    Quels indicateurs du visage avez vous utilisé pour classer les videos (Plusierus indeicateurs possible a classer dasn l'orde d'importance de gauche a droite) ?
+                    Quels indicateurs du visage avez vous utilisé pour classer les videos (Plusieurs indicateurs possible a classer dans l'orde d'importance de gauche a droite) ?
                     </Form.Label>
                     <TagInput handleTag={this.handleTag} />  
                   </Form.Group>

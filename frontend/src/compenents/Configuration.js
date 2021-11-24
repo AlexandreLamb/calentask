@@ -10,7 +10,7 @@ class Configuration extends React.Component {
             pathToExportData : ""
         };
     }
-    handleChange = (event) => {    
+    handleChange = (event) => {
         const target = event.target;
         console.log(target)
         const value = target.type === 'radio' ? target.id : target.value;

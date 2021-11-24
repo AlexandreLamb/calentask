@@ -15,7 +15,21 @@ class MainForm extends React.Component {
         documentID: null,        
         videoLetter: "A",
         videoNotAvailable: [],
-        numberOfView: 1
+        numberOfView: 1,
+        sequence: {
+          A : {
+            numberOfViews : 1
+          },
+          B : {
+            numberOfViews : 1
+          },
+          C : {
+            numberOfViews : 1
+          },
+          D : {
+            numberOfViews : 1
+          }
+        }
     };
     }
     handleChange = (event) => {    
@@ -40,11 +54,16 @@ class MainForm extends React.Component {
     handleEnded = (isStopWatchingVideo, popVideo) => {
       const videoLetter = this.state.videoLetter
       const videoNotAvailable = this.state.videoNotAvailable
-
       if (popVideo == true){
         this.setState({videoNotAvailable : [...videoNotAvailable, videoLetter]})
       }
-      if (videoLetter !== "D"){
+      if ((videoLetter !== "D") && (isStopWatchingVideo === false)){
+        console.log("enter in if")
+        const sequence = this.state.sequence
+        sequence[videoLetter] = {numberOfViews : sequence[videoLetter].numberOfViews + 1}
+        this.setState({
+          sequence: sequence
+        })
         let newVideoLetter = String.fromCharCode(videoLetter.charCodeAt()+1)
         while(this.state.videoNotAvailable.includes(newVideoLetter)){
           if (newVideoLetter === "D"){
@@ -57,6 +76,8 @@ class MainForm extends React.Component {
           playing: false,
           videoLetter: newVideoLetter
         })
+        console.log(this.state.videoLetter)
+        console.log(isStopWatchingVideo)
       } else if (isStopWatchingVideo) {
         this.setState({
           displayVideoForm: false,
@@ -67,10 +88,13 @@ class MainForm extends React.Component {
         while(this.state.videoNotAvailable.includes(newVideoLetter)){
           newVideoLetter = String.fromCharCode(newVideoLetter.charCodeAt()+1)
         }
+        const sequence = this.state.sequence
+        sequence[videoLetter] = {numberOfViews : sequence[videoLetter].numberOfViews + 1}
         this.setState({
           playing: false,
           videoLetter: newVideoLetter, 
-          numberOfView: this.state.numberOfView + 1
+          numberOfView: this.state.numberOfView + 1,
+          sequence : sequence
         })
       }
       
@@ -84,7 +108,8 @@ class MainForm extends React.Component {
         displaySelfEvaluationForm, 
         documentID, 
         videoLetter,
-        numberOfView
+        numberOfView, 
+        sequence
       } = this.state
       return(
         <Card 
@@ -101,7 +126,7 @@ class MainForm extends React.Component {
                   fontSize: "2.25rem"
                 }}
               >
-                Questionnaire evaluation de niveau de fatigue grace a des sequences videos 
+                Questionnaire evaluation de niveau de fatigue grace a des sequences videos
               </Card.Title> : null
             }
             {
@@ -113,6 +138,7 @@ class MainForm extends React.Component {
             {
               displayVideoForm ? 
               <VideoForm 
+                sequence  = {sequence}
                 videoLetter = {videoLetter}
                 numberOfView = {numberOfView}
                 playing = {playing}
