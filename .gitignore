@@ -13,6 +13,8 @@ frontend/node_modules
 # production
 /build
 
+/public
+
 /srv/.env
 /srv/data
 /srv/dist
