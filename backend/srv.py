@@ -37,7 +37,8 @@ def index():
 def put_personal_information():
     data = check_form(fl.request.get_json())
     response = fl.Response()
-    print(response)
+    print(os.environ)
+    print(data)
     if data is None:
         response.status_code=204
         return response
@@ -46,12 +47,6 @@ def put_personal_information():
         response.status_code=200  
         response.data=str(_id)
         return response
-        """
-        userInformations = UserInformations(data)
-        userInformations.save()
-        response.status_code = 200  
-        response.data = userInformations.get_id()
-        """
         return response
     
 
