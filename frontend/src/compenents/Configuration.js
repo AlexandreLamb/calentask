@@ -51,9 +51,12 @@ class Configuration extends React.Component {
             
             };
 
-            response.data.map((videoName, index)=>{
-                newState["tasks_list"]["task_"+(index+1)] = {"id": 'task_'+(index+1), "content" : videoName}
-                newState["columns"]["column-1"]["taskIds"].push('task_'+(index+1))
+            response.data.map((videoSetings, index)=>{
+                console.log(videoSetings)
+                
+                newState["tasks_list"]["task_"+(index+1)] = {"id": 'task_'+(index+1), "content" : Object.values(videoSetings)[0]}
+                newState["columns"][Object.keys(videoSetings)[0]]["taskIds"].push('task_'+(index+1))
+                
             })
             console.log(newState)
             this_contexte.setState(newState)
@@ -84,8 +87,8 @@ class Configuration extends React.Component {
         this.setState({[name]: value});  
     }
     handleOnDragEnd = (result) => {
+        const axios = require('axios').default
         const { destination, source, draggableId } = result;
-        console.log(result)
         if (!destination) {
         return;
         }
@@ -147,6 +150,25 @@ class Configuration extends React.Component {
         };
         console.log(newState)
         this.setState(newState);
+        console.log("newchange")
+        axios.post(FLASK_URL+"/configuration/udpate/video",{
+        "video_use" : this.state.tasks_list[result.draggableId].content
+        }).then(function (response) {
+          const status_code = response.status
+          if (parseInt(status_code) === 204){
+            // display alert
+            console.log("form empty")
+          }
+          else if(parseInt(status_code) === 200) {
+           
+          }
+          else {
+            console.log("Error")
+          }
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
     }
     
     render() {

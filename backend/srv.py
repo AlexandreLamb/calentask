@@ -1,5 +1,5 @@
 import os
-
+import numpy as np
 from flask import Flask
 import pandas as pd
 import flask as fl
@@ -67,7 +67,6 @@ def put_personal_evaluation():
 
 @app.route("/output/subject/rate/", methods=["POST"])
 def put_personal_rate():
-    print("here")
     print(fl.request.get_json())
     response = fl.Response()
     data = check_form(fl.request.get_json())
@@ -76,8 +75,6 @@ def put_personal_rate():
         response.status_code=400  
         return  response
     else:
-        print("else")
-        print(data)
         db.user_information.find_one_and_update({"_id" :ObjectId(data.pop("_id"))},{"$push":data})
         response.status_code=200
         return response
@@ -100,7 +97,7 @@ def generate_dataset():
     
 @app.route("/output/export/data", methods=["GET"])
 def export_data():
-    user_information =  mongo.db.user_information.find({})
+    user_information =  db.user_information.find({})
     df = pd.DataFrame( list(user_information))
     print(df)
     data_dict = dict()
@@ -111,7 +108,23 @@ def export_data():
        
 @app.route("/configuration/list/video", methods=["GET"])
 def list_video():
-    videos_list = os.listdir("../frontend/build/DESFAM_F_Sequences")
+    if "video_use" in db.list_collection_names() :
+        video_use = list(db.video_use.find({}))
+        video_names = []
+        for video in video_use:
+            video_names.append({"column-2" : video["video_use"]})  
+    videos_default = [{"column-1" : video_name} for video_name in os.listdir("../frontend/build/DESFAM_F_Sequences") if video_name not in np.squeeze([list(video_use) for video_use in video_names])]
+    return fl.jsonify(videos_default + video_names)
     
-    return fl.jsonify(videos_list)
-    
+@app.route("/configuration/udpate/video", methods=["POST"])
+def update_video():
+    print(fl.request.get_json())
+    response = fl.Response()
+    data = check_form(fl.request.get_json())
+    if data is None:
+        response.status_code=400  
+        return  response
+    else:
+        db.video_use.insert(data)
+        response.status_code=200
+        return response
