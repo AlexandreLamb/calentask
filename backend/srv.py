@@ -108,32 +108,10 @@ def export_data():
         data_dict[col] = str(df[col].values)
     return fl.jsonify(data_dict)
     
-@app.route("/test", methods=["GET"])
-def test():
-    test = Test(test_texte="test")
-    test.save()
-    return  fl.jsonify(test), 200
-
-@app.route("/testupdate", methods=["GET"])
-def testupdate():
-    test = Test.objects(id=ObjectId('6196e864a99933fb0808da44'))
-    up = {'test_texte2': 'update1'}
-    test.update(**up)
-    return  fl.jsonify(test), 200
-
- 
-@app.route("/testall", methods=["GET"])
-def testall():   
-    test = Test.objects(id=ObjectId('6196df245ead5ebc0fb36a72'))
-    if not test:
-        return fl.jsonify({'error': 'data not found'})
-    else:
-        to_update = {'update': 'update1','a':'b'}
-        for key, value in to_update.items():
-            setattr(test, key, value)
-        test.save()
-        return fl.jsonify(test)
-
-"""
-if __name__ == "__main__":
-    app.run(debug=True, port=5000)"""
+       
+@app.route("/configuration/list/video", methods=["GET"])
+def list_video():
+    videos_list = os.listdir("../frontend/build/DESFAM_F_Sequences")
+    
+    return fl.jsonify(videos_list)
+    

@@ -46,12 +46,36 @@ const commonIndicator = [
     {id: 4, value: "Bouche plus ou moins ouverte", isChecked: false}
   ]
 
-
+const configurationData = {
+    tasks_list: {
+      'task_1': { id: 'task_1', content: 'Take out the garbage' },
+      'task_2': { id: 'task_2', content: 'Watch my favorite show' },
+      'task_3': { id: 'task_3', content: 'Charge my phone' },
+      'task_4': { id: 'task_4', content: 'Cook dinner' },
+    },
+    columns: {
+      'column-1': {
+        id: 'column-1',
+        title: 'Video dipsonible',
+        taskIds: ['task_1', 'task_2', 'task_3', 'task_4'],
+      },
+      'column-2': {
+        id: 'column-2',
+        title: 'Video de la session',
+        taskIds: [],
+      },
+    },
+    // Facilitate reordering of the columns
+    columnOrder: ['column-1', 'column-2'],
+    pathToExportData: ""
+    };
+  
 
 export {
     itemListGender, 
     iemListStudieLevel,
     itemListFatigueLevel,
     iemListHeadquarters,
-    commonIndicator
+    commonIndicator, 
+    configurationData
 }
