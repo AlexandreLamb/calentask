@@ -1,7 +1,9 @@
 pandas
-flask
+Flask
 flask-cors
 gunicorn
 numpy
 flask-mongoengine
 python-dotenv
+Flask-PyMongo
+Flask-CLI

@@ -32,35 +32,7 @@ class Configuration extends React.Component {
             console.log("form empty")
           }
           else if(parseInt(status_code) === 200) {
-            let newState = {
-                tasks_list: {},
-                columns: {
-                    'column-1': {
-                      id: 'column-1',
-                      title: 'Video dipsonible',
-                      taskIds: [],
-                    },
-                    'column-2': {
-                      id: 'column-2',
-                      title: 'Video de la session',
-                      taskIds: [],
-                    },
-                  },
-                  // Facilitate reordering of the columns
-                  columnOrder: ['column-1', 'column-2'],
-                  pathToExportData: ""
-            
-            };
-
-            response.data.map((videoSetings, index)=>{
-                console.log(videoSetings)
-                
-                newState["tasks_list"]["task_"+(index+1)] = {"id": 'task_'+(index+1), "content" : Object.values(videoSetings)[0]}
-                newState["columns"][Object.keys(videoSetings)[0]]["taskIds"].push('task_'+(index+1))
-                
-            })
-            console.log(newState)
-            this_contexte.setState(newState)
+            this_contexte.setState(response.data)
           }
           else {
             console.log("Error")
@@ -145,8 +117,8 @@ class Configuration extends React.Component {
         console.log(newState)
         console.log("------------  state --------------------")
         console.log(this.state)
-        axios.post(FLASK_URL+"/configuration/udpate/video",{
-        "state" : this.state
+        axios.post(FLASK_URL+"configuration/udpate/video",{ 
+          "video_use" : newState
         //"video_use" : this.state.tasks_list[result.draggableId].content
         }).then(function (response) {
           const status_code = response.status
