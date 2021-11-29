@@ -20,6 +20,7 @@ class Configuration extends React.Component {
         this.state = ""
     }
     componentDidMount = () => {
+      
         const axios = require('axios').default
         const this_contexte = this
         const tasks = {}
@@ -60,16 +61,6 @@ class Configuration extends React.Component {
             })
             console.log(newState)
             this_contexte.setState(newState)
-            //this_contexte.setState(newState)
-            //console.log(this_contexte.state)
-            
-            /*
-            response.data.map((videoName,index) =>{
-                  console.log({"id" : "task-"+index , "content" : videoName})
-                  tasks["task-"+index] = {"id" : "task-"+index , "content" : videoName}
-              })
-            console.log(tasks)
-            */
           }
           else {
             console.log("Error")
@@ -78,6 +69,7 @@ class Configuration extends React.Component {
         .catch(function (error) {
           console.log(error);
         });
+        
       }
     handleChange = (event) => {
         const target = event.target;
@@ -148,11 +140,14 @@ class Configuration extends React.Component {
             [newFinish.id]: newFinish,
         },
         };
-        console.log(newState)
         this.setState(newState);
-        console.log("newchange")
+        console.log("------------ new state --------------------")
+        console.log(newState)
+        console.log("------------  state --------------------")
+        console.log(this.state)
         axios.post(FLASK_URL+"/configuration/udpate/video",{
-        "video_use" : this.state.tasks_list[result.draggableId].content
+        "state" : this.state
+        //"video_use" : this.state.tasks_list[result.draggableId].content
         }).then(function (response) {
           const status_code = response.status
           if (parseInt(status_code) === 204){

@@ -114,6 +114,8 @@ def list_video():
         for video in video_use:
             video_names.append({"column-2" : video["video_use"]})  
     videos_default = [{"column-1" : video_name} for video_name in os.listdir("../frontend/build/DESFAM_F_Sequences") if video_name not in np.squeeze([list(video_use) for video_use in video_names])]
+    else :
+        videos_default =  os.listdir("../frontend/build/DESFAM_F_Sequences")
     return fl.jsonify(videos_default + video_names)
     
 @app.route("/configuration/udpate/video", methods=["POST"])
