@@ -6,26 +6,28 @@ import Row from "react-bootstrap/Row"
 import Col from "react-bootstrap/Col"
 import {itemListGender, iemListStudieLevel, itemListFatigueLevel, iemListHeadquarters} from "./formItems"
 
+const FLASK_URL = "http://127.0.0.1:5000/"
+
 class InformationForm extends React.Component {
     constructor(props) {
       super(props);
       this.state = {
-        initialValues: "", 
-        age: "",
-        gender: "",
-        studieLevel: "",
-        studieArea: "",
-        fatigueLevel: "",
+        initialValues: "ML", 
+        age: "1",
+        gender: "M",
+        studieLevel: "1",
+        studieArea: "dza",
+        fatigueLevel: "3",
         armyLengthOfService: "", 
-        typeOfJob: "",
-        peopleCommand: "",
-        headquarters: "",
-        jobLengthOfService: "",
-        grade: ""
+        typeOfJob: "reze",
+        peopleCommand: "3",
+        headquarters: "azda",
+        jobLengthOfService: "1",
+        grade: "dzad"
 
       };
     }
-    handleChange = (event) => {    
+    handleChange = (event) => {  
       const target = event.target;
       console.log(target)
       const value = target.type === 'radio' ? target.id : target.value;
@@ -62,8 +64,7 @@ class InformationForm extends React.Component {
         grade
       } = this.state
       const this_contexte = this
-      
-      axios.post('http://fatigue:5000/output/subject/information/', {
+      axios.post(FLASK_URL+'output/subject/information/', {
         _initialValues: initialValues, 
         _age: age,
         _gender: gender,

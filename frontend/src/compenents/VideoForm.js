@@ -26,10 +26,9 @@ class VideoForm extends React.Component {
         else if (this.props.numberOfView > 0) {
             this.setState({
                 displayVideoRate: true,
-                isStopWatchingVideo : rateValueChecked.length === 3 ? true : false
+                isStopWatchingVideo : rateValueChecked.length === 4 ? true : false
             })
         }
-        
         
     }
     handleSubmit = (rateValue) => {
@@ -40,9 +39,12 @@ class VideoForm extends React.Component {
         } = this.state;
         this.setState({
             rateValueChecked: [...this.state.rateValueChecked, parseInt(rateValue)],
-            displayVideoRate: false
+            displayVideoRate: false,
+            isStopWatchingVideo : this.state.rateValueChecked.length === 3 ? true : false
+
         })
-        this.props.handleEnded(isStopWatchingVideo, true)
+        const isStopWatchingVideoUpdate = this.state.isStopWatchingVideo
+        this.props.handleEnded(isStopWatchingVideoUpdate, true)
     }
     handleNextVideo = () => {
         const {
@@ -53,11 +55,10 @@ class VideoForm extends React.Component {
         this.setState({ displayVideoRate : false })
         this.props.handleEnded(isStopWatchingVideo)
     }
-
-  
     render() { 
         const  { displayVideoRate, rateValueChecked } = this.state;
-        const url =  this.props.videoFolder + this.props.videoFolder + '_'+this.props.videoLetter+'-converted.mp4'
+        const url =   this.props.videoFolder + '_'+this.props.videoLetter+'-converted.mp4'
+        const videoName = this.props.videoFolder.split("/").at(-1)
         return(
             <div>
             <Card 
@@ -102,6 +103,8 @@ class VideoForm extends React.Component {
                 {   
                     ( displayVideoRate === true ) ? 
                     <VideoRate
+                    sequence = {this.props.sequence}
+                    videoName = {videoName}
                     videoLetter = {this.props.videoLetter}
                     rateValueChecked = {rateValueChecked}
                     handleSubmit = {this.handleSubmit}

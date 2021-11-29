@@ -1,0 +1,65 @@
+version: '3.7'
+
+services:
+
+    client:
+        build:
+            context: ./frontend
+            dockerfile: Dockerfile
+        tty: true
+        ports:
+            - "3000:3000"
+        volumes: 
+            - ./frontend:/app
+            - /app/node_modules
+        networks:
+            - frontend
+
+    mongodb:
+        image: mongo:bionic
+        container_name: mongo
+        restart: unless-stopped
+        command: mongod --auth
+        environment:
+            MONGO_INITDB_ROOT_USERNAME: "fatigue"
+            MONGO_INITDB_ROOT_PASSWORD: "fatigue1234"
+            MONGO_INITDB_DATABASE: fatigueSurvey
+            MONGODB_DATA_DIR: /data/db
+        volumes:
+            - mongodbdata:/data/db
+        networks:
+            - backend
+    api:
+        build: 
+            context: ./backend
+            dockerfile: Dockerfile
+        command: flask run --host=0.0.0.0
+        #command: gunicorn --bind 0.0.0.0:5000 srv:app
+        ports:
+            - "5000:5000"
+        environment:
+            MONGODB_HOST: mongodb
+            MONGODB_USERNAME: "fatigueUser"
+            MONGODB_PASSWORD: "fatiguePassword"
+            MONGODB_DB: "fatigueSurvey"
+            FLASK_APP: "srv.py"
+            FLASK_ENV: "development"
+        volumes:
+            - ./backend:/app
+            - appdata:/var/www/
+        depends_on: 
+            - mongodb
+        networks:
+            - frontend
+            - backend
+
+networks:
+    frontend:
+        driver: bridge
+    backend:
+        driver: bridge
+volumes:
+    mongodbdata:
+        driver: local
+    appdata:
+        driver: local
