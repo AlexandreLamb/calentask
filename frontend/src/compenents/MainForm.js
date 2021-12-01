@@ -208,7 +208,7 @@ class MainForm extends React.Component {
               /> : null
               }
               {
-                displaySelfEvaluationForm == false ? 
+                displaySelfEvaluationForm ? 
                 <SelfEvaluationForm
                 videoFolder = {this.props.videoFolder + videosToPlay[currentVideoIndex]+ "/" + videosToPlay[currentVideoIndex]}
                 handleSubmit={this.handleSubmitSelfEvaluationForm}
@@ -218,7 +218,7 @@ class MainForm extends React.Component {
               {
               displayVideoForm  === false &&  
               displayInformationForm === false &&
-              displaySelfEvaluationForm === false  ?
+              displaySelfEvaluationForm === false ?
               <Card.Title 
               style={{
                 textAlign: 'center',
@@ -226,8 +226,8 @@ class MainForm extends React.Component {
                 padding : "25%"
               }}
             >
-             Merci pour vos reponses 
-            <Button onClick={this.handleNextVideo}> Video Suivante </Button>
+             Merci pour vos reponses
+            { videosToPlay.length -1  == (currentVideoIndex ) ?  null : <Button onClick={this.handleNextVideo}>  Video Suivante </Button>}
             </Card.Title> : null
               }
 
