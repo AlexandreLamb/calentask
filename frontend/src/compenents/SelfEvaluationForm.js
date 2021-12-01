@@ -13,7 +13,7 @@ class SelfEvaluationForm extends React.Component {
     constructor(props) {
       super(props);
       this.state = {
-        confianceDegree: null, 
+        confianceDegree: "", 
         selfIndcator: null,
         commonIndicator : commonIndicator
       };
@@ -29,8 +29,7 @@ class SelfEvaluationForm extends React.Component {
       }
     handleChange = (event) => {   
       const target = event.target;
-      console.log(target)
-      const value = target.type === 'radio' ? target.id : target.value;
+      const value =  target.value;
       const name = target.name;
       this.setState({[name]: value});  
     }
@@ -41,12 +40,27 @@ class SelfEvaluationForm extends React.Component {
       const axios = require('axios').default;
       const { confianceDegree, selfIndcator, commonIndicator} = this.state
       const this_contexte = this
-      axios.post(FLASK_URL+'output/subject/evaluation/', {
-        _confianceDegree: confianceDegree,
-        _commonIndicator: commonIndicator,
-        _selfIndcator: selfIndcator,
-        _id: this_contexte.props.documentID,
+      const videoName = "_"+this.props.videoFolder.split("/").at(-1)
+      const data = {}
+      var commonIndicatorChecked = []
+      var selfIndcatorText = []
+      commonIndicator.forEach(element => {
+        if(element.isChecked){
+          commonIndicatorChecked.push(element.value)
+        }
       })
+      selfIndcator.forEach(element => {
+        selfIndcatorText.push(element.text)
+      })
+
+      data["_id"] = this_contexte.props.documentID
+      data[videoName] = {}
+      data[videoName+"_evaluation"] = {
+        _confianceDegree: confianceDegree,
+        _commonIndicator: commonIndicatorChecked,
+        _selfIndcator: selfIndcatorText,
+      }
+      axios.post(FLASK_URL+'output/subject/evaluation/', data)
       .then(function (response) {
         const status_code = response.status
         if (parseInt(status_code) === 204){
@@ -112,7 +126,7 @@ class SelfEvaluationForm extends React.Component {
                         label={value}
                         name="commonIndicator"
                         type="checkbox"
-                        id={id} />
+                        key={id} />
                     ))}
 
                   </Form.Group> 
@@ -125,13 +139,13 @@ class SelfEvaluationForm extends React.Component {
                     </Form.Label>
                     {[1, 2, 3, 4, 5].map((type) => (  
                     <Form.Check 
-                        value={confianceDegree} 
+                        value={`level-${type}`} 
                         onChange={this.handleChange}
                         inline
                         label={type}
                         name="confianceDegree"
                         type="radio"
-                        id={`level-${type}`} />
+                        key={`level-${type}`} />
                     ))}
                   </Form.Group>
               <Button onClick={this.handleSubmit}>Passer a la suite</Button>

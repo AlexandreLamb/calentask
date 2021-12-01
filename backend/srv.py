@@ -60,7 +60,7 @@ def put_personal_evaluation():
         response.status_code=204
         return response
     else:
-        db.user_information.find_one_and_update({"_id" :ObjectId(data.pop("_id"))},{"$set":data})
+        db.user_information.find_one_and_update({"_id" :ObjectId(data.pop("_id"))},{"$push":data})
         response.status_code=200  
         return response
     

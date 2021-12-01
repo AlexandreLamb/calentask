@@ -32,8 +32,9 @@ class MainForm extends React.Component {
             numberOfViews : 1
           }
         },
-        videoToPlay : []
-    };
+        videosToPlay : [],
+        currentVideoIndex : 0
+      };
     }
     getVideoToLoad = () => {
       const axios = require('axios').default
@@ -45,7 +46,7 @@ class MainForm extends React.Component {
             console.log("form empty")
           }
           else if(parseInt(status_code) === 200) {
-            this_contexte.setState({videoToPlay : response.data})
+            this_contexte.setState({videosToPlay : response.data})
           }
           else {
             console.log("Error")
@@ -57,7 +58,9 @@ class MainForm extends React.Component {
     }
     componentDidMount = () => {
       this.getVideoToLoad()
-      setInterval(this.getVideoToLoad, 3000)
+      if(this.state.displayVideoForm){
+        setInterval(this.getVideoToLoad, 3000)
+      }
     }
     handleChange = (event) => {    
       this.setState({value: event.target.value});  
@@ -127,6 +130,29 @@ class MainForm extends React.Component {
       
     }
     handleNextVideo = (event) => {
+      this.setState({
+        currentVideoIndex : this.state.currentVideoIndex + 1,
+        sequence: {
+          A : {
+            numberOfViews : 1
+          },
+          B : {
+            numberOfViews : 1
+          },
+          C : {
+            numberOfViews : 1
+          },
+          D : {
+            numberOfViews : 1
+          },
+          
+        },
+        videoLetter : "A",
+        displayInformationForm : false,
+        displayVideoForm : true,
+        displaySelfEvaluationForm: false,
+      
+      })
 
       event.preventDefault()
     }
@@ -141,7 +167,8 @@ class MainForm extends React.Component {
         videoLetter,
         numberOfView, 
         sequence,
-        videoToPlay
+        videosToPlay,
+        currentVideoIndex
       } = this.state
       return(
         <Card 
@@ -174,7 +201,7 @@ class MainForm extends React.Component {
                 videoLetter = {videoLetter}
                 numberOfView = {numberOfView}
                 playing = {playing}
-                videoFolder = {this.props.videoFolder + this.state}
+                videoFolder = {this.props.videoFolder + videosToPlay[currentVideoIndex]+ "/" + videosToPlay[currentVideoIndex]}
                 handleEnded = {this.handleEnded}
                 handlePlay = {this.handlePlay}
                 documentID = {documentID}
@@ -183,6 +210,7 @@ class MainForm extends React.Component {
               {
                 displaySelfEvaluationForm ? 
                 <SelfEvaluationForm
+                videoFolder = {this.props.videoFolder + videosToPlay[currentVideoIndex]+ "/" + videosToPlay[currentVideoIndex]}
                 handleSubmit={this.handleSubmitSelfEvaluationForm}
                 documentID = {documentID}
                 /> : null
@@ -199,7 +227,7 @@ class MainForm extends React.Component {
               }}
             >
              Merci pour vos reponses 
-            <Button onclick={this.handleNextVideo}> Video Suivante </Button>
+            <Button onClick={this.handleNextVideo}> Video Suivante </Button>
             </Card.Title> : null
               }
 
