@@ -9,7 +9,7 @@ import MainForm from './compenents/MainForm.js';
 import Configuration from './compenents/Configuration';
 
 function App() {
-  const VIDEO_FOLDER = "DESFAM_F_Sequences/DESFAM_F_H98_VENDREDI_1S/DESFAM_F_H98_VENDREDI"
+  const VIDEO_FOLDER = "DESFAM_F_Sequences/"
   return (
     <Router>
       <Route exact path="/">

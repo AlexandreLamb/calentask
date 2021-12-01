@@ -9,6 +9,7 @@ import styled from 'styled-components';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import { configurationData } from "./formItems"
 import Column from "./column"
+
 const FLASK_URL = "http://127.0.0.1:5000/"
 
 const Container = styled.div`
@@ -24,11 +25,10 @@ class Configuration extends React.Component {
         const axios = require('axios').default
         const this_contexte = this
         const tasks = {}
-        axios.get(FLASK_URL+'configuration/list/video')
+        axios.get(FLASK_URL+'configuration/create/video')
         .then(function (response) {
           const status_code = response.status
           if (parseInt(status_code) === 204){
-            // display alert
             console.log("form empty")
           }
           else if(parseInt(status_code) === 200) {
@@ -113,17 +113,11 @@ class Configuration extends React.Component {
         },
         };
         this.setState(newState);
-        console.log("------------ new state --------------------")
-        console.log(newState)
-        console.log("------------  state --------------------")
-        console.log(this.state)
         axios.post(FLASK_URL+"configuration/udpate/video",{ 
           "video_use" : newState
-        //"video_use" : this.state.tasks_list[result.draggableId].content
         }).then(function (response) {
           const status_code = response.status
           if (parseInt(status_code) === 204){
-            // display alert
             console.log("form empty")
           }
           else if(parseInt(status_code) === 200) {
@@ -188,52 +182,3 @@ class Configuration extends React.Component {
 }
 
 export default Configuration
-
-
-
-/*
-render() {
-        const {pathToExportData, videosName} = this.state;
-        return(
-            <Card 
-                style={{
-                width: '75%',
-                margin: 'auto',
-                marginTop: "1%"
-                }}
-            >
-            <Card.Title 
-                style={{
-                textAlign: 'center',
-                fontSize: "2.25rem"
-                }}
-            >
-            Interface de configuration du Questionnaire
-
-            </Card.Title>
-            <Form.Group  controlId="formBasicInitial">
-                    <Form.Label> Chemin de sauvgarde du fichier de résponse </Form.Label>
-                    <Form.Control name="pathToExportData"  directory="" webkitdirectory="" value={pathToExportData} onChange={this.handleChange} type="file" placeholder="Choisir un chemin vers un dossier" />
-                    <Form.Text className="text-muted">
-                      Les initial seront conservé de manière anonyme
-                    </Form.Text>
-
-                  </Form.Group>  
-                  <DragDropContext onDragEnd={this.handleOnDragEnd}>
-                <Container>
-              {this.state.columnOrder.map(columnId => {
-                const column = this.state.columns[columnId];
-                const tasks = column.taskIds.map(
-                  taskId => this.state.tasks[taskId],
-                );
-                return <Column key={column.id} column={column} tasks={tasks} />;
-              })}
-            </Container>
-          </DragDropContext>
-
-            </Card>
-        )
-    }
-
-
-*/

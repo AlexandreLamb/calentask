@@ -7,3 +7,4 @@ flask-mongoengine
 python-dotenv
 Flask-PyMongo
 Flask-CLI
+flask-socketio

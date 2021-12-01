@@ -3,7 +3,9 @@ import InformationForm from './InformationForm';
 import VideoForm from './VideoForm';
 import SelfEvaluationForm from './SelfEvaluationForm'
 import Card from "react-bootstrap/Card"
+import Button from '@restart/ui/esm/Button';
 
+const FLASK_URL = "http://127.0.0.1:5000/"
 class MainForm extends React.Component {
     constructor(props) {
       super(props);
@@ -29,8 +31,33 @@ class MainForm extends React.Component {
           D : {
             numberOfViews : 1
           }
-        }
+        },
+        videoToPlay : []
     };
+    }
+    getVideoToLoad = () => {
+      const axios = require('axios').default
+      const this_contexte = this
+      axios.get(FLASK_URL+"configuration/get/video/list")
+        .then(function (response) {
+          const status_code = response.status
+          if (parseInt(status_code) === 204){
+            console.log("form empty")
+          }
+          else if(parseInt(status_code) === 200) {
+            this_contexte.setState({videoToPlay : response.data})
+          }
+          else {
+            console.log("Error")
+          }
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    }
+    componentDidMount = () => {
+      this.getVideoToLoad()
+      setInterval(this.getVideoToLoad, 3000)
     }
     handleChange = (event) => {    
       this.setState({value: event.target.value});  
@@ -99,6 +126,10 @@ class MainForm extends React.Component {
       }
       
     }
+    handleNextVideo = (event) => {
+
+      event.preventDefault()
+    }
   
     render() {
       const {
@@ -109,7 +140,8 @@ class MainForm extends React.Component {
         documentID, 
         videoLetter,
         numberOfView, 
-        sequence
+        sequence,
+        videoToPlay
       } = this.state
       return(
         <Card 
@@ -142,7 +174,7 @@ class MainForm extends React.Component {
                 videoLetter = {videoLetter}
                 numberOfView = {numberOfView}
                 playing = {playing}
-                videoFolder = {this.props.videoFolder}
+                videoFolder = {this.props.videoFolder + this.state}
                 handleEnded = {this.handleEnded}
                 handlePlay = {this.handlePlay}
                 documentID = {documentID}
@@ -167,6 +199,7 @@ class MainForm extends React.Component {
               }}
             >
              Merci pour vos reponses 
+            <Button onclick={this.handleNextVideo}> Video Suivante </Button>
             </Card.Title> : null
               }
 

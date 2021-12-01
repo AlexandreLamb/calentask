@@ -26,7 +26,7 @@ mongo_client = PyMongo(app)
 db = mongo_client.db
 
 CORS(app)
- 
+
 @app.route('/')
 def index():
     if os.environ['FLASK_ENV'] == "production":
@@ -105,7 +105,7 @@ def export_data():
     return fl.jsonify(data_dict)
     
        
-@app.route("/configuration/list/video", methods=["GET"])
+@app.route("/configuration/create/video", methods=["GET"])
 def list_video():
     print(list(db.video_use.find({})) != [])
     if list(db.video_use.find({})) != [] :
@@ -138,7 +138,6 @@ def list_video():
             state["columns"]["column-1"]["taskIds"].append('task_'+str(index+1))
         video_use_id = db.video_use.insert(state)
         state["_id"] = str(video_use_id)
-        print(state)
     return fl.jsonify(state)
     
 @app.route("/configuration/udpate/video", methods=["POST"])
@@ -146,11 +145,21 @@ def update_video():
     response = fl.Response()
     data = check_form(fl.request.get_json())
     video_use = data["video_use"]
-    print(video_use)
     if data is None:
         response.status_code=400  
         return  response
     else:
         db.video_use.find_one_and_update({"_id" : ObjectId(video_use.pop("_id"))},{"$set":video_use})
         response.status_code=200
+    
         return response
+   
+@app.route("/configuration/get/video/list", methods=["GET"])
+def get_video_list():
+    video_use = db.video_use.find_one()
+    tasksIds = video_use["columns"]["column-2"]["taskIds"]
+    video_to_play = []
+    for id in tasksIds :
+        video_to_play.append(video_use["tasks_list"][id]["content"])
+    print(video_to_play)
+    return fl.jsonify(video_to_play)
