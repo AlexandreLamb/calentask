@@ -14,8 +14,11 @@ class SelfEvaluationForm extends React.Component {
       super(props);
       this.state = {
         confianceDegree: "", 
-        selfIndcator: null,
-        commonIndicator : commonIndicator
+        selfIndcator: [],
+        commonIndicator : commonIndicator,
+        displayCommonIndicator : false,
+        displayConfianceDegree : false,
+        displaySelfIndicator : true
       };
     }
     handleCheckedElement = (event) => {
@@ -37,51 +40,65 @@ class SelfEvaluationForm extends React.Component {
       this.setState({selfIndcator:tag})
     }
     handleSubmit = (event) => {
-      const axios = require('axios').default;
-      const { confianceDegree, selfIndcator, commonIndicator} = this.state
-      const this_contexte = this
-      const videoName = "_"+this.props.videoFolder.split("/").at(-1)
-      const data = {}
-      var commonIndicatorChecked = []
-      var selfIndcatorText = []
-      commonIndicator.forEach(element => {
-        if(element.isChecked){
-          commonIndicatorChecked.push(element.value)
-        }
-      })
-      selfIndcator.forEach(element => {
-        selfIndcatorText.push(element.text)
-      })
-
-      data["_id"] = this_contexte.props.documentID
-      data[videoName] = {}
-      data[videoName+"_evaluation"] = {
-        _confianceDegree: confianceDegree,
-        _commonIndicator: commonIndicatorChecked,
-        _selfIndcator: selfIndcatorText,
+      if ((this.state.displaySelfIndicator ==true) && (this.state.selfIndcator.length != 0)) {
+        this.setState({
+          displaySelfIndicator : false,
+          displayCommonIndicator : true
+        })
       }
-      axios.post(FLASK_URL+'output/subject/evaluation/', data)
-      .then(function (response) {
-        const status_code = response.status
-        if (parseInt(status_code) === 204){
-          // display alert
-          console.log("form empty")
-        }
-        else if(parseInt(status_code) === 200) {
-          this_contexte.props.handleSubmit()
-        }
-        else {
-          console.log("Error")
-        }
+      if (this.state.displayCommonIndicator == true){
+        this.setState({
+          displayCommonIndicator : false, 
+          displayConfianceDegree : true
+        })
+      }
+      if( this.state.displayConfianceDegree == true) {
+        const axios = require('axios').default;
+        const { confianceDegree, selfIndcator, commonIndicator} = this.state
+        const this_contexte = this
+        const videoName = "_"+this.props.videoFolder.split("/").at(-1)
+        const data = {}
+        var commonIndicatorChecked = []
+        var selfIndcatorText = []
+        commonIndicator.forEach(element => {
+          if(element.isChecked){
+            commonIndicatorChecked.push(element.value)
+          }
+        })
+        selfIndcator.forEach(element => {
+          selfIndcatorText.push(element.text)
+        })
 
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+        data["_id"] = this_contexte.props.documentID
+        data[videoName] = {}
+        data[videoName+"_evaluation"] = {
+          _confianceDegree: confianceDegree,
+          _commonIndicator: commonIndicatorChecked,
+          _selfIndcator: selfIndcatorText,
+        }
+        axios.post(FLASK_URL+'output/subject/evaluation/', data)
+        .then(function (response) {
+          const status_code = response.status
+          if (parseInt(status_code) === 204){
+            // display alert
+            console.log("form empty")
+          }
+          else if(parseInt(status_code) === 200) {
+            this_contexte.props.handleSubmit()
+          }
+          else {
+            console.log("Error")
+          }
+
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    }
       event.preventDefault()
     }
     render() {
-      const { confianceDegree, selfIndcator, commonIndicator} = this.state 
+      const { confianceDegree, selfIndcator, commonIndicator, displayCommonIndicator, displayConfianceDegree, displaySelfIndicator} = this.state 
       return(
             <Card
               style={{
@@ -106,33 +123,43 @@ class SelfEvaluationForm extends React.Component {
                 }}
               >
                 <Row className="mb-3">
-                  <Form.Group>
+                  { displaySelfIndicator  ?
+                    <Form.Group>
                     <Form.Label>
                     Quels indicateurs du visage avez vous utilisé pour classer les videos (Plusieurs indicateurs possible a classer dans l'orde d'importance de gauche a droite) ?
                     </Form.Label>
                     <TagInput handleTag={this.handleTag} />  
-                  </Form.Group>
-                  <Form.Group as={Col} controlId="formBasicCommonIndicator">
+                  </Form.Group> : null
+                  }
+                  {
+                      displayCommonIndicator ?
+                    <Form.Group as={Col} controlId="formBasicCommonIndicator">
+                      
                     <Form.Label>
                         Vos indicateurs utilisés se trouvent-ils parmi cette liste ?
                         (Plusieurs items possibles à cocher ):
                     </Form.Label>
-                    {commonIndicator.map(({ id, value, isChecked }) => (  
-                    <Form.Check 
-                        value={value} 
-                        onChange={this.handleCheckedElement}
-                        inline
-                        checked={isChecked}
-                        label={value}
-                        name="commonIndicator"
-                        type="checkbox"
-                        key={id} />
-                    ))}
 
-                  </Form.Group> 
+                   
+                     { commonIndicator.map(({ id, value, isChecked }) => (  
+                      <Form.Check 
+                          value={value} 
+                          onChange={this.handleCheckedElement}
+                          inline
+                          checked={isChecked}
+                          label={value}
+                          name="commonIndicator"
+                          type="checkbox"
+                          key={id} /> 
+                      )) }
+                    
+
+                  </Form.Group>  : null
+                  } 
                   </Row>
-                  <Row className="mb-3">             
-                  <Form.Group as={Col} controlId="formBasicConfianceDegree">
+                  <Row className="mb-3">
+
+                  {displayConfianceDegree ? <Form.Group as={Col} controlId="formBasicConfianceDegree">
                     <Form.Label>
                         Votre degré de confiance sur le classement que vous venez d’effectuer 
                         (EVA allant de 1 à 5 de «Très peu confiant» à «Très confiant»)  
@@ -147,7 +174,7 @@ class SelfEvaluationForm extends React.Component {
                         type="radio"
                         key={`level-${type}`} />
                     ))}
-                  </Form.Group>
+                  </Form.Group> : null}
               <Button onClick={this.handleSubmit}>Passer a la suite</Button>
 
               </Row>

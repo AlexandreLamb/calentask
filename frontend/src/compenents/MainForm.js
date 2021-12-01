@@ -145,8 +145,8 @@ class MainForm extends React.Component {
           D : {
             numberOfViews : 1
           },
-          
         },
+        videoNotAvailable: [],
         videoLetter : "A",
         displayInformationForm : false,
         displayVideoForm : true,
@@ -208,7 +208,7 @@ class MainForm extends React.Component {
               /> : null
               }
               {
-                displaySelfEvaluationForm ? 
+                displaySelfEvaluationForm == false ? 
                 <SelfEvaluationForm
                 videoFolder = {this.props.videoFolder + videosToPlay[currentVideoIndex]+ "/" + videosToPlay[currentVideoIndex]}
                 handleSubmit={this.handleSubmitSelfEvaluationForm}

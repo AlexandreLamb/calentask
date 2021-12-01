@@ -43,7 +43,8 @@ const commonIndicator = [
     {id: 1, value: "Yeux plus ou moins ouverts", isChecked: false},
     {id: 2, value: "Muscles du visage plus ou moins relâchés Tête plus ou moins baissée", isChecked: false},
     {id: 3, value: "Clignement des yeux", isChecked: false},
-    {id: 4, value: "Bouche plus ou moins ouverte", isChecked: false}
+    {id: 4, value: "Bouche plus ou moins ouverte", isChecked: false},
+    {id: 5, value: "Aucun des indicateurs ne se trouvent dans cette liste", isChecked: false}
   ]
 
 const configurationData = {
