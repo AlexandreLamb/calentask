@@ -98,11 +98,11 @@ def generate_dataset():
 def export_data():
     user_information =  db.user_information.find({})
     df = pd.DataFrame( list(user_information))
-    print(df)
+    print(list(user_information))
     data_dict = dict()
     for col in df.columns:
         data_dict[col] = str(df[col].values)
-    return fl.jsonify(data_dict)
+    return fl.jsonify(list(user_information))
     
        
 @app.route("/configuration/create/video", methods=["GET"])
