@@ -5,10 +5,13 @@ import Form from "react-bootstrap/Form"
 import ListGroup from "react-bootstrap/ListGroup"
 import Row from "react-bootstrap/Row"
 import Col from "react-bootstrap/Col"
+import Table from "react-bootstrap/Table"
 import styled from 'styled-components';
+import { CSVLink, CSVDownload } from "react-csv";
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import { configurationData } from "./formItems"
 import Column from "./column"
+const { Parser } = require('json2csv');
 
 const FLASK_URL = "http://127.0.0.1:5000/"
 
@@ -18,7 +21,12 @@ const Container = styled.div`
 class Configuration extends React.Component {
     constructor(props) {
         super(props);
-        this.state = ""
+        this.state = {
+          initiate :"",
+          date : new Date(),
+          subject_data : [],
+          subject_data_csv : []
+        }
     }
     componentDidMount = () => {
       
@@ -33,6 +41,32 @@ class Configuration extends React.Component {
           }
           else if(parseInt(status_code) === 200) {
             this_contexte.setState(response.data)
+            this_contexte.setState({initiate : "initiate"})
+          }
+          else {
+            console.log("Error")
+          }
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+        axios.get(FLASK_URL+'output/export/data')
+        .then(function (response) {
+          const status_code = response.status
+          if (parseInt(status_code) === 204){
+            console.log("form empty")
+          }
+          else if(parseInt(status_code) === 200) {
+            console.log(Object.entries(response.data))
+            this_contexte.setState({subject_data  : response.data})
+
+          try {
+            const parser = new Parser();
+            const csv = parser.parse(this_contexte.state.subject_data );
+            this_contexte.setState({subject_data_csv : csv})
+          } catch (err) {
+            console.error(err);
+}
           }
           else {
             console.log("Error")
@@ -150,18 +184,54 @@ class Configuration extends React.Component {
         Interface de configuration du Questionnaire
 
         </Card.Title>
-        <Form.Group  controlId="formBasicInitial">
-                <Form.Label> Chemin de sauvgarde du fichier de résponse </Form.Label>
-                <Form.Control name="pathToExportData"  directory="" webkitdirectory="" value={this.state.pathToExportData} onChange={this.handleChange} type="file" placeholder="Choisir un chemin vers un dossier" />
-                <Form.Text className="text-muted">
-                  Les initial seront conservé de manière anonyme
-                </Form.Text>
+        <Form.Group  controlId="formBasicInitial">  
+                 <CSVLink 
+                  data={ typeof(this.state.subject_data) == "object" ? this.state.subject_data_csv : [  ] }
+                  filename={"video_fatigue_"+this.state.date.getFullYear()+'-'+(this.state.date.getMonth()+1)+'-'+this.state.date.getDate()}
+                  > 
+                  <Button> Telecharger fichier de reponses </Button> 
+                </CSVLink> 
+        </Form.Group> 
+        
+        <Table responsive>
+            <thead>
+              <tr>
+                <th>#</th>
+                {this.state.subject_data.map((_subject, index) => (
+                  <th key={index}>{_subject._id}</th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>1</td>
+                {this.state.subject_data.map((_subject, index) => (
+                  <th key={index}>{_subject._age}</th>
+                ))}
+              </tr>
+              <tr>
+                <td>2</td>
+                {this.state.subject_data.map((_subject, index) => (
+                  <th key={index}>{_subject._initialValues}</th>
+                ))}
+              </tr>
+              <tr>
+                <td>3</td>
+                {this.state.subject_data.map((_subject, index) => (
+                  <th key={index}>{_subject._date}</th>
+                ))}
+              </tr>
+            </tbody>
+        </Table>
 
-              </Form.Group>  
+
+
+
+
               <DragDropContext onDragEnd={this.handleOnDragEnd}>
             
             
-           { this.state == "" ? "":            
+           { this.state.initiate == "" ? "":            
            <Container>
           {this.state.columnOrder.map(columnId => {
             const column = this.state.columns[columnId];

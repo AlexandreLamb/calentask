@@ -70,7 +70,6 @@ def put_personal_rate():
     print(fl.request.get_json())
     response = fl.Response()
     data = check_form(fl.request.get_json())
-    #data["sequence_" + data.pop("_videoLetter")] = data.pop("_rateValue")
     if data is None:
         response.status_code=400  
         return  response
@@ -96,13 +95,10 @@ def generate_dataset():
     
 @app.route("/output/export/data", methods=["GET"])
 def export_data():
-    user_information =  db.user_information.find({})
-    df = pd.DataFrame( list(user_information))
-    print(list(user_information))
-    data_dict = dict()
-    for col in df.columns:
-        data_dict[col] = str(df[col].values)
-    return fl.jsonify(list(user_information))
+    user_information = list( db.user_information.find())
+    for user in user_information:
+        user["_id"] = str(user["_id"])
+    return fl.jsonify(user_information)
     
        
 @app.route("/configuration/create/video", methods=["GET"])
