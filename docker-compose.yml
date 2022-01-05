@@ -39,9 +39,10 @@ services:
             - "5000:5000"
         environment:
             MONGODB_HOST: mongodb
-            MONGODB_USERNAME: "fatigueUser"
-            MONGODB_PASSWORD: "fatiguePassword"
+            MONGODB_USERNAME: "fatigue"
+            MONGODB_PASSWORD: "fatigue1234"
             MONGODB_DB: "fatigueSurvey"
+            MONGODB_PORT: 27017
             FLASK_APP: "srv.py"
             FLASK_ENV: "development"
         volumes:

@@ -14,8 +14,6 @@ ENV PYTHONUNBUFFERED 1
 ADD requirements.txt .
 RUN python -m pip install -r requirements.txt
 
-COPY build/ frontend/build/
-
 # Set working directory and addour Flask API files
 WORKDIR /app
 ADD . /app
