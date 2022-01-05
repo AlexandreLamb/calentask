@@ -17,7 +17,7 @@ PATH_T0_CSV = ""
 
 app = Flask(__name__, static_folder='frontend/build/', static_url_path='/', )
 
-
+print(os.environ)
 
 MONGO_URI = "mongodb://"+os.environ["MONGODB_USERNAME"]+":"+os.environ["MONGODB_PASSWORD"]+"@"+os.environ["MONGODB_HOST"]+":"+os.environ["MONGODB_PORT"]+"/"+os.environ["MONGODB_DB"]+"?authSource=admin"
 app.config["MONGO_URI"] = MONGO_URI
