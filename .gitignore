@@ -37,3 +37,5 @@ yarn-error.log*
 backend/.backend_env
 backend/.env
 backend/build
+
+backend/data

@@ -10,8 +10,9 @@ services:
         ports:
             - "3000:3000"
         volumes: 
-            - ./frontend:/app
+            - ./frontend:/frontend
             - /app/node_modules
+            - appdata:/data/
         networks:
             - frontend
 
@@ -46,8 +47,9 @@ services:
             FLASK_APP: "srv.py"
             FLASK_ENV: "development"
         volumes:
-            - ./backend:/app
-            - appdata:/var/www/
+            - ./backend:/backend
+            - ./frontend:/frontend
+            - appdata:/data/
         depends_on: 
             - mongodb
         networks:

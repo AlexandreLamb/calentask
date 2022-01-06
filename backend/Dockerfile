@@ -15,7 +15,8 @@ ADD requirements.txt .
 RUN python -m pip install -r requirements.txt
 
 # Set working directory and addour Flask API files
-WORKDIR /app
-ADD . /app
+WORKDIR /backend
+ADD . /backend
+
 #Start flask app
 CMD ["flask", "run"]

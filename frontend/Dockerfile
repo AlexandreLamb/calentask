@@ -6,7 +6,7 @@ EXPOSE 3000
 EXPOSE 35729
 
 # Set working directory
-WORKDIR /app
+WORKDIR /frontend
 
 # Add /app/node_modules/.bin to environment variables
 ENV PATH /app/node_modules/.bin:$PATH
@@ -18,7 +18,7 @@ RUN npm install
 RUN npm install react-scripts -g
 
 # Add React app to working directory
-ADD . /app
+ADD . /frontend
 
 # Start the React app
 CMD ["npm", "start"]

@@ -15,7 +15,8 @@ import json
 PATH_TO_SAVE = "data/"
 PATH_T0_CSV = ""
 
-app = Flask(__name__, static_folder='frontend/build/', static_url_path='/', )
+#app = Flask(__name__, static_folder='frontend/build/', static_url_path='/', )
+app = Flask(__name__ )
 
 print(os.environ)
 
@@ -110,9 +111,10 @@ def list_video():
         video_use = db.video_use.find_one()
         video_use["_id"] = str(video_use["_id"])
         print(video_use)
+        
         return fl.jsonify(video_use)
     else :
-        videos_default =  os.listdir("../frontend/build/DESFAM_F_Sequences")
+        videos_default =  os.listdir("/frontend/public/videos/DESFAM_F_Sequences")
         state = {
                 "tasks_list": {},
                 "columns": {
