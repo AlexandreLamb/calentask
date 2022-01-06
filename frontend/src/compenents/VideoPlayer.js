@@ -8,16 +8,7 @@ class VideoPlayer extends React.Component {
         time : 0
     };
     }
-    componentDidMount = () => {
-      console.log(this.props.playing) 
-      if(this.props.playing){
-        setInterval(this.countTime, 1000) 
-      }
-      
-    }
-    countTime = () => {
-      this.setState({time : this.state.time + 1})
-    }
+   
       
     render() {
         console.log("from player "+this.props.url)
