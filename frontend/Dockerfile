@@ -21,4 +21,4 @@ RUN npm install react-scripts -g
 ADD . /frontend
 
 # Start the React app
-CMD ["npm", "start"]
+CMD ["npm","start"]

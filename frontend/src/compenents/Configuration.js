@@ -23,7 +23,6 @@ class Configuration extends React.Component {
         super(props);
         this.state = {
           initiate :"",
-          date : new Date(),
           subject_data : [],
           subject_data_csv : []
         }
@@ -167,6 +166,7 @@ class Configuration extends React.Component {
     }
     
     render() {
+      const date = new Date()
         return (
             <Card 
             style={{
@@ -187,7 +187,7 @@ class Configuration extends React.Component {
         <Form.Group  controlId="formBasicInitial">  
                  <CSVLink 
                   data={ typeof(this.state.subject_data) == "object" ? this.state.subject_data_csv : [  ] }
-                  filename={"video_fatigue_"+this.state.date.getFullYear()+'-'+(this.state.date.getMonth()+1)+'-'+this.state.date.getDate()}
+                  filename={"video_fatigue_"+date.getFullYear()+'-'+(date.getMonth()+1)+'-'+date.getDate()}
                   > 
                   <Button> Telecharger fichier de reponses </Button> 
                 </CSVLink> 

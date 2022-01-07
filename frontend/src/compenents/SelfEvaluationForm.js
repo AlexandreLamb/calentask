@@ -6,8 +6,8 @@ import Row from "react-bootstrap/Row"
 import Col from "react-bootstrap/Col"
 import TagInput from './TagInput';
 import { commonIndicator } from './formItems';
+import api from "../axiosConfig"
 
-const FLASK_URL = "http://127.0.0.1:5000/"
 
 class SelfEvaluationForm extends React.Component {
     constructor(props) {
@@ -76,7 +76,7 @@ class SelfEvaluationForm extends React.Component {
           _commonIndicator: commonIndicatorChecked,
           _selfIndcator: selfIndcatorText,
         }
-        axios.post(FLASK_URL+'output/subject/evaluation/', data)
+        axios.post('output/subject/evaluation/', data)
         .then(function (response) {
           const status_code = response.status
           if (parseInt(status_code) === 204){

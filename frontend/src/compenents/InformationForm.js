@@ -5,8 +5,8 @@ import Card from "react-bootstrap/Card"
 import Row from "react-bootstrap/Row"
 import Col from "react-bootstrap/Col"
 import {itemListGender, iemListStudieLevel, itemListFatigueLevel, iemListHeadquarters} from "./formItems"
+import api from "../axiosConfig"
 
-const FLASK_URL = "http://127.0.0.1:5000/"
 
 class InformationForm extends React.Component {
     constructor(props) {
@@ -48,7 +48,7 @@ class InformationForm extends React.Component {
      return mm+'/'+dd+'/'+yyyy;
     }
     handleSubmit = (event) => {
-      const axios = require('axios').default;
+
       const {
         initialValues, 
         age,
@@ -64,7 +64,8 @@ class InformationForm extends React.Component {
         grade
       } = this.state
       const this_contexte = this
-      axios.post(FLASK_URL+'output/subject/information/', {
+     console.log(api)
+      api.post('output/subject/information/', {
         _initialValues: initialValues, 
         _age: age,
         _gender: gender,

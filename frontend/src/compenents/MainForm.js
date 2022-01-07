@@ -4,8 +4,8 @@ import VideoForm from './VideoForm';
 import SelfEvaluationForm from './SelfEvaluationForm'
 import Card from "react-bootstrap/Card"
 import Button from '@restart/ui/esm/Button';
+import api from "../axiosConfig"
 
-const FLASK_URL = "http://127.0.0.1:5000/"
 class MainForm extends React.Component {
     constructor(props) {
       super(props);
@@ -39,7 +39,7 @@ class MainForm extends React.Component {
     getVideoToLoad = () => {
       const axios = require('axios').default
       const this_contexte = this
-      axios.get(FLASK_URL+"configuration/get/video/list")
+      api.get("configuration/get/video/list")
         .then(function (response) {
           const status_code = response.status
           if (parseInt(status_code) === 204){

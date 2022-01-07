@@ -2,8 +2,8 @@ import React from 'react';
 import Button from "react-bootstrap/Button"
 import Form from "react-bootstrap/Form"
 import Card from "react-bootstrap/Card"
+import api from "../axiosConfig"
 
-const FLASK_URL = "http://127.0.0.1:5000/"
 
 class VideoRate extends React.Component {
     constructor(props) {
@@ -12,6 +12,12 @@ class VideoRate extends React.Component {
           rateValue : "",
           timeReflexions : 0,
       }
+    }
+    componentDidMount = () => {
+        setInterval(this.countTime, 1000) 
+    }
+    countTime = () => {
+      this.setState({timeReflexions : this.state.timeReflexions + 1})
     }
     handleChange = (event) => {
         const target = event.target;
@@ -36,7 +42,7 @@ class VideoRate extends React.Component {
           _numberOfView: numberOfView
         }
         console.log(data)
-        axios.post(FLASK_URL+'output/subject/rate/', data)
+        axios.post('output/subject/rate/', data)
       .then(function (response) {
         const status_code = response.status
         if (parseInt(status_code) === 204){

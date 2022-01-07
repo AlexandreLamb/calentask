@@ -9,6 +9,8 @@ services:
         tty: true
         ports:
             - "3000:3000"
+        environment:
+            REACT_APP_FLASK_URL: "http://simeon-ece-notebook-pc.local:5000/"
         volumes: 
             - ./frontend:/frontend
             - /app/node_modules
