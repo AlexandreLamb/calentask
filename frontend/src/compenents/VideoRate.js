@@ -42,7 +42,7 @@ class VideoRate extends React.Component {
           _numberOfView: numberOfView
         }
         console.log(data)
-        axios.post('output/subject/rate/', data)
+        api.post('output/subject/rate/', data)
       .then(function (response) {
         const status_code = response.status
         if (parseInt(status_code) === 204){

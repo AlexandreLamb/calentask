@@ -37,7 +37,6 @@ class MainForm extends React.Component {
       };
     }
     getVideoToLoad = () => {
-      const axios = require('axios').default
       const this_contexte = this
       api.get("configuration/get/video/list")
         .then(function (response) {

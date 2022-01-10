@@ -76,7 +76,7 @@ class SelfEvaluationForm extends React.Component {
           _commonIndicator: commonIndicatorChecked,
           _selfIndcator: selfIndcatorText,
         }
-        axios.post('output/subject/evaluation/', data)
+        api.post('output/subject/evaluation/', data)
         .then(function (response) {
           const status_code = response.status
           if (parseInt(status_code) === 204){

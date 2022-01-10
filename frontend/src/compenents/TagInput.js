@@ -17,7 +17,8 @@ class TagInput extends React.Component {
               
              ],
             suggestions: [
-                { id: 'Clignement des yeux', text: 'Clignement des yeux' }
+                { id: 'Clignement des yeux', text: 'Clignement des yeux' },
+                { id: 'Baillement', text: 'Baillement' }
              ]
         };
         this.handleDelete = this.handleDelete.bind(this);
