@@ -1,4 +1,4 @@
-FROM node:fermium-alpine3.14
+FROM node:14.18.3-buster-slim
 
 # Expose ports
 EXPOSE 3000
