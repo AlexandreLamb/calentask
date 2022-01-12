@@ -1,5 +1,4 @@
-FROM node
-
+FROM node:fermium-alpine3.14
 
 # Expose ports
 EXPOSE 3000
