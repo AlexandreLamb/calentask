@@ -1,4 +1,4 @@
-FROM node:14.18.3-buster-slim
+FROM node:12
 
 # Expose ports
 EXPOSE 3000
