@@ -14,7 +14,7 @@ ENV PATH /app/node_modules/.bin:$PATH
 COPY package.json /frontend/package.json
 COPY package-lock.json /frontend/package-lock.json
 RUN npm install
-#RUN npm install react-scripts -g
+RUN npm install react-scripts -g
 
 # Add React app to working directory
 ADD . /frontend
