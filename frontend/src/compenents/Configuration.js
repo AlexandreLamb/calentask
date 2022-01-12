@@ -219,25 +219,25 @@ class Configuration extends React.Component {
                 <Row>
 
                   <Col>
-                  <DragDropContext onDragEnd={this.handleOnDragEnd}>
-
-                    { this.state.initiate == "" ? "":
-                    <Container>
+                  <DragDropContext onDragEnd={this.handleOnDragEnd}>   
+            
+                  { this.state.initiate == "" ? "":            
+                  <Container>
                       {this.state.columnOrder.map(columnId => {
-                      const column = this.state.columns[columnId];
-                      const tasks = column.taskIds.map(
-                      taskId => this.state.tasks_list[taskId],
-                      );
-                      return
-                      <Column key={column.id} column={column} tasks={tasks} />;
+                        const column = this.state.columns[columnId];
+                        const tasks = column.taskIds.map(
+                          taskId => this.state.tasks_list[taskId],
+                        );
+                        return <Column key={column.id} column={column} tasks={tasks} />;
                       })}
-                    </Container>}
-                  </DragDropContext>
+                </Container>
+                }
+      </DragDropContext>
                   </Col>
                   <Col>
                   {this.state.subject_data.map((_subject, index) => (
 
-                  <Card style={{
+                  <Card key={index} style={{
                     margin: 'auto',
                     marginTop: "1%",
                     width: '75%',
@@ -247,7 +247,7 @@ class Configuration extends React.Component {
                       {_subject._initialValues + "_" + _subject._id}
                     </Card.Title>
                     { filtreTexte(Object.keys(_subject), "DESFAM").map((video, index) => (
-                    <ListGroup.Item>{video}</ListGroup.Item>
+                    <ListGroup.Item key={index}>{video}</ListGroup.Item>
                     ))}
                   </Card>
                   ))}

@@ -15,8 +15,8 @@ import json
 PATH_TO_SAVE = "data/"
 PATH_T0_CSV = ""
 
-#app = Flask(__name__, static_folder='frontend/build/', static_url_path='/', )
-app = Flask(__name__ )
+app = Flask(__name__, static_folder='build/', static_url_path='/', )
+#app = Flask(__name__ )
 
 print(os.environ)
 
