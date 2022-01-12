@@ -1,4 +1,4 @@
-FROM node:12
+FROM node:10.19.0
 
 # Expose ports
 EXPOSE 3000
