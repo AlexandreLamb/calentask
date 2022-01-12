@@ -12,18 +12,18 @@ class InformationForm extends React.Component {
     constructor(props) {
       super(props);
       this.state = {
-        initialValues: "ML", 
-        age: "1",
-        gender: "M",
-        studieLevel: "1",
-        studieArea: "dza",
-        fatigueLevel: "3",
+        initialValues: "", 
+        age: "",
+        gender: "",
+        studieLevel: "",
+        studieArea: "",
+        fatigueLevel: "",
         armyLengthOfService: "", 
-        typeOfJob: "reze",
-        peopleCommand: "3",
-        headquarters: "azda",
-        jobLengthOfService: "1",
-        grade: "dzad"
+        typeOfJob: "",
+        peopleCommand: "",
+        headquarters: "",
+        jobLengthOfService: "",
+        grade: ""
 
       };
     }
