@@ -8,8 +8,6 @@
     "@testing-library/user-event": "^12.8.3",
     "axios": "^0.21.4",
     "bootstrap": "^5.1.1",
-    "danfojs": "^0.2.8",
-    "danfojs-node": "^0.2.8",
     "dotenv": "^10.0.0",
     "json2csv": "^5.0.6",
     "list-files": "^1.1.4",
@@ -57,5 +55,6 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  }
+  },
+  "optionalDependencies": {}
 }
