@@ -10,7 +10,7 @@ services:
         ports:
             - "80:80"
         environment:
-            REACT_APP_FLASK_URL: "http://simeon-ece-notebook-pc.local:5000/"
+            REACT_APP_FLASK_URL: "http://0.0.0.0:5000/"
         volumes: 
             - ./frontend:/frontend
             - /app/node_modules
@@ -30,6 +30,8 @@ services:
             MONGO_INITDB_ROOT_PASSWORD: "fatigue1234"
             MONGO_INITDB_DATABASE: fatigueSurvey
             MONGODB_DATA_DIR: /data/db
+            ports:
+                -"27017:27017"
         volumes:
             - mongodbdata:/data/db
         networks:
