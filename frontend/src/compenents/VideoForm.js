@@ -73,21 +73,25 @@ class VideoForm extends React.Component {
                     fontSize: "1.50rem",
                 }}
             >
-                        Section 2: Sequences videos {this.props.videoLetter}
+                        Section 2: Séquences des 4 vidéos
             </Card.Title>
                 {   this.props.playing === false /* && 
                     displayVideoRate === false */ ?
                 <div>
                     
                     <Card.Title>
-                        Explication
+                        Règles de classement
                     </Card.Title>
                     <Card.Body>
-                    Vous allez vous appreter a visionner 4 sequences de vidéos (A, B, C, D) d'afillé.
-                    Les sequences font 10 secondes, l'objectf est de trouver l'ordre des sequences (0 min, 15 min, 30 min, 45 min).
-                    A la suite du visionnage des 4 sequences vous allez pouvoir revisonner les sequences dans l'odre A, B, C, D.
-                    A la fin de chaque visonnage de sequences vous allez pouvoir choisir si cette sequence provient des 0 min, 15 min, 30 min ou 45 min. 
-                    Une fois une fois le choix fait, impossible de revenir en arriere.
+                    L’objectif de ce questionnaire est de nous aider à recenser si et comment vous arrivez à « BIEN » classer 4 séquences 
+                    vidéos de 10 secondes qui correspondent à 4 moments dans la réalisation d’une tâche fatigante à savoir au début (0 min.),
+                    après 15 (15 min.), après 30 minutes (30 min.) et à la fin du test (45 min.)
+                    Vous allez vous apprêter a visionner 4 sequences de vidéos (A, B, C, D) consécutivement.
+                    Les sequences durent 10 secondes, l'objectf est de trouver l'ordre des sequences (0 min, 15 min, 30 min, 45 min).
+                    A la suite du visionnage des 4 sequences vous allez pouvoir revisionner les sequences dans l'odre A, B, C, D.
+                    A la fin de chaque visonnage de sequences votre objectif sera de « retrouver » l’ordre de ces 4 séquences qui correspondent
+                    à 4 moments (0 min ,etc.) des 45 minutes de la tâche fatigante. 
+                    Une fois que vous avez fait ce choix, vous ne pourrez pas le changer !
                     </Card.Body> 
                 <Button variant="secondary" onClick={this.props.handlePlay}> Lancer la sequence video "{this.props.videoLetter}"</Button>
 

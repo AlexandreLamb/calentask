@@ -190,7 +190,7 @@ class MainForm extends React.Component {
                   textAlign: 'center',
                   fontSize: "2.25rem"
                 }}>
-            Questionnaire evaluation de niveau de fatigue grace a des sequences videos
+            Questionnaire permettant le Classement (évaluation) de Visages Fatigués (Etude CLAVIF) grâce au visionnage de séquences vidéos
           </Card.Title> : null
           }
           {

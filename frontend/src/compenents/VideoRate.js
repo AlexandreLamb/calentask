@@ -71,10 +71,9 @@ class VideoRate extends React.Component {
                     }}
                 >
             <Form>
-            <Form.Label>A quelle minute(s) correspond la sequence {this.props.videoLetter} ? </Form.Label>
-               
+            <Form.Label> A quel moment (minutes) correspond cette séquence vidéo (séquence {this.props.videoLetter}   ) ? </Form.Label>
                <Form.Group controlId="formBasicFatigueEva">
-                      {[1, 15, 30, 45].map((type) => (  
+                      {[0, 15, 30, 45].map((type) => (  
                         <Form.Check 
                           key = {type}
                           inline
