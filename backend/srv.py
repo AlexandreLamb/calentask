@@ -40,7 +40,6 @@ def index():
 def put_personal_information():
     data = check_form(fl.request.get_json())
     response = fl.Response()
-    print(os.environ)
     print(data)
     if data is None:
         response.status_code=204
