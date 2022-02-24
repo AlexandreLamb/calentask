@@ -46,7 +46,7 @@ def put_personal_information():
         response.status_code=204
         return response
     else:
-        _id = db.user_information.insert(data)
+        _id = db.user_information.insert_one(data)
         response.status_code=200  
         response.data=str(_id)
         return response
