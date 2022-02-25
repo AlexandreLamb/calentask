@@ -83,8 +83,18 @@ class VideoForm extends React.Component {
                         Règles de classement
                     </Card.Title>
                     <Card.Body>
-                    L’objectif de ce questionnaire est de nous aider à recenser si et comment vous arrivez à « BIEN » classer 4 séquences 
-                    vidéos de 10 secondes qui correspondent à 4 moments dans la réalisation d’une tâche fatigante à savoir au début (0 min.),
+                    L’objectif de ce questionnaire est de classer dans l'ordre chronologique 4 séquences 
+                    vidéos (A, B, C, D), qui correspondent a 4 moments dans une tache fatiguantes : 
+                    {[0, 15, 30, 45].map((type) => (  
+                        <Form.Check 
+                          key = {type}
+                          inline
+                          label={type + " min"}
+                          name="rateValue"
+                          type="radio"
+                          id={type} />
+                      ))}
+                     de 10 secondes qui correspondent à 4 moments dans la réalisation d’une tâche fatigante à savoir au début (0 min.),
                     après 15 (15 min.), après 30 minutes (30 min.) et à la fin du test (45 min.)
                     Vous allez vous apprêter a visionner 4 sequences de vidéos (A, B, C, D) consécutivement.
                     Les sequences durent 10 secondes, l'objectf est de trouver l'ordre des sequences (0 min, 15 min, 30 min, 45 min).

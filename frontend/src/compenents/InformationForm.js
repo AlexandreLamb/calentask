@@ -218,9 +218,9 @@ class InformationForm extends React.Component {
                 </Form.Group> 
                 <Form.Group as={Col} controlId="formBasicPeopleCommand">
                     <Form.Label>
-                      Combien de personnes avez vous sous votre comandement ? 
+                      Combien de personnes avez vous sous votre commandement ? 
                     </Form.Label>
-                    <Form.Control name="peopleCommand" value={peopleCommand} onChange={this.handleChange} type="number" placeholder="Nombre de personne sous votre comandement" />
+                    <Form.Control name="peopleCommand" value={peopleCommand} onChange={this.handleChange} type="number" placeholder="Nombre de personne sous votre commandement" />
                 </Form.Group>    
                 </Row>  
                 <Row>
