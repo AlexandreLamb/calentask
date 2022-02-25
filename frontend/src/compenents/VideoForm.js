@@ -2,6 +2,7 @@ import React from 'react';
 import Button from "react-bootstrap/Button"
 import VideoPlayer from './VideoPlayer';
 import Card from "react-bootstrap/Card"
+import Form from "react-bootstrap/form"
 import VideoRate from "./VideoRate";
 
 class VideoForm extends React.Component {
