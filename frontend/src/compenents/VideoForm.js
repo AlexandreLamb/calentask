@@ -85,7 +85,7 @@ class VideoForm extends React.Component {
                     </Card.Title>
                     <Card.Body>
                     L’objectif de ce questionnaire est de classer dans l'ordre chronologique 4 séquences 
-                    vidéos (A, B, C, D), qui correspondent a 4 moments dans une tache fatiguantes : 
+                    vidéos (A, B, C, D), qui correspondent a 4 moments dans une tache fatigantes : 
                     {[0, 15, 30, 45].map((type) => (  
                         <Form.Check 
                           key = {type}
@@ -95,14 +95,17 @@ class VideoForm extends React.Component {
                           type="radio"
                           id={type} />
                       ))}
-                     de 10 secondes qui correspondent à 4 moments dans la réalisation d’une tâche fatigante à savoir au début (0 min.),
-                    après 15 (15 min.), après 30 minutes (30 min.) et à la fin du test (45 min.)
-                    Vous allez vous apprêter a visionner 4 sequences de vidéos (A, B, C, D) consécutivement.
-                    Les sequences durent 10 secondes, l'objectf est de trouver l'ordre des sequences (0 min, 15 min, 30 min, 45 min).
-                    A la suite du visionnage des 4 sequences vous allez pouvoir revisionner les sequences dans l'odre A, B, C, D.
-                    A la fin de chaque visonnage de sequences votre objectif sera de « retrouver » l’ordre de ces 4 séquences qui correspondent
-                    à 4 moments (0 min ,etc.) des 45 minutes de la tâche fatigante. 
-                    Une fois que vous avez fait ce choix, vous ne pourrez pas le changer !
+                      Les 4 sequences vidéos durent 10 secondes chacune. 
+                      Il vous est demandé de visionner une fois les 4 séquences videos
+                        avant de commencer a les classer. 
+                        A l'issue du premier visionnage des 4 séquences vous pouvez commencer a les classer
+                        ou bien decider de revisionner les 4 séqunces.
+                        
+                        
+                        Attention : une fois que vous avez classé une vidéo , pas de retour en arrière ! (a mettre en gras)
+
+             
+                    
                     </Card.Body> 
                 <Button variant="secondary" onClick={this.props.handlePlay}> Lancer la sequence video "{this.props.videoLetter}"</Button>
 
