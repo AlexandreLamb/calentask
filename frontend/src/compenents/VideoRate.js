@@ -87,8 +87,7 @@ class VideoRate extends React.Component {
                       ))}
                   </Form.Group>
                   { rateValue ? <Button onClick={this.handleSubmit}> Valider votre choix</Button> : "" }
-                  sinon
-                  <Button onClick={this.props.handleNextVideo}> Regarder la sequence suivante </Button>
+                  <Button onClick={this.props.handleNextVideo}> Sinon, regardez à nouveau la sequence suivante </Button>
                </Form>
                </Card>
                
