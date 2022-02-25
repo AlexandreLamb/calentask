@@ -194,7 +194,7 @@ class MainForm extends React.Component {
           </Card.Title> : null
           }
           {
-          /* displayInformationForm */ false?
+           displayInformationForm ?
           <InformationForm handleSubmit={this.handleSubmitInformationForm} /> : null
           }
           {
