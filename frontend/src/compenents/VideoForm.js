@@ -24,7 +24,7 @@ class VideoForm extends React.Component {
         if (this.props.numberOfView === 0){
             this.props.handleEnded(isStopWatchingVideo)
         }
-        else if (this.props.numberOfView > 1) {
+        else if (this.props.numberOfView > 0) {
             this.setState({
                 displayVideoRate: true,
                 isStopWatchingVideo : rateValueChecked.length === 4 ? true : false
