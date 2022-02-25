@@ -24,7 +24,7 @@ class VideoForm extends React.Component {
         if (this.props.numberOfView === 0){
             this.props.handleEnded(isStopWatchingVideo)
         }
-        else if (this.props.numberOfView > 0) {
+        else if (this.props.numberOfView > 1) {
             this.setState({
                 displayVideoRate: true,
                 isStopWatchingVideo : rateValueChecked.length === 4 ? true : false
@@ -85,7 +85,7 @@ class VideoForm extends React.Component {
                     </Card.Title>
                     <Card.Body>
                     L’objectif de ce questionnaire est de classer dans l'ordre chronologique 4 séquences 
-                    vidéos (A, B, C, D), qui correspondent a 4 moments dans une tache fatigantes : 
+                    vidéos (A, B, C, D), qui correspondent à 4 moments dans une tâche fatigante : 
                     {[0, 15, 30, 45].map((type) => (  
                         <Form.Check 
                           key = {type}
@@ -96,10 +96,10 @@ class VideoForm extends React.Component {
                           id={type} />
                       ))}
                       Les 4 sequences vidéos durent 10 secondes chacune. 
-                      Il vous est demandé de visionner une fois les 4 séquences videos
-                        avant de commencer a les classer. 
-                        A l'issue du premier visionnage des 4 séquences vous pouvez commencer a les classer
-                        ou bien decider de revisionner les 4 séqunces.
+                      Il vous est demandé de visionner une fois les 4 séquences vidéos
+                        avant de commencer à les classer. 
+                        A l'issue du premier visionnage des 4 séquences vous pouvez commencer à les classer
+                        ou bien décider de revisionner les 4 séquences.
                         
                         
                         Attention : une fois que vous avez classé une vidéo , pas de retour en arrière ! (a mettre en gras)
@@ -119,7 +119,7 @@ class VideoForm extends React.Component {
                 />        
 
                 {   
-                    ( displayVideoRate === true ) ? 
+                    ( (displayVideoRate === true)  ) ? 
                     <VideoRate
                     sequence = {this.props.sequence}
                     videoName = {videoName}
