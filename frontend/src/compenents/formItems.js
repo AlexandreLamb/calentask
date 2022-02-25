@@ -19,12 +19,13 @@ const iemListStudieLevel = [
 
 const iemListHeadquarters= [
     {id: 0, key: "headquarters-default", value: "default", text: "Cliquer ici pour choisir votre état major", disabled : true},
-    {id: 1, key: "headquarters-air", value: "1", text: "Etat major de l'Air et de l'Espace"},
-    {id: 2, key: "headquarters-earth", value: "2", text: "Etat major de la Terre"},
-    {id: 3, key: "headquarters-water", value: "3", text: "Etat major de la Marine"},
-    {id: 4, key: "headquarters-gendarmerie", value: "4", text: "Etat major de la Gendarmerie"},
-    {id: 6, key: "headquarters-sga", value: "4", text: "SGA"},
-    {id: 7, key: "headquarters-other", value: "5", text: "Autres services (SSA, ect.)"}
+    {id: 1, key: "headquarters-air", value: "1", text: "Armée de l'Air et de l'Espace"},
+    {id: 2, key: "headquarters-earth", value: "2", text: "Armée de Terre"},
+    {id: 3, key: "headquarters-water", value: "3", text: "Marine Nationnale"},
+    {id: 4, key: "headquarters-gendarmerie", value: "4", text: "Gendarmerie Nationnale"},
+    {id: 5, key: "headquarters-sga", value: "4", text: "DGA"},
+    {id: 6, key: "headquarters-other", value: "5", text: "Autres services (SSA, ect.)"},
+    {id: 7, key: "headquarters-other", value: "6", text: "Pompiers"}
 ]
 
 const itemListFatigueLevel = [
