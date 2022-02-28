@@ -1,4 +1,5 @@
 import React from 'react';
+import Strong from 'react'
 import Button from "react-bootstrap/Button"
 import VideoPlayer from './VideoPlayer';
 import Card from "react-bootstrap/Card"
@@ -66,6 +67,8 @@ class VideoForm extends React.Component {
             style={{
                 textAlign: 'center',
                 borderLeftStyle:"none",
+                 paddingLeft: "15em",
+                 paddingRight: "15em"
             }}
             >
             <Card.Title
@@ -78,29 +81,24 @@ class VideoForm extends React.Component {
             </Card.Title>
                 {   this.props.playing === false /* && 
                     displayVideoRate === false */ ?
-                <div>
+                <div >
                     
                     <Card.Title>
                         Règles de classement
                     </Card.Title>
-                    <Card.Body>
+                    <Card.Body >
                     L’objectif de ce questionnaire est de classer dans l'ordre chronologique 4 séquences 
                     vidéos (A, B, C, D), qui correspondent à 4 moments dans une tâche fatigante : 
-                    {[0, 15, 30, 45].map((type) => (  
-                        <Form.Check 
-                          key = {type}
-                          inline
-                          label={type + " min"}
-                          name="rateValue"
-                          type="radio"
-                          id={type} />
-                      ))}
+                    <div style={{fontWeight: "bold"}}>
+                    0 min, 15 min, 30 min, 45 min
+
+                    </div>
                       Les 4 sequences vidéos durent 10 secondes chacune. 
                       Il vous est demandé de visionner une fois les 4 séquences vidéos
                         avant de commencer à les classer. 
-                        A l'issue du premier visionnage des 4 séquences vous pouvez commencer à les classer
-                        ou bien décider de revisionner les 4 séquences.
                         
+                    A l'issue du premier visionnage des 4 séquences vous pouvez commencer à les classer
+                        ou bien décider de revisionner les 4 séquences.
                         
                         Attention : une fois que vous avez classé une vidéo , pas de retour en arrière ! (a mettre en gras)
 

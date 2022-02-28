@@ -5,6 +5,7 @@ import Card from "react-bootstrap/Card"
 import Row from "react-bootstrap/Row"
 import Col from "react-bootstrap/Col"
 import {itemListGender, iemListStudieLevel, itemListFatigueLevel, iemListHeadquarters} from "./formItems"
+import { getLocalState } from '../utils';
 import api from "../axiosConfig"
 
 
@@ -12,19 +13,18 @@ class InformationForm extends React.Component {
     constructor(props) {
       super(props);
       this.state = {
-        initialValues: "", 
-        age: "",
-        gender: "",
-        studieLevel: "",
-        studieArea: "",
-        fatigueLevel: "",
-        armyLengthOfService: "", 
-        typeOfJob: "",
-        peopleCommand: "",
-        headquarters: "",
-        jobLengthOfService: "",
-        grade: ""
-
+        initialValues: getLocalState("initialValues", ""), 
+        age:  getLocalState("age", ""),
+        gender: getLocalState("gender", "default"),
+        studieLevel: getLocalState("studieLevel", "default"),
+        studieArea: getLocalState("studieArea", ""),
+        fatigueLevel: getLocalState("fatigueLevel", ""),
+        armyLengthOfService: getLocalState("armyLengthOfService", ""), 
+        typeOfJob: getLocalState("typeOfJob", ""),
+        peopleCommand: getLocalState("peopleCommand", ""),
+        headquarters: getLocalState("headquarters", "default"),
+        jobLengthOfService: getLocalState("jobLengthOfService", ""),
+        grade: getLocalState("grade", "")
       };
     }
     handleChange = (event) => {  
@@ -32,7 +32,10 @@ class InformationForm extends React.Component {
       console.log(target)
       const value = target.type === 'radio' ? target.id : target.value;
       const name = target.name;
-      this.setState({[name]: value});  
+      this.setState({[name]: value}, () =>{
+        localStorage.setItem("state",JSON.stringify(this.state))
+        console.log(this.state)
+      })
     }
     createDateFormat = () => {
       let today = new Date();
@@ -148,7 +151,7 @@ class InformationForm extends React.Component {
                   </Form.Group>    
                   <Form.Group as={Col} controlId="formBasicGender">
                     <Form.Label>Genre</Form.Label>
-                    <Form.Select name="gender" defaultValue="default"  onChange={this.handleChange} >
+                    <Form.Select name="gender" value={this.state.gender}  onChange={this.handleChange} >
                       {
                         itemListGender.map(({id, key, value, text, disabled})=>(
                           <option id={id} key ={key} value={value} disabled={disabled}>{text} </option> 
@@ -164,7 +167,7 @@ class InformationForm extends React.Component {
                   <Row className="mb-3">             
                   <Form.Group as={Col} controlId="formBasicStudiesLevel">
                     <Form.Label>Quelle est votre niveau d'étude ?</Form.Label>
-                    <Form.Select name="studieLevel" defaultValue="default" onChange={this.handleChange} >
+                    <Form.Select name="studieLevel" value={studieLevel} onChange={this.handleChange} >
                       {
                         iemListStudieLevel.map(({id, key, value, text, disabled})=>(
                           <option id={id} key ={key} value={value} disabled={disabled}>{text} </option> 
@@ -187,6 +190,7 @@ class InformationForm extends React.Component {
                             value={fatigueLevel} 
                             onChange={this.handleChange}
                             inline
+                            checked={fatigueLevel == id}
                             key={key}
                             label={label}
                             name="fatigueLevel"
@@ -201,7 +205,7 @@ class InformationForm extends React.Component {
                     <Form.Label>
                       A quelle état major appartenait vous ? 
                     </Form.Label>
-                    <Form.Select name="headquarters" defaultValue="default" onChange={this.handleChange} >
+                    <Form.Select name="headquarters" value={headquarters} onChange={this.handleChange} >
                       {
                         iemListHeadquarters.map(({id, key, value, text, disabled})=>(
                           <option id={id} key ={key} value={value} disabled={disabled}>{text} </option> 

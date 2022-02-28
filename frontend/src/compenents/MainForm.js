@@ -219,7 +219,7 @@ class MainForm extends React.Component {
                 fontSize: "2.25rem",
                 padding : "25%"
               }}>
-            Merci pour vos reponses
+            Merci pour vos réponses
             { videosToPlay.length -1 == (currentVideoIndex ) ? null : <Button onClick={this.handleNextVideo}> Video
               Suivante </Button>}
           </Card.Title> : null

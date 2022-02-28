@@ -25,7 +25,7 @@ const iemListHeadquarters= [
     {id: 4, key: "headquarters-gendarmerie", value: "4", text: "Gendarmerie Nationnale"},
     {id: 5, key: "headquarters-sga", value: "4", text: "DGA"},
     {id: 6, key: "headquarters-other", value: "5", text: "Autres services (SSA, ect.)"},
-    {id: 7, key: "headquarters-other", value: "6", text: "Pompiers"}
+    {id: 7, key: "headquarters-firemen", value: "6", text: "Pompiers"}
 ]
 
 const itemListFatigueLevel = [

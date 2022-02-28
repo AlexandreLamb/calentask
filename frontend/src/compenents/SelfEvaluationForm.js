@@ -112,7 +112,7 @@ class SelfEvaluationForm extends React.Component {
                 fontSize: "1.50rem",
               }}
             >
-              Secion 3 : Auto évaluation
+              Section 3 : Auto évaluation
             </Card.Title>
               <Form
                 style={{
@@ -161,7 +161,8 @@ class SelfEvaluationForm extends React.Component {
 
                   {displayConfianceDegree ? <Form.Group as={Col} controlId="formBasicConfianceDegree">
                     <Form.Label>
-                        Votre degré de confiance sur le classement que vous venez d’effectuer 
+                        Donnez nous votre avis sur le degrè de confiance du classement que vous venez d’effectuer 
+                        mettre a la ligne 
                         (EVA allant de 1 à 5 de «Très peu confiant» à «Très confiant»)  
                     </Form.Label>
                     {[1, 2, 3, 4, 5].map((type) => (  
