@@ -3,6 +3,7 @@ import Button from "react-bootstrap/Button"
 import Form from "react-bootstrap/Form"
 import Card from "react-bootstrap/Card"
 import api from "../axiosConfig"
+import { itemListSequenceLevel} from "./formItems"
 
 
 class VideoRate extends React.Component {
@@ -11,10 +12,15 @@ class VideoRate extends React.Component {
       this.state = {
           rateValue : "",
           timeReflexions : 0,
+          interval : null
       }
     }
     componentDidMount = () => {
-        setInterval(this.countTime, 1000) 
+      const this_contexte = this
+      this.setState({ interval : setInterval(this_contexte.countTime, 1000)}) 
+    }
+    componentWillUnmount = () =>{
+      clearInterval(this.interval)
     }
     countTime = () => {
       this.setState({timeReflexions : this.state.timeReflexions + 1})
@@ -32,12 +38,12 @@ class VideoRate extends React.Component {
         const this_contexte = this
         const videoName = "_"+this.props.videoName
         const sequenceLetter = "_"+this.props.videoLetter
-        const numberOfView = this.props.sequence[this.props.videoLetter].numberOfViews
+        const numberOfView = this.props.sequence[this.props.videoLetter].numberOfViews + 1
         const data = {}
         data["_id"]= this_contexte.props.documentID
         data[videoName] = {}
         data[videoName][sequenceLetter] = {
-          _rateValuerzeze: rateValue,
+          _rateValue: rateValue,
           _timeReflexions: timeReflexions,
           _numberOfView: numberOfView
         }
@@ -61,6 +67,7 @@ class VideoRate extends React.Component {
       });
       event.preventDefault()
     }
+   
     render() { 
         const { rateValue, timeReflexions } = this.state
         return(
@@ -72,22 +79,26 @@ class VideoRate extends React.Component {
                 >
             <Form>
             <Form.Label> A quel moment (minutes) correspond cette séquence vidéo (séquence {this.props.videoLetter}   ) ? </Form.Label>
-               <Form.Group controlId="formBasicFatigueEva">
-                      {[0, 15, 30, 45].map((type) => (  
+               <Form.Group controlId="formBasicSequence">
+                      { itemListSequenceLevel.map(({id, key, label}) => ( 
                         <Form.Check 
-                          key = {type}
+                          id = {id.toString()}
+                          key={key}
                           inline
-                          disabled={this.props.rateValueChecked.includes(type)}
+                          disabled={this.props.rateValueChecked.includes(label)}
                           value={rateValue}
                           onChange={this.handleChange}
-                          label={type + " min"}
+                          label={label + " min"}
                           name="rateValue"
                           type="radio"
-                          id={type} />
+                          />
                       ))}
                   </Form.Group>
                   { rateValue ? <Button onClick={this.handleSubmit}> Valider votre choix</Button> : "" }
-                  <Button onClick={this.props.handleNextVideo}> Sinon, regardez à nouveau la sequence suivante </Button>
+                  <div>
+                  Sinon,
+                  </div>
+                  <Button onClick={this.props.handleNextVideo}>regardez une autre sequence</Button>
                </Form>
                </Card>
                

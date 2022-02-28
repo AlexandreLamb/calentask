@@ -17,7 +17,7 @@ class MainForm extends React.Component {
         documentID: null,
         videoLetter: "A",
         videoNotAvailable: [],
-        numberOfView: 1,
+        numberOfView: 0,
         sequence: {
           A: {
             numberOfViews: 1
@@ -83,7 +83,22 @@ class MainForm extends React.Component {
         playing: true
       })
     }
-
+    handleEnd = (videoLetter, isStopWatchingVideo) => {
+      const sequence = this.state.sequence
+      sequence[videoLetter] = {
+        numberOfViews: sequence[videoLetter].numberOfViews + 1
+      }
+      this.setState({
+        sequence: sequence,
+        playing: false
+      })
+       if (isStopWatchingVideo) {
+        this.setState({
+          displayVideoForm: false,
+          displaySelfEvaluationForm: true
+        })
+      }
+    }
     handleEnded = (isStopWatchingVideo, popVideo) => {
       const videoLetter = this.state.videoLetter
       const videoNotAvailable = this.state.videoNotAvailable
@@ -202,7 +217,7 @@ class MainForm extends React.Component {
           <VideoForm sequence={sequence} videoLetter={videoLetter} numberOfView={numberOfView} playing={playing}
             videoFolder={this.props.videoFolder + videosToPlay[currentVideoIndex]+ "/" +
             videosToPlay[currentVideoIndex]} handleEnded={this.handleEnded} handlePlay={this.handlePlay}
-            documentID={documentID} /> : null
+            documentID={documentID} handleEnd={this.handleEnd} /> : null
           }
           {
           displaySelfEvaluationForm ?

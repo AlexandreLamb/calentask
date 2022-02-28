@@ -1,9 +1,11 @@
 import React from 'react';
-import Strong from 'react'
 import Button from "react-bootstrap/Button"
 import VideoPlayer from './VideoPlayer';
 import Card from "react-bootstrap/Card"
 import Form from "react-bootstrap/Form"
+import Container from 'react-bootstrap/Container'
+import Row from "react-bootstrap/Row"
+import Col from "react-bootstrap/Col"
 import VideoRate from "./VideoRate";
 
 class VideoForm extends React.Component {
@@ -12,7 +14,9 @@ class VideoForm extends React.Component {
         this.state = {
             displayVideoRate: false,
             rateValueChecked : [],
-            isStopWatchingVideo: false
+            isStopWatchingVideo: false, 
+            videoLetter : null,
+            classifiedSequence : []
         };
     }
 
@@ -20,9 +24,30 @@ class VideoForm extends React.Component {
         const {
             displayVideoRate,
             rateValueChecked,
-            isStopWatchingVideo
+            isStopWatchingVideo, 
+            videoLetter
         } = this.state;
+
+        let totalViews = 0
+        for (let seq in this.props.sequence){
+
+            console.log(this.props.sequence[seq])
+            totalViews = this.props.sequence[seq].numberOfViews + totalViews
+        }
+        console.log(totalViews)
+        if (totalViews < 4) {
+            this.props.handleEnd(this.state.videoLetter)
+        }
+        else{
+            this.setState({
+                displayVideoRate: true,
+                isStopWatchingVideo : rateValueChecked.length === 4 ? true : false
+            })
+        }
+
+        /*
         if (this.props.numberOfView === 0){
+
             this.props.handleEnded(isStopWatchingVideo)
         }
         else if (this.props.numberOfView > 0) {
@@ -30,14 +55,16 @@ class VideoForm extends React.Component {
                 displayVideoRate: true,
                 isStopWatchingVideo : rateValueChecked.length === 4 ? true : false
             })
-        }
+        }*/
         
     }
     handleSubmit = (rateValue) => {
         const {
             displayVideoRate,
             rateValueChecked,
-            isStopWatchingVideo
+            isStopWatchingVideo,
+            videoLetter, 
+            classifiedSequence
         } = this.state;
         this.setState({
             rateValueChecked: [...this.state.rateValueChecked, parseInt(rateValue)],
@@ -46,20 +73,51 @@ class VideoForm extends React.Component {
 
         })
         const isStopWatchingVideoUpdate = this.state.isStopWatchingVideo
-        this.props.handleEnded(isStopWatchingVideoUpdate, true)
+        classifiedSequence.push(videoLetter)
+        this.props.handleEnd(videoLetter, isStopWatchingVideoUpdate)
     }
     handleNextVideo = () => {
         const {
             displayVideoRate,
             rateValueChecked,
-            isStopWatchingVideo
+            isStopWatchingVideo, 
+            videoLetter,
+            classifiedSequence
         } = this.state;
-        this.setState({ displayVideoRate : false })
-        this.props.handleEnded(isStopWatchingVideo)
+        this.setState({ displayVideoRate : false }, () =>{
+        this.props.handleEnd(videoLetter, isStopWatchingVideo)
+
+        })
     }
+    handleLaunchVideo = (letter) => {
+        const this_contexte = this
+        
+        this.setState({videoLetter : letter}, ()=>{
+            this_contexte.props.handlePlay()
+        })
+    }
+    manageButton = (videoLetter) => {
+        let isSequenceIsViewedOneTime = this.props.sequence[videoLetter].numberOfViews == 1 ? true : false
+        let totalViews = 0
+        for (let seq in this.props.sequence){
+
+            console.log(this.props.sequence[seq])
+            totalViews = this.props.sequence[seq].numberOfViews + totalViews
+        }
+        console.log(totalViews)
+        if (totalViews >= 4) {
+            isSequenceIsViewedOneTime = false
+        }
+        if(this.state.classifiedSequence.includes(videoLetter)){
+            isSequenceIsViewedOneTime = true
+          }
+        return isSequenceIsViewedOneTime
+    }
+
+
     render() { 
-        const  { displayVideoRate, rateValueChecked } = this.state;
-        const url =   this.props.videoFolder + '_'+this.props.videoLetter+'-converted.mp4'
+        const  { displayVideoRate, rateValueChecked, isStopWatchingVideo, videoLetter, classifiedSequence } = this.state;
+        const url =   this.props.videoFolder + '_'+videoLetter+'-converted.mp4'
         const videoName = this.props.videoFolder.split("/").at(-1)
         return(
             <div>
@@ -105,16 +163,41 @@ class VideoForm extends React.Component {
              
                     
                     </Card.Body> 
-                <Button variant="secondary" onClick={this.props.handlePlay}> Lancer la sequence video "{this.props.videoLetter}"</Button>
-
+                    <Container>
+                        <Row style={{paddingTop : "5px"}}> 
+                            <Col >
+                            <Button disabled={ this.manageButton("A")} variant="secondary" onClick={() => this.handleLaunchVideo("A")}> Lancer la sequence video "A"</Button>
+                            </Col>
+                            </Row>
+                        <Row style={{paddingTop : "5px"}}>
+                            <Col>
+                            <Button disabled={ this.manageButton("B")} variant="secondary" onClick={() => this.handleLaunchVideo("B")}> Lancer la sequence video "B"</Button>
+                            </Col>
+                        </Row>
+                        <Row style={{paddingTop : "5px"}}>
+                            <Col>
+                            <Button disabled={ this.manageButton("C")} variant="secondary" onClick={() => this.handleLaunchVideo("C")}> Lancer la sequence video "C"</Button>
+                        </Col>
+                        </Row>
+                        <Row style={{paddingTop : "5px"}}>
+                        <Col>
+                            <Button disabled={ this.manageButton("D")} variant="secondary" onClick={() => this.handleLaunchVideo("D")}> Lancer la sequence video "D"</Button>
+                            </Col>
+                        </Row>
+                    </Container>
+                
                 </div> : null
                 }                 
+                {this.props.playing ?  
                 <VideoPlayer 
                     url={url}
                     playing={this.props.playing}
                     handlePlay={this.props.handlePlay}
                     handleEnded={this.handleEnded}
-                />        
+                /> 
+                
+                : null}
+                       
 
                 {   
                     ( (displayVideoRate === true)  ) ? 
@@ -124,9 +207,8 @@ class VideoForm extends React.Component {
                     videoLetter = {this.props.videoLetter}
                     rateValueChecked = {rateValueChecked}
                     handleSubmit = {this.handleSubmit}
-                    handleNextvideo = {this.handleNextVideo}
-                    documentID = {this.props.documentID}
                     handleNextVideo = {this.handleNextVideo}
+                    documentID = {this.props.documentID}
                     /> : null
                 } 
 

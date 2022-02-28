@@ -72,6 +72,12 @@ const configurationData = {
     pathToExportData: ""
     };
   
+const itemListSequenceLevel = [
+    {id: 0, key: "sequence-0", label: 0},
+    {id: 15, key: "sequence-15", label: 15},
+    {id: 30, key: "sequence-30", label: 30},
+    {id: 45, key: "sequence-45", label: 45}
+  ]
 
 export {
     itemListGender, 
@@ -79,5 +85,6 @@ export {
     itemListFatigueLevel,
     iemListHeadquarters,
     commonIndicator, 
-    configurationData
+    configurationData,
+    itemListSequenceLevel
 }
