@@ -33,7 +33,8 @@ class MainForm extends React.Component {
           }
         },
         videosToPlay: [],
-        currentVideoIndex: 0
+        currentVideoIndex: 0,
+        clearLocalStorage : false
       };
     }
     getVideoToLoad = () => {
@@ -177,8 +178,41 @@ class MainForm extends React.Component {
         displaySelfEvaluationForm: false,
 
       })
+     
 
       event.preventDefault()
+    }
+    handleBackToMenue = () =>{
+     localStorage.setItem("state" , JSON.stringify({}))
+     const state = {
+        playing: false,
+        displayInformationForm: true,
+        displayVideoForm: false,
+        displaySelfEvaluationForm: false,
+        documentID: null,
+        videoLetter: "A",
+        videoNotAvailable: [],
+        numberOfView: 0,
+        sequence: {
+          A: {
+            numberOfViews: 1
+          },
+          B: {
+            numberOfViews: 1
+          },
+          C: {
+            numberOfViews: 1
+          },
+          D: {
+            numberOfViews: 1
+          }
+        },
+        videosToPlay: [],
+        currentVideoIndex: 0,
+        clearLocalStorage : true
+
+      };
+      this.setState(state)
     }
 
     render() {
@@ -192,7 +226,8 @@ class MainForm extends React.Component {
           numberOfView,
           sequence,
           videosToPlay,
-          currentVideoIndex
+          currentVideoIndex,
+          clearLocalStorage
         } = this.state
       return(
         <Card style={{
@@ -210,7 +245,7 @@ class MainForm extends React.Component {
           }
           {
            displayInformationForm ?
-          <InformationForm handleSubmit={this.handleSubmitInformationForm} /> : null
+          <InformationForm handleSubmit={this.handleSubmitInformationForm} clearLocalStorage={clearLocalStorage} /> : null
           }
           {
           displayVideoForm ?
@@ -234,9 +269,19 @@ class MainForm extends React.Component {
                 fontSize: "2.25rem",
                 padding : "25%"
               }}>
-            Merci pour vos réponses
-            { videosToPlay.length -1 == (currentVideoIndex ) ? null : <Button onClick={this.handleNextVideo}> Video
-              Suivante </Button>}
+            Merci pour vos réponses, 
+            
+            { videosToPlay.length -1 == (currentVideoIndex ) ? null : 
+            <div>
+              Avez vous encore du temps pour une nouvelle sessions ? 
+              <div></div>
+
+              <Button onClick={this.handleNextVideo}> Video
+              Suivante </Button>
+            </div>
+            }
+            sinon, 
+            <Button onClick={this.handleBackToMenue}> Quitter la sesison </Button>
           </Card.Title> : null
           }
 

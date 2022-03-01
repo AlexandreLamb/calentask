@@ -16,7 +16,7 @@ class VideoForm extends React.Component {
             rateValueChecked : [],
             isStopWatchingVideo: false, 
             videoLetter : null,
-            classifiedSequence : []
+            classifiedSequence : [], 
         };
     }
 

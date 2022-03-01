@@ -126,26 +126,37 @@ class SelfEvaluationForm extends React.Component {
                   { displaySelfIndicator  ?
                     <Form.Group>
                     <Form.Label>
-                    Quels indicateurs du visage avez vous utilisé pour classer les videos (Plusieurs indicateurs possible a classer dans l'orde d'importance de gauche a droite) ?
+                    Quels indicateurs du visage avez vous utilisé pour classer les videos ?
+                    <div>
+                    (Plusieurs indicateurs possible à classer dans l'orde d'importance de gauche a droite, validez avec la touche "entrer")
+                    </div>
                     </Form.Label>
                     <TagInput handleTag={this.handleTag} />  
                   </Form.Group> : null
                   }
                   {
                       displayCommonIndicator ?
-                    <Form.Group as={Col} controlId="formBasicCommonIndicator">
+                    <Form.Group as={Col} controlId="formBasicCommonIndicator"
+                    
+                    >
                       
                     <Form.Label>
                         Vos indicateurs utilisés se trouvent-ils parmi cette liste ?
+                        <div>
                         (Plusieurs items possibles à cocher ):
-                    </Form.Label>
 
+                        </div>
+                    </Form.Label>
+                      <div></div>
                    
                      { commonIndicator.map(({ id, value, isChecked }) => (  
                       <Form.Check 
                           value={value} 
                           onChange={this.handleCheckedElement}
-                          inline
+                          style={{
+                            paddingLeft : "45%",
+                            textAlign:"initial"
+                             }}
                           checked={isChecked}
                           label={value}
                           name="commonIndicator"
@@ -162,9 +173,13 @@ class SelfEvaluationForm extends React.Component {
                   {displayConfianceDegree ? <Form.Group as={Col} controlId="formBasicConfianceDegree">
                     <Form.Label>
                         Donnez nous votre avis sur le degrè de confiance du classement que vous venez d’effectuer 
-                        mettre a la ligne 
+                        <div>
                         (EVA allant de 1 à 5 de «Très peu confiant» à «Très confiant»)  
+
+                        </div>
                     </Form.Label>
+                    <div></div>
+
                     {[1, 2, 3, 4, 5].map((type) => (  
                     <Form.Check 
                         value={`level-${type}`} 

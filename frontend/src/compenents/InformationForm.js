@@ -27,6 +27,28 @@ class InformationForm extends React.Component {
         grade: getLocalState("grade", "")
       };
     }
+    componentDidMount = () =>{
+      console.log(this.props.clearLocalStorage)
+      if(this.props.clearLocalStorage){
+        const state = {
+          initialValues: getLocalState("initialValues", ""), 
+          age:  getLocalState("age", ""),
+          gender: getLocalState("gender", "default"),
+          studieLevel: getLocalState("studieLevel", "default"),
+          studieArea: getLocalState("studieArea", ""),
+          fatigueLevel: getLocalState("fatigueLevel", ""),
+          armyLengthOfService: getLocalState("armyLengthOfService", ""), 
+          typeOfJob: getLocalState("typeOfJob", ""),
+          peopleCommand: getLocalState("peopleCommand", ""),
+          headquarters: getLocalState("headquarters", "default"),
+          jobLengthOfService: getLocalState("jobLengthOfService", ""),
+          grade: getLocalState("grade", "")
+        };
+        this.setState(state)
+      }
+      
+
+    }
     handleChange = (event) => {  
       const target = event.target;
       console.log(target)
