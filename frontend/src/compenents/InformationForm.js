@@ -156,7 +156,7 @@ class InformationForm extends React.Component {
             </Card.Title>
               <Form
                 style={{
-                  width: '95%',
+                  width: '85%',
                   margin: "auto",
                   textAlign: 'center',
                   marginTop: "10%"
@@ -164,7 +164,7 @@ class InformationForm extends React.Component {
               >
                 <Row className="mb-3">
                   <Form.Group as={Col} controlId="formBasicInitial">
-                    <Form.Label> Initial de votre prenom et nom (Format Prenom Nom)</Form.Label>
+                    <Form.Label> Initial de votre prenom et nom<div>(Format Prenom Nom)</div></Form.Label>
                     <Form.Control name="initialValues" value={initialValues} onChange={this.handleChange} type="text" placeholder="Ex : ML (Martin Latouche)" />
                     <Form.Text className="text-muted">
                       Les initial seront conservé de manière anonyme
@@ -203,8 +203,8 @@ class InformationForm extends React.Component {
                   </Form.Group>
                   <Form.Group as={Col} controlId="formBasicFatigueEva">
                     <Form.Label>
-                      Comment estimé vous votre connaissance sur la thematique Fatigue 
-                      (EVA ou echelle allant de 1 à 10 de «Ignorant» à «Expert»)
+                      Comment estimé vous votre connaissance sur la thématique Fatigue 
+                      <div>(EVA ou echelle allant de 1 à 10 de «Ignorant» à «Expert»)</div>
                     </Form.Label>
                       {
                         itemListFatigueLevel.map(({id, key, label}) => (  
