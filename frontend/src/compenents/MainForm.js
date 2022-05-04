@@ -59,9 +59,7 @@ class MainForm extends React.Component {
   };
   componentDidMount = () => {
     this.getVideoToLoad();
-    if (this.state.displayVideoForm) {
-      setInterval(this.getVideoToLoad, 3000);
-    }
+    
   };
   handleChange = (event) => {
     this.setState({
@@ -264,6 +262,7 @@ class MainForm extends React.Component {
             videoLetter={videoLetter}
             numberOfView={numberOfView}
             playing={playing}
+            getVideoToLoad={this.getVideoToLoad}
             videoFolder={
               this.props.videoFolder +
               videosToPlay[currentVideoIndex] +

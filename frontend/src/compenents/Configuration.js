@@ -114,8 +114,7 @@ class Configuration extends React.Component {
       const filtreTexte = (arr, requete) => {
         return arr.filter(el => (el.toLowerCase().indexOf(requete.toLowerCase()) !== -1) && (el.toLowerCase().indexOf("_evaluation") == -1));
       }
-      console.log(this.state.subject_data)
-      console.log(this.state.subject_data.map(subject => filtreTexte(Object.keys(subject), "DESFAM")))
+      
 
 
       const {
@@ -131,6 +130,7 @@ class Configuration extends React.Component {
         destination.droppableId === source.droppableId &&
         destination.index === source.index
       ) {
+       
         return;
       }
 
@@ -156,6 +156,21 @@ class Configuration extends React.Component {
         };
 
         this.setState(newState);
+        api.post("configuration/udpate/video", {
+          "video_use": newState
+        }).then(function (response) {
+          const status_code = response.status
+          if (parseInt(status_code) === 204) {
+            console.log("form empty")
+          } else if (parseInt(status_code) === 200) {
+
+          } else {
+            console.log("Error")
+          }
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
         return;
       }
 
@@ -182,6 +197,7 @@ class Configuration extends React.Component {
           [newFinish.id]: newFinish,
         },
       };
+      console.log(newState)
       this.setState(newState);
       api.post("configuration/udpate/video", {
           "video_use": newState

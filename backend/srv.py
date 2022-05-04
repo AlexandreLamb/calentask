@@ -104,7 +104,6 @@ def export_data():
        
 @app.route("/configuration/create/video", methods=["GET"])
 def list_video():
-    print(list(db.video_use.find({})) != [])
     if list(db.video_use.find({})) != [] :
         video_use = db.video_use.find_one()
         video_use["_id"] = str(video_use["_id"])

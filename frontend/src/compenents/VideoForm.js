@@ -19,7 +19,9 @@ class VideoForm extends React.Component {
             classifiedSequence : [], 
         };
     }
-
+    componentDidMount() { 
+        this.props.getVideoToLoad()
+    }
     handleEnded = () => {
         const {
             displayVideoRate,
