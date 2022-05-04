@@ -5,7 +5,7 @@ import SelfEvaluationForm from "./SelfEvaluationForm";
 import Card from "react-bootstrap/Card";
 import Button from "@restart/ui/esm/Button";
 import api from "../axiosConfig";
-
+import Image from 'react-bootstrap/Image'
 class MainForm extends React.Component {
   constructor(props) {
     super(props);
@@ -244,10 +244,11 @@ class MainForm extends React.Component {
             Questionnaire permettant le Classement (évaluation) de Visages
             Fatigués (Etude CLAVIF) grâce au visionnage de séquences vidéos
             <div>
-              <img
-                src="frontend/public/logo-fatigue-et-vigilance.png"
+              <Image fluid={true}
+                src="logo-fatigue-et-vigilance.png"
+                width="10%"
                 alt="logo ufv"
-              ></img>{" "}
+              ></Image>{" "}
             </div>
           </Card.Title>
         ) : null}
