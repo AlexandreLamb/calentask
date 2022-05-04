@@ -12,6 +12,7 @@ class VideoPlayer extends React.Component {
       
     render() {
         console.log("from player "+this.props.url)
+        console.log("video "+this.props.videoLetter)
         return(
             <ReactPlayer
             width={this.props.playing ? "100%" : "0"}

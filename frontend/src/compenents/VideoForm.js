@@ -99,6 +99,7 @@ class VideoForm extends React.Component {
     manageButton = (videoLetter) => {
         let isSequenceIsViewedOneTime = this.props.sequence[videoLetter].numberOfViews == 1 ? true : false
         let totalViews = 0
+        
         for (let seq in this.props.sequence){
 
             console.log(this.props.sequence[seq])
@@ -135,7 +136,7 @@ class VideoForm extends React.Component {
                     fontSize: "1.50rem",
                 }}
             >
-                        Section 2: Séquences des 4 vidéos
+                        Section 2 <div>4 séquences vidéos de 10 secondes chacune</div> 
             </Card.Title>
                 {   this.props.playing === false /* && 
                     displayVideoRate === false */ ?
@@ -145,21 +146,22 @@ class VideoForm extends React.Component {
                         Règles de classement
                     </Card.Title>
                     <Card.Body >
-                    L’objectif de ce questionnaire est de classer dans l'ordre chronologique 4 séquences 
-                    vidéos (A, B, C, D), qui correspondent à 4 moments dans une tâche fatigante : 
+                    L’objectif de cette étude est de vous demander de classer dans l'ordre chronologique 4 séquences 
+                    vidéos de 10 secondes (A, B, C, D), qui correspondent à 4 moments dans une tâche fatigante : 
                     <div style={{fontWeight: "bold"}}>
                     0 min, 15 min, 30 min, 45 min
 
                     </div>
                       Les 4 sequences vidéos durent 10 secondes chacune. 
-                      Il vous est demandé de visionner une fois les 4 séquences vidéos
+                      Il vous est demander de visionner une fois les 4 séquences vidéos
                         avant de commencer à les classer. 
                         
                     A l'issue du premier visionnage des 4 séquences vous pouvez commencer à les classer
                         ou bien décider de revisionner les 4 séquences.
+                    <div style={{fontWeight: "bold"}}>
                         
-                        Attention : une fois que vous avez classé une vidéo , pas de retour en arrière ! (a mettre en gras)
-
+                        Attention : une fois que vous avez classé une vidéo , il ne vous sera pas possible de revenir en arrière !
+                    </div>
              
                     
                     </Card.Body> 
@@ -192,6 +194,7 @@ class VideoForm extends React.Component {
                 <VideoPlayer 
                     url={url}
                     playing={this.props.playing}
+                    videoLetter={videoLetter}
                     handlePlay={this.props.handlePlay}
                     handleEnded={this.handleEnded}
                 /> 
@@ -204,7 +207,7 @@ class VideoForm extends React.Component {
                     <VideoRate
                     sequence = {this.props.sequence}
                     videoName = {videoName}
-                    videoLetter = {this.props.videoLetter}
+                    videoLetter = {videoLetter}
                     rateValueChecked = {rateValueChecked}
                     handleSubmit = {this.handleSubmit}
                     handleNextVideo = {this.handleNextVideo}

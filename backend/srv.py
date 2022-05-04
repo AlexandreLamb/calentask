@@ -118,7 +118,7 @@ def list_video():
                 "columns": {
                     'column-1': {
                       "id": 'column-1',
-                      "title": 'Video dipsonible',
+                      "title": 'Video disponible',
                       "taskIds": [],
                     },
                     'column-2': {
