@@ -157,16 +157,16 @@ class MainForm extends React.Component {
       currentVideoIndex: this.state.currentVideoIndex + 1,
       sequence: {
         A: {
-          numberOfViews: 1,
+          numberOfViews: 0,
         },
         B: {
-          numberOfViews: 1,
+          numberOfViews: 0,
         },
         C: {
-          numberOfViews: 1,
+          numberOfViews: 0,
         },
         D: {
-          numberOfViews: 1,
+          numberOfViews: 0,
         },
       },
       videoNotAvailable: [],
@@ -191,16 +191,16 @@ class MainForm extends React.Component {
       numberOfView: 0,
       sequence: {
         A: {
-          numberOfViews: 1,
+          numberOfViews: 0,
         },
         B: {
-          numberOfViews: 1,
+          numberOfViews: 0,
         },
         C: {
-          numberOfViews: 1,
+          numberOfViews: 0,
         },
         D: {
-          numberOfViews: 1,
+          numberOfViews: 0,
         },
       },
       videosToPlay: [],
