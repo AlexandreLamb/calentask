@@ -11,6 +11,7 @@ from flask_pymongo import PyMongo
 from bson.objectid import ObjectId
 from bson import json_util
 import json
+from werkzeug.utils import secure_filename
 
 PATH_TO_SAVE = "data/"
 PATH_T0_CSV = ""
@@ -160,3 +161,17 @@ def get_video_list():
         video_to_play.append(video_use["tasks_list"][id]["content"])
     print(video_to_play)
     return fl.jsonify(video_to_play)
+
+@app.route('/configuration/post/video', methods=['POST'])
+def upload_video():
+    print(fl.request.files)
+    if 'inputFile' not in fl.request.files:
+	    return "No inputFile part"
+    file = fl.request.files['inputFile']
+    if file.filename == '':
+        return "No image selected for uploading"
+    else:
+        filename = secure_filename(file.filename)
+        file.save(os.path.join(filename))
+        print('upload_video filename: ' + filename)
+        return "video upload"

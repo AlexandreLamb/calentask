@@ -9,6 +9,7 @@ import Row from "react-bootstrap/Row"
 import Col from "react-bootstrap/Col"
 import Table from "react-bootstrap/Table"
 import styled from 'styled-components';
+import Upload from './Upload';
 import {
   CSVLink,
   CSVDownload
@@ -233,7 +234,7 @@ class Configuration extends React.Component {
 
               <Container>
                 <Row>
-
+                 
                   <Col>
                   <DragDropContext onDragEnd={this.handleOnDragEnd}>   
             

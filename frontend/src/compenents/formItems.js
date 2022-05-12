@@ -19,6 +19,7 @@ const iemListStudieLevel = [
     text: "Cliquer ici pour choisir votre niveau d'étude",
     disabled: true,
   },
+  { id: 1, key: "studieLevel-0", value: "1", text: "BAC (ou Équivalent du BAC)" },
   { id: 1, key: "studieLevel-1", value: "1", text: "BAC +1" },
   { id: 2, key: "studieLevel-2", value: "2", text: "BAC +2" },
   { id: 3, key: "studieLevel-3", value: "3", text: "BAC +3" },
