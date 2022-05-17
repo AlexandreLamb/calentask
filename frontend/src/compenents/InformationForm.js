@@ -7,7 +7,9 @@ import Col from "react-bootstrap/Col";
 import {
   itemListGender,
   iemListStudieLevel,
-  itemListFatigueLevel,
+  itemListFatigueLevelTheorical,
+  itemListFatigueLevelPratical,
+  iemListGrade,
   iemListHeadquarters,
 } from "./formItems";
 import { getLocalState } from "../utils";
@@ -22,17 +24,17 @@ class InformationForm extends React.Component {
       gender: getLocalState("gender", "default"),
       studieLevel: getLocalState("studieLevel", "default"),
       studieArea: getLocalState("studieArea", ""),
-      fatigueLevel: getLocalState("fatigueLevel", ""),
+      fatigueLevelTheorical: getLocalState("fatigueLevelTheorical", ""),
+      fatigueLevelPratical: getLocalState("fatigueLevelPratical", ""),
       armyLengthOfService: getLocalState("armyLengthOfService", ""),
       typeOfJob: getLocalState("typeOfJob", ""),
       peopleCommand: getLocalState("peopleCommand", ""),
       headquarters: getLocalState("headquarters", "default"),
       jobLengthOfService: getLocalState("jobLengthOfService", ""),
-      grade: getLocalState("grade", ""),
+      grade: getLocalState("grade", "default"),
     };
   }
   componentDidMount = () => {
-    console.log(this.props.clearLocalStorage);
     if (this.props.clearLocalStorage) {
       const state = {
         initialValues: getLocalState("initialValues", ""),
@@ -40,7 +42,8 @@ class InformationForm extends React.Component {
         gender: getLocalState("gender", "default"),
         studieLevel: getLocalState("studieLevel", "default"),
         studieArea: getLocalState("studieArea", ""),
-        fatigueLevel: getLocalState("fatigueLevel", ""),
+        fatigueLevelTheorical: getLocalState("fatigueLevelTheorical", ""),
+        fatigueLevelPratical: getLocalState("fatigueLevelPratical", ""),  
         armyLengthOfService: getLocalState("armyLengthOfService", ""),
         typeOfJob: getLocalState("typeOfJob", ""),
         peopleCommand: getLocalState("peopleCommand", ""),
@@ -53,12 +56,10 @@ class InformationForm extends React.Component {
   };
   handleChange = (event) => {
     const target = event.target;
-    console.log(target);
     const value = target.type === "radio" ? target.id : target.value;
     const name = target.name;
     this.setState({ [name]: value }, () => {
       localStorage.setItem("state", JSON.stringify(this.state));
-      console.log(this.state);
     });
   };
   createDateFormat = () => {
@@ -81,7 +82,8 @@ class InformationForm extends React.Component {
       gender,
       studieLevel,
       studieArea,
-      fatigueLevel,
+      fatigueLevelTheorical,
+      fatigueLevelPratical,
       armyLengthOfService,
       typeOfJob,
       peopleCommand,
@@ -90,7 +92,6 @@ class InformationForm extends React.Component {
       grade,
     } = this.state;
     const this_contexte = this;
-    console.log(api);
     api
       .post("output/subject/information/", {
         _initialValues: initialValues,
@@ -98,7 +99,8 @@ class InformationForm extends React.Component {
         _gender: gender,
         _studieLevel: studieLevel,
         _sutdieArea: studieArea,
-        _fatigueLevel: fatigueLevel,
+        _fatigueLevelTheorical: fatigueLevelTheorical,
+        _fatigueLevelPratical: fatigueLevelPratical,
         _armyLengthOfService: armyLengthOfService,
         _typeOfJob: typeOfJob,
         _peopleCommand: peopleCommand,
@@ -130,7 +132,8 @@ class InformationForm extends React.Component {
       gender,
       studieLevel,
       studieArea,
-      fatigueLevel,
+      fatigueLevelTheorical,
+      fatigueLevelPratical,
       armyLengthOfService,
       typeOfJob,
       peopleCommand,
@@ -170,7 +173,7 @@ class InformationForm extends React.Component {
           >
             <Form.Group as={Col} controlId="formBasicInitial">
               <Form.Label>
-                Initiales de votre prenom et nom<div>(Format Prenom Nom)</div>
+                Initiales de votre prenom et nom ? <div>&nbsp;</div>
               </Form.Label>
               <Form.Control
                 name="initialValues"
@@ -185,15 +188,21 @@ class InformationForm extends React.Component {
             </Form.Group>
             <Form.Group as={Col} controlId="formBasicGrade">
               <Form.Label>
-                Quel est votre grade ? <div>&nbsp;</div>{" "}
+                Quel est votre grade ? <div>&nbsp;</div>
               </Form.Label>
-              <Form.Control
+              <Form.Select
                 name="grade"
                 value={grade}
                 onChange={this.handleChange}
-                type="number"
-                placeholder="Entrez votre grade"
-              />
+              >
+                {iemListGrade.map(
+                  ({ id, key, value, text, disabled }) => (
+                    <option id={id} key={key} value={value} disabled={disabled}>
+                      {text}{" "}
+                    </option>
+                  )
+                )}
+              </Form.Select>
             </Form.Group>
             <Form.Group as={Col} controlId="formBasicHeadquarters">
               <Form.Label>
@@ -235,7 +244,7 @@ class InformationForm extends React.Component {
               <Form.Label>Genre</Form.Label>
               <Form.Select
                 name="gender"
-                value={this.state.gender}
+                value={gender}
                 onChange={this.handleChange}
               >
                 {itemListGender.map(({ id, key, value, text, disabled }) => (
@@ -316,7 +325,7 @@ class InformationForm extends React.Component {
           >
             <Form.Group as={Col} controlId="formBasicArmyJobLengthOfService">
               <Form.Label>
-                Depuis combien de temps êtes vous dans votre poste (en années) ?
+                Depuis combien de temps êtes vous dans votre poste (en années) ? <div>&nbsp;</div>
               </Form.Label>
               <Form.Control
                 name="jobLengthOfService"
@@ -338,24 +347,46 @@ class InformationForm extends React.Component {
             </Form.Group>
           </Row>
           <Row>
-            <Form.Group as={Col} controlId="formBasicFatigueEva">
+            <Form.Group as={Col} controlId="formBasicFatigueTheoricalEva">
               <Form.Label>
-                Comment estimez vous votre connaissance sur la thématique
-                Fatigue
+              Comment estimez-vous votre connaissance théorique de la fatigue mentale ?
                 <div>
                   (EVA ou echelle allant de 1 à 10 de «Ignorant» à «Expert»)
                 </div>
               </Form.Label>
               <div>&nbsp;</div>
-              {itemListFatigueLevel.map(({ id, key, label }) => (
+              {itemListFatigueLevelTheorical.map(({ id, key, label }) => (
                 <Form.Check
-                  value={fatigueLevel}
+                  value={fatigueLevelTheorical}
                   onChange={this.handleChange}
                   inline
-                  checked={fatigueLevel == id}
+                  checked={parseInt(fatigueLevelTheorical) === id}
                   key={key}
                   label={label}
-                  name="fatigueLevel"
+                  name="fatigueLevelTheorical"
+                  type="radio"
+                  id={id}
+                />
+              ))}
+            </Form.Group>
+            <div>&nbsp;</div>
+            <Form.Group as={Col} controlId="formBasicFatiguePraticalEva">
+              <Form.Label>
+              Comment estimez-vous votre connaissance pratique de la fatigue mentale ?
+                <div>
+                  (EVA ou echelle allant de 1 à 10 de «Ignorant» à «Expert»)
+                </div>
+              </Form.Label>
+              <div>&nbsp;</div>
+              {itemListFatigueLevelPratical.map(({ id, key, label }) => (
+                <Form.Check
+                  value={fatigueLevelPratical}
+                  onChange={this.handleChange}
+                  inline
+                  checked={parseInt(fatigueLevelPratical) === id}
+                  key={key}
+                  label={label}
+                  name="fatigueLevelPratical"
                   type="radio"
                   id={id}
                 />

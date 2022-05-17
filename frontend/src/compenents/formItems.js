@@ -19,7 +19,12 @@ const iemListStudieLevel = [
     text: "Cliquer ici pour choisir votre niveau d'étude",
     disabled: true,
   },
-  { id: 1, key: "studieLevel-0", value: "1", text: "BAC (ou Équivalent du BAC)" },
+  {
+    id: 1,
+    key: "studieLevel-0",
+    value: "1",
+    text: "BAC (ou Équivalent du BAC)",
+  },
   { id: 1, key: "studieLevel-1", value: "1", text: "BAC +1" },
   { id: 2, key: "studieLevel-2", value: "2", text: "BAC +2" },
   { id: 3, key: "studieLevel-3", value: "3", text: "BAC +3" },
@@ -29,6 +34,34 @@ const iemListStudieLevel = [
   { id: 7, key: "studieLevel-pro", value: "7", text: "BAC PRO" },
   { id: 8, key: "studieLevel-bepcap", value: "8", text: "BEP ou CAP" },
 ];
+
+var text = "Soldat 2ème classe, Soldat 1ère classe, Caporal, Caporal Chef, Sergent,  Sergent Chef,  Adjudant,  Adjudant Chef,  Major,  Sous Lieutenant,  Lieutenant (Enseigne de Vaisseau),  Capitaine (Lieutenant de Vaisseau),   Commandant (Capitaine de Vaisseau),  Lieutenant-Colonel, Colonel, Général."
+
+const iemListGrade = [
+  {
+    id: 0,
+    key: "grade-default",
+    value: "default",
+    text: "Cliquer ici pour choisir votre grade",
+    disabled: true,
+  },
+  { id: 1, key: "grade-1", value: "1", text: "Soldat 2ème classe" },
+  { id: 2, key: "grade-2", value: "2", text: "Soldat 1ère classe" },
+  { id: 3, key: "grade-3", value: "3", text: "Caporal" },
+  { id: 4, key: "grade-4", value: "4", text: "Caporal Chef" },
+  { id: 5, key: "grade-5", value: "5", text: "Sergent" },
+  { id: 6, key: "grade-6", value: "6", text: "Sergent Chef" },
+  { id: 7, key: "grade-7", value: "7", text: "Adjudant" },
+  { id: 8, key: "grade-8", value: "8", text: "Adjudant Chef" },
+  { id: 9, key: "grade-9", value: "9", text: "Major" },
+  { id: 10, key: "grade-10", value: "10", text: "Sous Lieutenant" },
+  { id: 11, key: "grade-11", value: "11", text: "Lieutenant (Enseigne de Vaisseau)" },
+  { id: 12, key: "grade-12", value: "12", text: "Capitaine (Lieutenant de Vaisseau)" },
+  { id: 13, key: "grade-13", value: "13", text: "Commandant (Capitaine de Vaisseau)" },
+  { id: 14, key: "grade-14", value: "14", text: "Lieutenant-Colonel" },
+  { id: 15, key: "grade-15", value: "15", text: "Colonel" },
+  { id: 16, key: "grade-16", value: "16", text: "Général" },
+  ];
 
 const iemListHeadquarters = [
   {
@@ -52,17 +85,17 @@ const iemListHeadquarters = [
     value: "4",
     text: "Gendarmerie Nationnale",
   },
-  { id: 5, key: "headquarters-sga", value: "4", text: "DGA" },
+  { id: 5, key: "headquarters-sga", value: "5", text: "DGA" },
   {
     id: 6,
     key: "headquarters-other",
-    value: "5",
+    value: "6",
     text: "Autres services (SSA, ect.)",
   },
-  { id: 7, key: "headquarters-firemen", value: "6", text: "Pompiers" },
+  { id: 7, key: "headquarters-firemen", value: "7", text: "Pompiers" },
 ];
 
-const itemListFatigueLevel = [
+const itemListFatigueLevelPratical = [
   { id: 1, key: "fatigueLevel-1", label: 1 },
   { id: 2, key: "fatigueLevel-2", label: 2 },
   { id: 3, key: "fatigueLevel-3", label: 3 },
@@ -74,6 +107,20 @@ const itemListFatigueLevel = [
   { id: 9, key: "fatigueLevel-9", label: 9 },
   { id: 10, key: "fatigueLevel-10", label: 10 },
 ];
+
+const itemListFatigueLevelTheorical = [
+  { id: 1, key: "fatigueLevel-1", label: 1 },
+  { id: 2, key: "fatigueLevel-2", label: 2 },
+  { id: 3, key: "fatigueLevel-3", label: 3 },
+  { id: 4, key: "fatigueLevel-4", label: 4 },
+  { id: 5, key: "fatigueLevel-5", label: 5 },
+  { id: 6, key: "fatigueLevel-6", label: 6 },
+  { id: 7, key: "fatigueLevel-7", label: 7 },
+  { id: 8, key: "fatigueLevel-8", label: 8 },
+  { id: 9, key: "fatigueLevel-9", label: 9 },
+  { id: 10, key: "fatigueLevel-10", label: 10 },
+];
+
 const commonIndicator = [
   { id: 1, value: "Yeux plus ou moins ouverts", isChecked: false },
   {
@@ -126,7 +173,9 @@ const itemListSequenceLevel = [
 export {
   itemListGender,
   iemListStudieLevel,
-  itemListFatigueLevel,
+  itemListFatigueLevelTheorical,
+  itemListFatigueLevelPratical,
+  iemListGrade,
   iemListHeadquarters,
   commonIndicator,
   configurationData,
