@@ -234,7 +234,9 @@ class Configuration extends React.Component {
 
               <Container>
                 <Row>
-                 
+                 <Col>
+                 <Upload></Upload>
+                 </Col>
                   <Col>
                   <DragDropContext onDragEnd={this.handleOnDragEnd}>   
             

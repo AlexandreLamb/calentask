@@ -12,6 +12,7 @@ from bson.objectid import ObjectId
 from bson import json_util
 import json
 from werkzeug.utils import secure_filename
+import random
 
 PATH_TO_SAVE = "data/"
 PATH_T0_CSV = ""
@@ -165,13 +166,53 @@ def get_video_list():
 @app.route('/configuration/post/video', methods=['POST'])
 def upload_video():
     print(fl.request.files)
-    if 'inputFile' not in fl.request.files:
-	    return "No inputFile part"
-    file = fl.request.files['inputFile']
-    if file.filename == '':
-        return "No image selected for uploading"
+    print([chr(el) for el in random.sample(range(65,69),4)])
+    
+    if len(fl.request.files) != 4:
+	    return "Miss video file"
     else:
-        filename = secure_filename(file.filename)
-        file.save(os.path.join(filename))
-        print('upload_video filename: ' + filename)
+        for file in fl.request.files:
+            print(file)
+            filename = fl.request.files[file].filename
+            print(filename)
+            if filename.split(".")[-1] != "mp4":
+                return "Wrong file format, only mp4 file accepts"           
+            else:
+                filename = secure_filename(filename)
+                folderName = filename.split(".")[0].split("_")
+                folderName = "_".join(folderName[:-1])
+                path_to_video_folder = "../frontend/public/videos/DESFAM_F_Sequences/"+folderName+"_test_upload"
+                
+                os.makedirs(path_to_video_folder, exist_ok=True)
+                
+                print('upload_video filename: ' + filename)
+                print('upload_video folder: ' + path_to_video_folder)
+                print('upload_video path: ' + os.path.join(path_to_video_folder,filename))
+                
+                fl.request.files[file].save(os.path.join(path_to_video_folder,filename))
+        video_use = db.video_use.find_one()
+        id_video = str(video_use["_id"])
+        videos_default =  os.listdir("/frontend/public/videos/DESFAM_F_Sequences")
+        state = {
+                "tasks_list": {},
+                "columns": {
+                    'column-1': {
+                      "id": 'column-1',
+                      "title": 'Video disponible',
+                      "taskIds": [],
+                    },
+                    'column-2': {
+                      "id": 'column-2',
+                      "title": 'Video de la session',
+                      "taskIds": [],
+                    },
+                  },
+                  "columnOrder": ['column-1', 'column-2'],
+                  "pathToExportData": ""
+            
+            };
+        for (index, video_name) in enumerate(videos_default):
+            state["tasks_list"]["task_"+str(index+1)] = {"id": 'task_'+str(index+1), "content" : video_name}
+            state["columns"]["column-1"]["taskIds"].append('task_'+str(index+1))
+        video_use_id = db.video_use.find_one_and_update({"_id" :str(video_use["_id"])},{"$push":state})
         return "video upload"
