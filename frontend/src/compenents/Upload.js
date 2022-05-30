@@ -65,7 +65,7 @@ export default class Upload extends React.Component {
       if (folderNameArray.length === 4) {
         return (
           <div>
-            Confirmez vous l'odre des video suivant (du début a la fin) ?
+            Confirmez vous l'ordre des video suivant (du début a la fin) ?
             <div>
               <ListGroup as="ol" numbered={true}>
                 {Object.keys(selectedFiles).map((key, index) => (
@@ -96,10 +96,10 @@ export default class Upload extends React.Component {
   render() {
     return (
       <div>
-          {[0, 1, 2, 3].map((key) => (
+          {[0, 15, 30, 45].map((key) => (
             <div key={key}>
               <label>
-                Upload a video {key}: <br />
+                Video {key} min: <br />
                 <br />
                 <input
                   type="file"

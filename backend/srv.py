@@ -95,15 +95,49 @@ def check_form(data):
 
 def generate_dataset():
     df = pd.DataFrame(columns=["date","video",""])
-    
+
+@app.route("/output/sequence/order", methods=["GET"])
+def export_sequence_order():
+    df_sequence = pd.read_csv("../frontend/public/videos/sequence_order.csv",index_col=["subject","day"])
+
+    return fl.Response(
+       df_sequence.to_csv(),
+       mimetype="text/csv",
+       headers={"Content-disposition":
+       "attachment; filename=sequence_order.csv"})
+
 @app.route("/output/export/data", methods=["GET"])
 def export_data():
     user_information = list( db.user_information.find())
+    print(user_information)
     for user in user_information:
         user["_id"] = str(user["_id"])
+    """  
+    def generate_csv_data(data: dict) -> str:
+    
+        # Defining CSV columns in a list to maintain
+        # the order
+        csv_columns = data.keys()
+    
+        # Generate the first row of CSV 
+        csv_data = ",".join(csv_columns) + "\n"
+    
+        # Generate the single record present
+        new_row = list()
+        for col in csv_columns:
+            new_row.append(str(data[col]))
+    
+        # Concatenate the record with the column information 
+        # in CSV format
+        csv_data += ",".join(new_row) + "\n"
+    
+        return csv_data
+    test_user_information = generate_csv_data(user_information)
+    print(test_user_information)
+    """
     return fl.jsonify(user_information)
     
-       
+
 @app.route("/configuration/create/video", methods=["GET"])
 def list_video():
     if list(db.video_use.find({})) != [] :
@@ -130,7 +164,6 @@ def list_video():
                   },
                   "columnOrder": ['column-1', 'column-2'],
                   "pathToExportData": ""
-            
             };
         for (index, video_name) in enumerate(videos_default):
             state["tasks_list"]["task_"+str(index+1)] = {"id": 'task_'+str(index+1), "content" : video_name}
@@ -166,12 +199,12 @@ def get_video_list():
 @app.route('/configuration/post/video', methods=['POST'])
 def upload_video():
     print(fl.request.files)
-    print([chr(el) for el in random.sample(range(65,69),4)])
-    
+    sequence_order = [chr(el) for el in random.sample(range(65,69),4)]
+    df_sequence = pd.read_csv("../frontend/public/videos/sequence_order.csv",index_col=["subject","day"])
     if len(fl.request.files) != 4:
 	    return "Miss video file"
     else:
-        for file in fl.request.files:
+        for index, file in enumerate(fl.request.files):
             print(file)
             filename = fl.request.files[file].filename
             print(filename)
@@ -181,38 +214,27 @@ def upload_video():
                 filename = secure_filename(filename)
                 folderName = filename.split(".")[0].split("_")
                 folderName = "_".join(folderName[:-1])
-                path_to_video_folder = "../frontend/public/videos/DESFAM_F_Sequences/"+folderName+"_test_upload"
+                path_to_video_folder = "../frontend/public/videos/DESFAM_F_Sequences/"+folderName
                 
                 os.makedirs(path_to_video_folder, exist_ok=True)
-                
+                filename = "_".join(filename.split('.')[0].split("_")[0:-1])+"_"+sequence_order[index]+"-converted.mp4"
                 print('upload_video filename: ' + filename)
                 print('upload_video folder: ' + path_to_video_folder)
                 print('upload_video path: ' + os.path.join(path_to_video_folder,filename))
-                
                 fl.request.files[file].save(os.path.join(path_to_video_folder,filename))
+        
+        df_sequence.loc[(filename.split("_")[-3],filename.split("_")[-2]),["0 min", "15 min", "30 min", "45 min"]] = sequence_order
+        df_sequence.to_csv("../frontend/public/videos/sequence_order.csv")
         video_use = db.video_use.find_one()
-        id_video = str(video_use["_id"])
+        video_use.pop("_id")
+        last_index  = len(list(video_use["tasks_list"]))
         videos_default =  os.listdir("/frontend/public/videos/DESFAM_F_Sequences")
-        state = {
-                "tasks_list": {},
-                "columns": {
-                    'column-1': {
-                      "id": 'column-1',
-                      "title": 'Video disponible',
-                      "taskIds": [],
-                    },
-                    'column-2': {
-                      "id": 'column-2',
-                      "title": 'Video de la session',
-                      "taskIds": [],
-                    },
-                  },
-                  "columnOrder": ['column-1', 'column-2'],
-                  "pathToExportData": ""
-            
-            };
-        for (index, video_name) in enumerate(videos_default):
-            state["tasks_list"]["task_"+str(index+1)] = {"id": 'task_'+str(index+1), "content" : video_name}
-            state["columns"]["column-1"]["taskIds"].append('task_'+str(index+1))
-        video_use_id = db.video_use.find_one_and_update({"_id" :str(video_use["_id"])},{"$push":state})
+        videos_already_in_db = []
+        for key in video_use["tasks_list"]:
+            videos_already_in_db.append(video_use["tasks_list"][key].get("content"))
+            videos_to_add = [video for video in videos_default if video not in videos_already_in_db]
+        for (index, video_name) in enumerate(videos_to_add):
+                video_use["tasks_list"]["task_"+str(last_index+index+1)] = {"id": 'task_'+str(last_index+index+1), "content" : video_name}
+                video_use["columns"]["column-1"]["taskIds"].append('task_'+str(last_index+index+1))
+        db.video_use.find_one_and_update({}, {"$set" :video_use})
         return "video upload"

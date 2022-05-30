@@ -35,8 +35,6 @@ const iemListStudieLevel = [
   { id: 8, key: "studieLevel-bepcap", value: "8", text: "BEP ou CAP" },
 ];
 
-var text = "Soldat 2ème classe, Soldat 1ère classe, Caporal, Caporal Chef, Sergent,  Sergent Chef,  Adjudant,  Adjudant Chef,  Major,  Sous Lieutenant,  Lieutenant (Enseigne de Vaisseau),  Capitaine (Lieutenant de Vaisseau),   Commandant (Capitaine de Vaisseau),  Lieutenant-Colonel, Colonel, Général."
-
 const iemListGrade = [
   {
     id: 0,
@@ -132,11 +130,8 @@ const commonIndicator = [
   { id: 4, value: "Clignement des yeux", isChecked: false },
   { id: 5, value: "Bouche plus ou moins ouverte", isChecked: false },
   { id: 6, value: "Front plus ou moins plissé/ridé", isChecked: false },
-  {
-    id: 7,
-    value: "Aucun des indicateurs ne se trouvent dans cette liste",
-    isChecked: false,
-  },
+  { id: 7, value: "Autres indicateurs ne se trouvant pas dans cette liste", isChecked: false },
+
 ];
 
 const configurationData = {

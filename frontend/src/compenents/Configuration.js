@@ -216,6 +216,9 @@ class Configuration extends React.Component {
           console.log(error);
         });
     }
+    exporSequenceOrder = () =>{
+      api.get("/output/sequence/order").then()
+    }
     render() {
       const date = new Date()
         return (
@@ -282,6 +285,13 @@ class Configuration extends React.Component {
                       <Button> Telecharger fichier de reponses </Button>
                     </CSVLink>
                   </Form.Group>
+                  <Form.Group style={{
+                  margin: 'auto',
+                  marginRight: '2%',
+                }} controlId="formBasicInitial">
+                            
+                              <Button><a href="http://172.21.03:5000/output/sequence/order"> Telecharger ordre reponses</a> </Button>
+                          </Form.Group>
                   </Col>
                 </Row>
               </Container>
