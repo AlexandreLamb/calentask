@@ -200,7 +200,7 @@ def upload_video():
     print(fl.request.files)
     sequence_order = [chr(el) for el in random.sample(range(65,69),4)]
     if os.path.exists("../frontend/public/videos/sequence_order.csv"):
-           df_sequence = pd.read_csv("../frontend/public/videos/sequence_order.csv",index_col=["subject","day"])
+        df_sequence = pd.read_csv("../frontend/public/videos/sequence_order.csv",index_col=["subject","day"])
     else:
         columns = ["0 min","15 min","30 min","45 min"]
         index = ["subject","day"]
