@@ -13,7 +13,7 @@ frontend/node_modules
 # production
 /build
 
-/public
+/public/videos
 
 /srv/.env
 /srv/data
@@ -37,3 +37,5 @@ yarn-error.log*
 backend/.backend_env
 backend/.env
 backend/build
+
+backend/data

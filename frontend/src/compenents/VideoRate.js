@@ -2,8 +2,9 @@ import React from 'react';
 import Button from "react-bootstrap/Button"
 import Form from "react-bootstrap/Form"
 import Card from "react-bootstrap/Card"
+import api from "../axiosConfig"
+import { itemListSequenceLevel} from "./formItems"
 
-const FLASK_URL = "http://127.0.0.1:5000/"
 
 class VideoRate extends React.Component {
     constructor(props) {
@@ -11,7 +12,18 @@ class VideoRate extends React.Component {
       this.state = {
           rateValue : "",
           timeReflexions : 0,
+          interval : null
       }
+    }
+    componentDidMount = () => {
+      const this_contexte = this
+      this.setState({ interval : setInterval(this_contexte.countTime, 1000)}) 
+    }
+    componentWillUnmount = () =>{
+      clearInterval(this.interval)
+    }
+    countTime = () => {
+      this.setState({timeReflexions : this.state.timeReflexions + 1})
     }
     handleChange = (event) => {
         const target = event.target;
@@ -26,17 +38,17 @@ class VideoRate extends React.Component {
         const this_contexte = this
         const videoName = "_"+this.props.videoName
         const sequenceLetter = "_"+this.props.videoLetter
-        const numberOfView = this.props.sequence[this.props.videoLetter].numberOfViews
+        const numberOfView = this.props.sequence[this.props.videoLetter].numberOfViews + 1
         const data = {}
         data["_id"]= this_contexte.props.documentID
         data[videoName] = {}
         data[videoName][sequenceLetter] = {
-          _rateValuerzeze: rateValue,
+          _rateValue: rateValue,
           _timeReflexions: timeReflexions,
           _numberOfView: numberOfView
         }
         console.log(data)
-        axios.post(FLASK_URL+'output/subject/rate/', data)
+        api.post('output/subject/rate/', data)
       .then(function (response) {
         const status_code = response.status
         if (parseInt(status_code) === 204){
@@ -55,6 +67,7 @@ class VideoRate extends React.Component {
       });
       event.preventDefault()
     }
+   
     render() { 
         const { rateValue, timeReflexions } = this.state
         return(
@@ -65,24 +78,27 @@ class VideoRate extends React.Component {
                     }}
                 >
             <Form>
-            <Form.Label>A quelle minute(s) correspond la sequence {this.props.videoLetter} ? </Form.Label>
-               
-               <Form.Group controlId="formBasicFatigueEva">
-                      {[1, 15, 30, 45].map((type) => (  
+            <Form.Label> A quel moment (minutes) correspond cette séquence vidéo (séquence {this.props.videoLetter}   ) ? </Form.Label>
+               <Form.Group controlId="formBasicSequence">
+                      { itemListSequenceLevel.map(({id, key, label}) => ( 
                         <Form.Check 
-                          key = {type}
+                          id = {id.toString()}
+                          key={key}
                           inline
-                          disabled={this.props.rateValueChecked.includes(type)}
+                          disabled={this.props.rateValueChecked.includes(label)}
                           value={rateValue}
                           onChange={this.handleChange}
-                          label={type + " min"}
+                          label={label + " min"}
                           name="rateValue"
                           type="radio"
-                          id={type} />
+                          />
                       ))}
                   </Form.Group>
-                  { rateValue ? <Button onClick={this.handleSubmit}> Valider le resultat</Button> : "" }
-                  <Button onClick={this.props.handleNextVideo}> Regarder la sequence suivante </Button>
+                  { rateValue ? <Button onClick={this.handleSubmit}> Valider votre choix</Button> : "" }
+                  <div>
+                  Sinon,
+                  </div>
+                  <Button onClick={this.props.handleNextVideo}>regardez une autre sequence</Button>
                </Form>
                </Card>
                
