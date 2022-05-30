@@ -13,16 +13,14 @@ frontend/node_modules
 # production
 /build
 
-/public/videos
-
 /srv/.env
 /srv/data
 /srv/dist
 /srv/build
-public/DESFAM_F_H98_VENDREDI
-public/DESFAM_F_Sequences
+frontend/public/DESFAM_F_H98_VENDREDI
+frontend/public/DESFAM_F_Sequences
 backend/__pycache__
-frontend/public
+frontend/public/videos/DESFAM_F_Sequences
 frontend/build
 # misc
 .DS_Store

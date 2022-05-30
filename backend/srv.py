@@ -136,8 +136,7 @@ def export_data():
     print(test_user_information)
     """
     return fl.jsonify(user_information)
-    
-
+  
 @app.route("/configuration/create/video", methods=["GET"])
 def list_video():
     if list(db.video_use.find({})) != [] :
@@ -200,7 +199,13 @@ def get_video_list():
 def upload_video():
     print(fl.request.files)
     sequence_order = [chr(el) for el in random.sample(range(65,69),4)]
-    df_sequence = pd.read_csv("../frontend/public/videos/sequence_order.csv",index_col=["subject","day"])
+    if os.path.exists("../frontend/public/videos/sequence_order.csv"):
+           df_sequence = pd.read_csv("../frontend/public/videos/sequence_order.csv",index_col=["subject","day"])
+    else:
+        columns = ["0 min","15 min","30 min","45 min"]
+        index = ["subject","day"]
+        df_sequence = pd.DataFrame(columns=columns, index=index)
+
     if len(fl.request.files) != 4:
 	    return "Miss video file"
     else:
@@ -238,3 +243,14 @@ def upload_video():
                 video_use["columns"]["column-1"]["taskIds"].append('task_'+str(last_index+index+1))
         db.video_use.find_one_and_update({}, {"$set" :video_use})
         return "video upload"
+  
+
+@app.route("/fix/bug/upload", methods=["GET"])
+def fix_bug():
+    backup_file = db.video_use.find_one()
+    backup_file.pop("_id")
+    db["backup"].insert_one(backup_file)
+    x =  db.video_use.delete_many({})
+
+    print(x.deleted_count, " documents deleted.")       
+    return fl.jsonify(list(backup_file))
