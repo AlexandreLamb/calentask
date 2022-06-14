@@ -173,7 +173,7 @@ class InformationForm extends React.Component {
           >
             <Form.Group as={Col} controlId="formBasicInitial">
               <Form.Label>
-                Initiales de votre prenom et nom ? <div>&nbsp;</div>
+                Initiales de votre prénom et nom ? <div>&nbsp;</div>
               </Form.Label>
               <Form.Control
                 name="initialValues"
@@ -206,7 +206,7 @@ class InformationForm extends React.Component {
             </Form.Group>
             <Form.Group as={Col} controlId="formBasicHeadquarters">
               <Form.Label>
-                A quel état major appartenait vous ? <div>&nbsp;</div>
+                A quel Etat-major appartenez-vous ? <div>&nbsp;</div>
               </Form.Label>
               <Form.Select
                 name="headquarters"
@@ -305,7 +305,7 @@ class InformationForm extends React.Component {
             </Form.Group>
             <Form.Group as={Col} controlId="formBasicPeopleCommand">
               <Form.Label>
-                Combien de personnes avez vous sous votre commandement ?
+                Combien de personnes avez-vous sous votre commandement ?
               </Form.Label>
               <Form.Control
                 name="peopleCommand"
@@ -325,7 +325,7 @@ class InformationForm extends React.Component {
           >
             <Form.Group as={Col} controlId="formBasicArmyJobLengthOfService">
               <Form.Label>
-                Depuis combien de temps êtes vous dans votre poste (en années) ? <div>&nbsp;</div>
+                Depuis combien de temps êtes-vous dans votre poste (en années) ? <div>&nbsp;</div>
               </Form.Label>
               <Form.Control
                 name="jobLengthOfService"
@@ -394,7 +394,7 @@ class InformationForm extends React.Component {
             </Form.Group>
             <div>&nbsp;</div>
             <Form.Group>
-              <Button onClick={this.handleSubmit}>Passer a la suite</Button>
+              <Button onClick={this.handleSubmit}>Passer à la suite</Button>
             </Form.Group>
           </Row>
         </Form>

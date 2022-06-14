@@ -98,7 +98,7 @@ class VideoRate extends React.Component {
                   <div>
                   Sinon,
                   </div>
-                  <Button onClick={this.props.handleNextVideo}>regardez une autre sequence</Button>
+                  <Button onClick={this.props.handleNextVideo}>Regarder une autre séquence</Button>
                </Form>
                </Card>
                

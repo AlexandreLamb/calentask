@@ -132,11 +132,11 @@ class SelfEvaluationForm extends React.Component {
             {displaySelfIndicator ? (
               <Form.Group>
                 <Form.Label>
-                  Quels indicateurs du visage avez vous utilisé pour classer les
+                  Quels indicateurs du visage avez-vous utilisés pour classer les
                   videos ?
                   <div>
                     (Plusieurs indicateurs possible à classer dans l'orde
-                    d'importance de gauche a droite, validez avec la touche
+                    d'importance de gauche à droite, validez avec la touche
                     "entrer")
                   </div>
                 </Form.Label>
@@ -173,7 +173,7 @@ class SelfEvaluationForm extends React.Component {
             {displayConfianceDegree ? (
               <Form.Group as={Col} controlId="formBasicConfianceDegree">
                 <Form.Label>
-                  Donnez nous votre avis sur le degrè de confiance du classement
+                  Donnez nous votre avis sur le degré de confiance du classement
                   que vous venez d'effectuer
                   <div>
                     (EVA allant de 1 à 10 de «Pas du tout confiant» à «Très

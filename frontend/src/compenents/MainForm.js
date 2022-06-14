@@ -300,7 +300,7 @@ class MainForm extends React.Component {
             Merci pour vos réponses,
             {videosToPlay.length - 1 == currentVideoIndex ? null : (
               <div>
-                Avez vous encore du temps pour une nouvelle sessions ?
+                Avez-vous encore du temps pour une nouvelle session ?
                 <div></div>
                 <Button onClick={this.handleNextVideo}> Video Suivante </Button>
               </div>
@@ -308,7 +308,7 @@ class MainForm extends React.Component {
             sinon,
             <Button onClick={this.handleBackToMenue}>
               {" "}
-              Quitter la sesison{" "}
+              Quitter la session{" "}
             </Button>
           </Card.Title>
         ) : null}

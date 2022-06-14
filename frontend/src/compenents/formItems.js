@@ -55,9 +55,9 @@ const iemListGrade = [
   { id: 10, key: "grade-10", value: "10", text: "Sous Lieutenant" },
   { id: 11, key: "grade-11", value: "11", text: "Lieutenant (Enseigne de Vaisseau)" },
   { id: 12, key: "grade-12", value: "12", text: "Capitaine (Lieutenant de Vaisseau)" },
-  { id: 13, key: "grade-13", value: "13", text: "Commandant (Capitaine de Vaisseau)" },
-  { id: 14, key: "grade-14", value: "14", text: "Lieutenant-Colonel" },
-  { id: 15, key: "grade-15", value: "15", text: "Colonel" },
+  { id: 13, key: "grade-13", value: "13", text: "Commandant (Capitaine de corvette)" },
+  { id: 14, key: "grade-14", value: "14", text: "Lieutenant-Colonel (Capitaine de frégate)" },
+  { id: 15, key: "grade-15", value: "15", text: "Colonel (Capitaine de vaisseau)" },
   { id: 16, key: "grade-16", value: "16", text: "Général" },
   ];
 
@@ -76,7 +76,7 @@ const iemListHeadquarters = [
     text: "Armée de l'Air et de l'Espace",
   },
   { id: 2, key: "headquarters-earth", value: "2", text: "Armée de Terre" },
-  { id: 3, key: "headquarters-water", value: "3", text: "Marine Nationnale" },
+  { id: 3, key: "headquarters-water", value: "3", text: "Marine Nationale" },
   {
     id: 4,
     key: "headquarters-gendarmerie",

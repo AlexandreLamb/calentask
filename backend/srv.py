@@ -254,3 +254,20 @@ def fix_bug():
 
     print(x.deleted_count, " documents deleted.")       
     return fl.jsonify(list(backup_file))
+
+@app.route("/connection/wifi", methods=["POST"])
+def connection():
+    response = fl.Response()
+    request = fl.request.get_json()
+    server_name = request.get("wifi_name")
+    password = request.get("password")
+    
+    try:            
+        print("nmcli d wifi connect {} password {}".format(server_name,password))
+        os.system("nmcli d wifi connect {} password {}".format(server_name,password))
+    except:
+        raise
+    else:
+        return True
+
+    return ""

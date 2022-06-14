@@ -148,7 +148,7 @@ class VideoForm extends React.Component {
                         Règles de classement
                     </Card.Title>
                     <Card.Body >
-                    L’objectif de cette étude est de vous demander de classer dans l'ordre chronologique 4 séquences 
+                    L’objectif de cette étude est de vous demandé de classer dans l'ordre chronologique 4 séquences 
                     vidéos de 10 secondes (A, B, C, D), qui correspondent à 4 moments dans une tâche fatigante : 
                     <div style={{fontWeight: "bold"}}>
                     0 min, 15 min, 30 min, 45 min

@@ -1,262 +1,288 @@
-import React, {
-  useState
-} from 'react';
-import Card from "react-bootstrap/Card"
-import Button from "react-bootstrap/Button"
-import Form from "react-bootstrap/Form"
-import ListGroup from "react-bootstrap/ListGroup"
-import Row from "react-bootstrap/Row"
-import Col from "react-bootstrap/Col"
-import Table from "react-bootstrap/Table"
-import styled from 'styled-components';
-import Upload from './Upload';
-import {
-  CSVLink,
-  CSVDownload
-} from "react-csv";
-import {
-  DragDropContext,
-  Droppable,
-  Draggable
-} from 'react-beautiful-dnd';
-import {
-  configurationData
-} from "./formItems"
-import Column from "./column"
-import api from "../axiosConfig"
-import ListGroupItem from 'react-bootstrap/esm/ListGroupItem';
-const {
-  Parser
-} = require('json2csv');
+import React, { useState } from "react";
+import Card from "react-bootstrap/Card";
+import Button from "react-bootstrap/Button";
+import Form from "react-bootstrap/Form";
+import ListGroup from "react-bootstrap/ListGroup";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import Table from "react-bootstrap/Table";
+import styled from "styled-components";
+import Upload from "./Upload";
+import { CSVLink, CSVDownload } from "react-csv";
+import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+import { configurationData } from "./formItems";
+import Column from "./column";
+import api from "../axiosConfig";
+import ListGroupItem from "react-bootstrap/esm/ListGroupItem";
+const { Parser } = require("json2csv");
 
 const filtreTexte = (arr, requete) => {
-  return arr.filter(el => (el.toLowerCase().indexOf(requete.toLowerCase()) !== -1) && (el.toLowerCase().indexOf("_evaluation") == -1));
-}
-const Container = styled.div `
+  return arr.filter(
+    (el) =>
+      el.toLowerCase().indexOf(requete.toLowerCase()) !== -1 &&
+      el.toLowerCase().indexOf("_evaluation") == -1
+  );
+};
+const Container = styled.div`
   display: flex;
-  margin: auto
+  margin: auto;
 `;
 class Configuration extends React.Component {
-    constructor(props) {
-      super(props);
-      this.state = {
-        initiate: "",
-        subject_data: [],
-        subject_data_csv: []
-      }
-    }
+  constructor(props) {
+    super(props);
+    this.state = {
+      initiate: "",
+      subject_data: [],
+      subject_data_csv: [],
+      wifi_name:"", 
+      password:""
 
-    getSubjectData = () => {
-      const this_contexte = this
-      const filtreTexte = (arr, requete) => {
-        return arr.filter(el => el.toLowerCase().indexOf(requete.toLowerCase()) !== -1);
-      }
+    };
+  }
 
-      api.get('output/export/data')
-        .then(function (response) {
-          const status_code = response.status
-          if (parseInt(status_code) === 204) {
-            console.log("form empty")
-          } else if (parseInt(status_code) === 200) {
+  getSubjectData = () => {
+    const this_contexte = this;
+    const filtreTexte = (arr, requete) => {
+      return arr.filter(
+        (el) => el.toLowerCase().indexOf(requete.toLowerCase()) !== -1
+      );
+    };
+
+    api
+      .get("output/export/data")
+      .then(function (response) {
+        const status_code = response.status;
+        if (parseInt(status_code) === 204) {
+          console.log("form empty");
+        } else if (parseInt(status_code) === 200) {
+          this_contexte.setState({
+            subject_data: response.data,
+          });
+
+          try {
+            const parser = new Parser();
+            const csv = parser.parse(this_contexte.state.subject_data);
             this_contexte.setState({
-              subject_data: response.data
-            })
-
-            try {
-              const parser = new Parser();
-              const csv = parser.parse(this_contexte.state.subject_data);
-              this_contexte.setState({
-                subject_data_csv: csv
-              })
-            } catch (err) {
-              console.error(err);
-            }
-          } else {
-            console.log("Error")
+              subject_data_csv: csv,
+            });
+          } catch (err) {
+            console.error(err);
           }
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
-    }
-    componentDidMount = () => {
-
-      const this_contexte = this
-      api.get('configuration/create/video')
-        .then(function (response) {
-          const status_code = response.status
-          if (parseInt(status_code) === 204) {
-            console.log("form empty")
-          } else if (parseInt(status_code) === 200) {
-            this_contexte.setState(response.data)
-            this_contexte.setState({
-              initiate: "initiate"
-            })
-          } else {
-            console.log("Error")
-          }
-        })
-        .catch(function (error) {
-          console.log(error);
-        });;
-      this.getSubjectData()
-
-      //setInterval(this.getSubjectData, 3000)
-    }
-    handleChange = (event) => {
-      const target = event.target;
-      const value = target.type === 'radio' ? target.id : target.value;
-      const name = target.name;
-      this.setState({
-        [name]: value
+        } else {
+          console.log("Error");
+        }
+      })
+      .catch(function (error) {
+        console.log(error);
       });
+  };
+  componentDidMount = () => {
+    const this_contexte = this;
+    api
+      .get("configuration/create/video")
+      .then(function (response) {
+        const status_code = response.status;
+        if (parseInt(status_code) === 204) {
+          console.log("form empty");
+        } else if (parseInt(status_code) === 200) {
+          this_contexte.setState(response.data);
+          this_contexte.setState({
+            initiate: "initiate",
+          });
+        } else {
+          console.log("Error");
+        }
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+    this.getSubjectData();
+
+    //setInterval(this.getSubjectData, 3000)
+  };
+  handleChange = (event) => {
+    const target = event.target;
+    const value = target.type === "radio" ? target.id : target.value;
+    const name = target.name;
+    this.setState({
+      [name]: value,
+    });
+  };
+  handleOnDragEnd = (result) => {
+    const filtreTexte = (arr, requete) => {
+      return arr.filter(
+        (el) =>
+          el.toLowerCase().indexOf(requete.toLowerCase()) !== -1 &&
+          el.toLowerCase().indexOf("_evaluation") == -1
+      );
+    };
+
+    const { destination, source, draggableId } = result;
+    if (!destination) {
+      return;
     }
-    handleOnDragEnd = (result) => {
-      const filtreTexte = (arr, requete) => {
-        return arr.filter(el => (el.toLowerCase().indexOf(requete.toLowerCase()) !== -1) && (el.toLowerCase().indexOf("_evaluation") == -1));
-      }
-      
 
+    if (
+      destination.droppableId === source.droppableId &&
+      destination.index === source.index
+    ) {
+      return;
+    }
 
-      const {
-        destination,
-        source,
-        draggableId
-      } = result;
-      if (!destination) {
-        return;
-      }
+    const start = this.state.columns[source.droppableId];
+    const finish = this.state.columns[destination.droppableId];
 
-      if (
-        destination.droppableId === source.droppableId &&
-        destination.index === source.index
-      ) {
-       
-        return;
-      }
+    if (start === finish) {
+      const newTaskIds = Array.from(start.taskIds);
+      newTaskIds.splice(source.index, 1);
+      newTaskIds.splice(destination.index, 0, draggableId);
 
-      const start = this.state.columns[source.droppableId];
-      const finish = this.state.columns[destination.droppableId];
-
-      if (start === finish) {
-        const newTaskIds = Array.from(start.taskIds);
-        newTaskIds.splice(source.index, 1);
-        newTaskIds.splice(destination.index, 0, draggableId);
-
-        const newColumn = {
-          ...start,
-          taskIds: newTaskIds,
-        };
-
-        const newState = {
-          ...this.state,
-          columns: {
-            ...this.state.columns,
-            [newColumn.id]: newColumn,
-          },
-        };
-
-        this.setState(newState);
-        api.post("configuration/udpate/video", {
-          "video_use": newState
-        }).then(function (response) {
-          const status_code = response.status
-          if (parseInt(status_code) === 204) {
-            console.log("form empty")
-          } else if (parseInt(status_code) === 200) {
-
-          } else {
-            console.log("Error")
-          }
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
-        return;
-      }
-
-      // Moving from one list to another
-      const startTaskIds = Array.from(start.taskIds);
-      startTaskIds.splice(source.index, 1);
-      const newStart = {
+      const newColumn = {
         ...start,
-        taskIds: startTaskIds,
-      };
-
-      const finishTaskIds = Array.from(finish.taskIds);
-      finishTaskIds.splice(destination.index, 0, draggableId);
-      const newFinish = {
-        ...finish,
-        taskIds: finishTaskIds,
+        taskIds: newTaskIds,
       };
 
       const newState = {
         ...this.state,
         columns: {
           ...this.state.columns,
-          [newStart.id]: newStart,
-          [newFinish.id]: newFinish,
+          [newColumn.id]: newColumn,
         },
       };
-      console.log(newState)
-      this.setState(newState);
-      api.post("configuration/udpate/video", {
-          "video_use": newState
-        }).then(function (response) {
-          const status_code = response.status
-          if (parseInt(status_code) === 204) {
-            console.log("form empty")
-          } else if (parseInt(status_code) === 200) {
 
+      this.setState(newState);
+      api
+        .post("configuration/udpate/video", {
+          video_use: newState,
+        })
+        .then(function (response) {
+          const status_code = response.status;
+          if (parseInt(status_code) === 204) {
+            console.log("form empty");
+          } else if (parseInt(status_code) === 200) {
           } else {
-            console.log("Error")
+            console.log("Error");
           }
         })
         .catch(function (error) {
           console.log(error);
         });
+      return;
     }
-    exporSequenceOrder = () =>{
-      api.get("/output/sequence/order").then()
-    }
-    render() {
-      const date = new Date()
-        return (
-            <Card style={{
-            width: '75%',
-            margin: 'auto',
-            marginTop: "1%"
-            }}>
-              <Card.Title style={{
-            textAlign: 'center',
-            fontSize: "2.25rem"
-            }}>
-                Interface de configuration du Questionnaire
 
-              </Card.Title>
+    // Moving from one list to another
+    const startTaskIds = Array.from(start.taskIds);
+    startTaskIds.splice(source.index, 1);
+    const newStart = {
+      ...start,
+      taskIds: startTaskIds,
+    };
 
-              <Container>
-                <Row>
-                 <Col>
-                 <Upload></Upload>
-                 </Col>
-                  <Col>
-                  <DragDropContext onDragEnd={this.handleOnDragEnd}>   
-            
-                  { this.state.initiate == "" ? "":            
+    const finishTaskIds = Array.from(finish.taskIds);
+    finishTaskIds.splice(destination.index, 0, draggableId);
+    const newFinish = {
+      ...finish,
+      taskIds: finishTaskIds,
+    };
+
+    const newState = {
+      ...this.state,
+      columns: {
+        ...this.state.columns,
+        [newStart.id]: newStart,
+        [newFinish.id]: newFinish,
+      },
+    };
+    console.log(newState);
+    this.setState(newState);
+    api
+      .post("configuration/udpate/video", {
+        video_use: newState,
+      })
+      .then(function (response) {
+        const status_code = response.status;
+        if (parseInt(status_code) === 204) {
+          console.log("form empty");
+        } else if (parseInt(status_code) === 200) {
+        } else {
+          console.log("Error");
+        }
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
+  connecitonWifi = () => {
+    const state = this.state;
+    api
+      .post("/connection/wifi", {
+        wifi_name: state.wifi_name,
+        password: state.password
+      })
+      .then(function (response) {
+        const status_code = response.status;
+        if (parseInt(status_code) === 204) {
+          console.log("form empty");
+        } else if (parseInt(status_code) === 200) {
+        } else {
+          console.log("Error");
+        }
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
+  handleChangeText = (event) => {
+    const target = event.target;
+    console.log(target)
+    const value = target.type === "radio" ? target.id : target.value;
+    const name = target.name;
+    this.setState({ [name]: value });
+  };
+  render() {
+    const date = new Date();
+    return (
+      <Card
+        style={{
+          width: "75%",
+          margin: "auto",
+          marginTop: "1%",
+        }}
+      >
+        <Card.Title
+          style={{
+            textAlign: "center",
+            fontSize: "2.25rem",
+          }}
+        >
+          Interface de configuration du Questionnaire
+        </Card.Title>
+
+        <Container>
+          <Row>
+            <Col>
+              <Upload></Upload>
+            </Col>
+            <Col>
+              <DragDropContext onDragEnd={this.handleOnDragEnd}>
+                {this.state.initiate == "" ? (
+                  ""
+                ) : (
                   <Container>
-                      {this.state.columnOrder.map(columnId => {
-                        const column = this.state.columns[columnId];
-                        const tasks = column.taskIds.map(
-                          taskId => this.state.tasks_list[taskId],
-                        );
-                        return <Column key={column.id} column={column} tasks={tasks} />;
-                      })}
-                </Container>
-                }
-      </DragDropContext>
-                  </Col>
-                  <Col>
+                    {this.state.columnOrder.map((columnId) => {
+                      const column = this.state.columns[columnId];
+                      const tasks = column.taskIds.map(
+                        (taskId) => this.state.tasks_list[taskId]
+                      );
+                      return (
+                        <Column key={column.id} column={column} tasks={tasks} />
+                      );
+                    })}
+                  </Container>
+                )}
+              </DragDropContext>
+            </Col>
+            {/* <Col>
                   {this.state.subject_data.map((_subject, index) => (
 
                   <Card key={index} style={{
@@ -273,31 +299,100 @@ class Configuration extends React.Component {
                     ))}
                   </Card>
                   ))}
-                  </Col>
-                  <Col>
-                  <Form.Group style={{
-          margin: 'auto',
-          marginTop: '50%',
-          marginRight: '2%',
-        }} controlId="formBasicInitial">
-                    <CSVLink data={ typeof(this.state.subject_data)=="object" ? this.state.subject_data_csv : [ ] }
-                      filename={"video_fatigue_"+date.getFullYear()+'-'+(date.getMonth()+1)+'-'+date.getDate()}>
+                    </Col>*/}
+            <Col>
+              <Card style={{ width: "18rem" }}>
+                <Card.Body>
+                  <Card.Title>Téléchargement</Card.Title>
+                  <Form.Group
+                    style={{
+                      marginBottom: "5%",
+                    }}
+                    controlId="formBasicInitial"
+                  >
+                    <CSVLink
+                      data={
+                        typeof this.state.subject_data == "object"
+                          ? this.state.subject_data_csv
+                          : []
+                      }
+                      filename={
+                        "video_fatigue_" +
+                        date.getFullYear() +
+                        "-" +
+                        (date.getMonth() + 1) +
+                        "-" +
+                        date.getDate()
+                      }
+                    >
                       <Button> Telecharger fichier de reponses </Button>
                     </CSVLink>
                   </Form.Group>
-                  <Form.Group style={{
-                  margin: 'auto',
-                  marginRight: '2%',
-                }} controlId="formBasicInitial">
-                            
-                              <Button><a href="http://172.21.03:5000/output/sequence/order"> Telecharger ordre reponses</a> </Button>
-                          </Form.Group>
-                  </Col>
-                </Row>
-              </Container>
-            </Card>
-        );
-    }
+                  <Form.Group controlId="formBasicInitial">
+                    <Button
+                      href={api.defaults.baseURL + "/output/sequence/order"}
+                    >
+                      {" "}
+                      Telecharger ordre reponses
+                    </Button>
+                  </Form.Group>
+                </Card.Body>
+              </Card>
+            </Col>
+          </Row>
+          {/*
+          <Row>
+            <Col>
+              <Card style={{ width: "25rem" }}>
+                <Card.Body>
+                  <Card.Title>Connection WIFI</Card.Title>
+                  <Form>
+                    <Form.Group
+                      as={Row}
+                      className="mb-3"
+                      controlId="formPlaintextSSID"
+                    >
+                      <Form.Label column sm="5">
+                       Nom du Wifi
+                      </Form.Label>
+                      <Col sm="5">
+                        <Form.Control
+                        name="wifi_name"
+                        type="text"
+                        value={this.state.wifi_name}
+                        onChange={this.handleChangeText}
+                        placeholder="Nom du wifi"
+                        />
+                      </Col>
+                    </Form.Group>
+
+                    <Form.Group
+                      as={Row}
+                      className="mb-3"
+                      controlId="formPlaintextPassword"
+                    >
+                      <Form.Label column sm="5">
+                        Password
+                      </Form.Label>
+                      <Col sm="5">
+                        <Form.Control 
+                        name="password"
+                        value={this.state.password}
+                        onChange={this.handleChangeText}
+                        type="password" placeholder="Password" />
+                      </Col>
+                    </Form.Group>
+                  </Form>
+                  <Button onClick={this.connecitonWifi} variant="primary">Connection</Button>
+                </Card.Body>
+              </Card>
+            </Col>
+          </Row>
+          */}
+        </Container>
+      </Card>
+    );
+  }
 }
 
-export default Configuration
+export default Configuration;
