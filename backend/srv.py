@@ -132,12 +132,7 @@ def export_data():
     for data in user_information:
         print(type(data))
         df_data = df_data.append(normalize_handmade(data))
-    """
-    print(type(user_information[0]))
-    print(list(user_information[0]))
-    for key in user_information[0]:
-        print(type(user_information[0][key]))
-    """
+    
     now = datetime.now()
     dt_string = now.strftime("%d_%m_%Y_%H_%M_%S")
     return fl.Response(
@@ -145,16 +140,7 @@ def export_data():
        mimetype="text/csv",
        headers={"Content-disposition":
        "attachment; filename=video_fatigue_"+dt_string+".csv"})
-    """
-    df_data = normalize_handmade(json.dumps(user_information))
-    now = datetime.now()
-    dt_string = now.strftime("%d_%m_%Y_%H_%M_%S")
-    return fl.Response(
-       df_data.to_csv(),
-       mimetype="text/csv",
-       headers={"Content-disposition":
-       "attachment; filename=video_fatigue_"+dt_string+".csv"})
-    """
+    
 @app.route("/configuration/create/video", methods=["GET"])
 def list_video():
     if list(db.video_use.find({})) != [] :
