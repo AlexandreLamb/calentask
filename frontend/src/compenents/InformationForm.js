@@ -154,7 +154,7 @@ class InformationForm extends React.Component {
             fontSize: "1.50rem",
           }}
         >
-          Section 1 : Information personnelle
+          Section 1 : Informations personnelles
         </Card.Title>
         <Form
           style={{

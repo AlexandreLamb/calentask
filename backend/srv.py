@@ -109,6 +109,7 @@ def export_sequence_order():
 @app.route("/output/export/data", methods=["GET"])
 def export_data():
     user_information = list( db.user_information.find())
+    
     print(user_information)
     for user in user_information:
         user["_id"] = str(user["_id"])
