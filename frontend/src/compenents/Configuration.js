@@ -304,36 +304,20 @@ class Configuration extends React.Component {
               <Card style={{ width: "18rem" }}>
                 <Card.Body>
                   <Card.Title>Téléchargement</Card.Title>
-                  <Form.Group
-                    style={{
-                      marginBottom: "5%",
-                    }}
-                    controlId="formBasicInitial"
-                  >
-                    <CSVLink
-                      data={
-                        typeof this.state.subject_data == "object"
-                          ? this.state.subject_data_csv
-                          : []
-                      }
-                      filename={
-                        "video_fatigue_" +
-                        date.getFullYear() +
-                        "-" +
-                        (date.getMonth() + 1) +
-                        "-" +
-                        date.getDate()
-                      }
+                  <Form.Group controlId="formBasicInitial_1">
+                    <Button
+                      href={api.defaults.baseURL + "/output/export/data"}
                     >
-                      <Button> Telecharger fichier de reponses </Button>
-                    </CSVLink>
+                      {" "}
+                      Telecharger les données de reponses
+                    </Button>
                   </Form.Group>
-                  <Form.Group controlId="formBasicInitial">
+                  <Form.Group controlId="formBasicInitial_2">
                     <Button
                       href={api.defaults.baseURL + "/output/sequence/order"}
                     >
                       {" "}
-                      Telecharger ordre reponses
+                      Telecharger l'ordre reponses
                     </Button>
                   </Form.Group>
                 </Card.Body>

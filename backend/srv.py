@@ -13,6 +13,7 @@ from bson import json_util
 import json
 from werkzeug.utils import secure_filename
 import random
+from datetime import datetime
 
 PATH_TO_SAVE = "data/"
 PATH_T0_CSV = ""
@@ -110,34 +111,50 @@ def export_sequence_order():
 def export_data():
     user_information = list( db.user_information.find())
     
-    print(user_information)
     for user in user_information:
         user["_id"] = str(user["_id"])
-    """  
-    def generate_csv_data(data: dict) -> str:
-    
-        # Defining CSV columns in a list to maintain
-        # the order
-        csv_columns = data.keys()
-    
-        # Generate the first row of CSV 
-        csv_data = ",".join(csv_columns) + "\n"
-    
-        # Generate the single record present
-        new_row = list()
-        for col in csv_columns:
-            new_row.append(str(data[col]))
-    
-        # Concatenate the record with the column information 
-        # in CSV format
-        csv_data += ",".join(new_row) + "\n"
-    
-        return csv_data
-    test_user_information = generate_csv_data(user_information)
-    print(test_user_information)
+    def normalize_handmade(json):
+        key_list = list(json)
+        df_csv = pd.DataFrame(columns=key_list)
+        #print(key_list)
+        for key in key_list:
+            #print(key + " = " + str(type(json[key])))
+            if type(json[key]) == type([]):
+                df_list = pd.json_normalize(json[key], record_prefix=key).add_prefix(key)
+                df_list = df_list.replace('', np.nan).fillna(method='bfill').iloc[[0]]
+                df_csv = df_csv.append(df_list)
+            else: 
+                #print(pd.Series(json[key], index=[key]))
+                df_csv = df_csv.append(pd.Series(json[key], index=[key]), ignore_index=True)
+        
+        return df_csv.replace('', np.nan).fillna(method='bfill').iloc[[0]]
+    df_data = pd.DataFrame()
+    for data in user_information:
+        print(type(data))
+        df_data = df_data.append(normalize_handmade(data))
     """
-    return fl.jsonify(user_information)
-  
+    print(type(user_information[0]))
+    print(list(user_information[0]))
+    for key in user_information[0]:
+        print(type(user_information[0][key]))
+    """
+    now = datetime.now()
+    dt_string = now.strftime("%d_%m_%Y_%H_%M_%S")
+    return fl.Response(
+       df_data.to_csv(),
+       mimetype="text/csv",
+       headers={"Content-disposition":
+       "attachment; filename=video_fatigue_"+dt_string+".csv"})
+    """
+    df_data = normalize_handmade(json.dumps(user_information))
+    now = datetime.now()
+    dt_string = now.strftime("%d_%m_%Y_%H_%M_%S")
+    return fl.Response(
+       df_data.to_csv(),
+       mimetype="text/csv",
+       headers={"Content-disposition":
+       "attachment; filename=video_fatigue_"+dt_string+".csv"})
+    """
 @app.route("/configuration/create/video", methods=["GET"])
 def list_video():
     if list(db.video_use.find({})) != [] :
