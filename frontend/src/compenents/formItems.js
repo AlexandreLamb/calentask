@@ -35,6 +35,26 @@ const iemListStudieLevel = [
   { id: 8, key: "studieLevel-bepcap", value: "8", text: "BEP ou CAP" },
 ];
 
+const iemListStudieLevelStudent = [
+  {
+    id: 0,
+    key: "studieLevel-default",
+    value: "default",
+    text: "Cliquer ici pour choisir votre niveau d'étude",
+    disabled: true,
+  },
+  {
+    id: 1,
+    key: "studieLevel-0",
+    value: "1",
+    text: "ING 1 (L1)",
+  },
+  { id: 1, key: "studieLevel-1", value: "1", text: "ING 2 (L2)" },
+  { id: 2, key: "studieLevel-2", value: "2", text: "ING 3 (L3)" },
+  { id: 3, key: "studieLevel-3", value: "3", text: "ING 4 (M1)" },
+  { id: 4, key: "studieLevel-4", value: "4", text: "ING 5 (M2)" },
+];
+
 const iemListGrade = [
   {
     id: 0,
@@ -175,4 +195,5 @@ export {
   commonIndicator,
   configurationData,
   itemListSequenceLevel,
+  iemListStudieLevelStudent,
 };

@@ -11,6 +11,7 @@ import {
   itemListFatigueLevelPratical,
   iemListGrade,
   iemListHeadquarters,
+  iemListStudieLevelStudent,
 } from "./formItems";
 import { getLocalState } from "../utils";
 import api from "../axiosConfig";
@@ -186,6 +187,7 @@ class InformationForm extends React.Component {
                 Les initiales seront conservées de manière anonyme
               </Form.Text>
             </Form.Group>
+            {this.props.studentMode ?
             <Form.Group as={Col} controlId="formBasicGrade">
               <Form.Label>
                 Quel est votre grade ? <div>&nbsp;</div>
@@ -203,8 +205,8 @@ class InformationForm extends React.Component {
                   )
                 )}
               </Form.Select>
-            </Form.Group>
-            <Form.Group as={Col} controlId="formBasicHeadquarters">
+            </Form.Group> : null}
+            {this.props.studentMode ? <Form.Group as={Col} controlId="formBasicHeadquarters">
               <Form.Label>
                 A quel Etat-major appartenez-vous ? <div>&nbsp;</div>
               </Form.Label>
@@ -221,7 +223,8 @@ class InformationForm extends React.Component {
                   )
                 )}
               </Form.Select>
-            </Form.Group>
+            </Form.Group> : null}
+            
           </Row>
           <Row
             className="mb-3"
@@ -230,16 +233,16 @@ class InformationForm extends React.Component {
               marginBottom: "5%",
             }}
           >
-            <Form.Group as={Col} controlId="formBasicTypeOfJob">
+            {this.props.studentMode ? <Form.Group as={Col} controlId="formBasicTypeOfJob">
               <Form.Label>Quel est votre intutilé de spécialité ?</Form.Label>
-              <Form.Control
+               <Form.Control
                 name="typeOfJob"
                 value={typeOfJob}
                 onChange={this.handleChange}
                 type="text"
                 placeholder="Intitulé de votre poste"
-              />
-            </Form.Group>
+              />  
+            </Form.Group> : null}
             <Form.Group as={Col} controlId="formBasicGender">
               <Form.Label>Genre</Form.Label>
               <Form.Select
@@ -282,16 +285,23 @@ class InformationForm extends React.Component {
                 value={studieLevel}
                 onChange={this.handleChange}
               >
-                {iemListStudieLevel.map(
+                {this.props.studentMode ? iemListStudieLevel.map(
                   ({ id, key, value, text, disabled }) => (
                     <option id={id} key={key} value={value} disabled={disabled}>
                       {text}{" "}
                     </option>
                   )
-                )}
+                ) : iemListStudieLevelStudent.map(
+                  ({ id, key, value, text, disabled }) => (
+                    <option id={id} key={key} value={value} disabled={disabled}>
+                      {text}{" "}
+                    </option>
+                  )
+                )
+                }
               </Form.Select>
             </Form.Group>
-            <Form.Group as={Col} controlId="formBasicarmyLengthOfService">
+            {this.props.studentMode ? <Form.Group as={Col} controlId="formBasicarmyLengthOfService">
               <Form.Label>
                 Depuis combien de temps êtes vous millitaire (en années) ?
               </Form.Label>
@@ -302,8 +312,8 @@ class InformationForm extends React.Component {
                 type="number"
                 placeholder="Année de service"
               />
-            </Form.Group>
-            <Form.Group as={Col} controlId="formBasicPeopleCommand">
+            </Form.Group> : null}
+            {this.props.studentMode ? <Form.Group as={Col} controlId="formBasicPeopleCommand">
               <Form.Label>
                 Combien de personnes avez-vous sous votre commandement ?
               </Form.Label>
@@ -314,7 +324,7 @@ class InformationForm extends React.Component {
                 type="number"
                 placeholder="Nombre de personne sous votre commandement"
               />
-            </Form.Group>
+            </Form.Group> : null}
           </Row>
           <Row
             className="mb-3"
@@ -322,7 +332,7 @@ class InformationForm extends React.Component {
               marginTop: "5%",
               marginBottom: "5%",
             }}
-          >
+          >{this.props.studentMode ?
             <Form.Group as={Col} controlId="formBasicArmyJobLengthOfService">
               <Form.Label>
                 Depuis combien de temps êtes-vous dans votre poste (en années) ? <div>&nbsp;</div>
@@ -334,7 +344,7 @@ class InformationForm extends React.Component {
                 type="number"
                 placeholder="Année dans le poste"
               />
-            </Form.Group>
+            </Form.Group> : null }
             <Form.Group as={Col} controlId="formBasicStudieArea">
               <Form.Label>Quel est votre domaine d'étude ? <div>&nbsp;</div></Form.Label>
               <Form.Control

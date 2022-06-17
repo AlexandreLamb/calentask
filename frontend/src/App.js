@@ -1,26 +1,31 @@
-import './App.css';
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link
-} from "react-router-dom";
-import MainForm from './compenents/MainForm.js';
-import Configuration from './compenents/Configuration';
+import "./App.css";
+import React from "react";
 
-function App() {
-  const VIDEO_FOLDER = "videos/DESFAM_F_Sequences/"
-  return (
-    <Router>
-      <Route exact path="/">
-        <MainForm videoFolder={VIDEO_FOLDER}/>
-      </Route>
-      <Route path="/configuration">
-        <Configuration videoFolder={VIDEO_FOLDER}/>
-      </Route>
-    </Router>
-      
-  );
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import MainForm from "./compenents/MainForm.js";
+import Configuration from "./compenents/Configuration";
+const VIDEO_FOLDER = "videos/DESFAM_F_Sequences/";
+
+class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {}
+  }
+  
+  render() {
+    return (
+      <Router>
+        <Route exact path="/">
+          <MainForm
+            videoFolder={VIDEO_FOLDER}
+          />
+        </Route>
+        <Route path="/configuration">
+          <Configuration videoFolder={VIDEO_FOLDER} />
+        </Route>
+      </Router>
+    );
+  }
 }
 
 export default App;

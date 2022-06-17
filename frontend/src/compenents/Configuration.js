@@ -35,7 +35,7 @@ class Configuration extends React.Component {
       subject_data: [],
       subject_data_csv: [],
       wifi_name:"", 
-      password:""
+      password:"", 
 
     };
   }
@@ -96,7 +96,7 @@ class Configuration extends React.Component {
       .catch(function (error) {
         console.log(error);
       });
-    this.getSubjectData();
+    //this.getSubjectData();
 
     //setInterval(this.getSubjectData, 3000)
   };
@@ -206,6 +206,7 @@ class Configuration extends React.Component {
         } else if (parseInt(status_code) === 200) {
         } else {
           console.log("Error");
+
         }
       })
       .catch(function (error) {
@@ -238,6 +239,26 @@ class Configuration extends React.Component {
     const value = target.type === "radio" ? target.id : target.value;
     const name = target.name;
     this.setState({ [name]: value });
+  };
+  toggleStates = () => {   
+   const this_contexte = this
+   api
+   .get("/configuration/toggle/student")
+   .then(function (response) {
+     const status_code = response.status;
+     if (parseInt(status_code) === 204) {
+       console.log("Request error");
+     } else if (parseInt(status_code) === 200) {
+        console.log(response.data)
+        this_contexte.setState({studentMode : response.data})
+     } else {
+       console.log("Error");
+
+     }
+   })
+   .catch(function (error) {
+     console.log(error);
+   });
   };
   render() {
     const date = new Date();
@@ -320,6 +341,19 @@ class Configuration extends React.Component {
                       Telecharger l'ordre reponses
                     </Button>
                   </Form.Group>
+                  
+                </Card.Body>
+              </Card>
+            </Col>
+            <Col>
+            <Card style={{ width: "18rem" }}>
+                <Card.Body>
+                  <Card.Title>Mode Etudiant</Card.Title>
+                  {this.state.studentMode ? 
+                  <Button onClick={this.toggleStates}>Activer mode etudiant </Button> : 
+                  <Button onClick={this.toggleStates}>Désactiver mode etudiant </Button>
+                  }  
+
                 </Card.Body>
               </Card>
             </Col>

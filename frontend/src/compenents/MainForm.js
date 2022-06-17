@@ -35,7 +35,29 @@ class MainForm extends React.Component {
       videosToPlay: [],
       currentVideoIndex: 0,
       clearLocalStorage: false,
+      studentMode: false,
+
     };
+  }
+  getStudentMode = () => {
+    const this_contexte = this;
+    api
+      .get("configuration/get/student")
+      .then(function (response) {
+        const status_code = response.status;
+        if (parseInt(status_code) === 204) {
+          console.log("form empty");
+        } else if (parseInt(status_code) === 200) {
+          this_contexte.setState({
+            studentMode: response.data,
+          });
+        } else {
+          console.log("Error");
+        }
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   }
   getVideoToLoad = () => {
     const this_contexte = this;
@@ -59,6 +81,8 @@ class MainForm extends React.Component {
   };
   componentDidMount = () => {
     this.getVideoToLoad();
+    setInterval(this.getStudentMode, 3000)
+
     
   };
   handleChange = (event) => {
@@ -239,6 +263,7 @@ class MainForm extends React.Component {
               fontSize: "2.25rem",
             }}
           >
+            {process.env.REACT_APP_FLASK_URL}
             Questionnaire permettant le Classement (évaluation) de Visages
             Fatigués (Etude CLAVIF) grâce au visionnage de séquences vidéos
             <div>
@@ -252,6 +277,7 @@ class MainForm extends React.Component {
         ) : null}
         {displayInformationForm ? (
           <InformationForm
+            studentMode={this.state.studentMode}
             handleSubmit={this.handleSubmitInformationForm}
             clearLocalStorage={clearLocalStorage}
           />
