@@ -282,21 +282,16 @@ def toggleStudentMode():
     col_name="settings"
     if col_name in db.list_collection_names():
         if db.settings.find_one({}) != None:
-            print("collection exists")
             studentModeObj = db.settings.find_one({})
-            print(studentModeObj)
             res = db.settings.find_one_and_update({"_id" : studentModeObj.get("_id")}, {"$set" : {"studentMode" : not studentModeObj.get("studentMode")}})
-            print(res)
             studentMode = db.settings.find_one({})["studentMode"]
         else : 
             res = db.settings.insert_one({"studentMode": False})
-            print(res)
             studentMode = db.settings.find_one({})["studentMode"]
         
 
     else:
         res = db.settings.insert_one({"studentMode": False})
-        print(res)
         studentMode = db.settings.find_one({})["studentMode"]
         
     return fl.jsonify(studentMode)
@@ -306,7 +301,6 @@ def toggleStudentMode():
 def getStudentMode():
     col_name="settings"
     if col_name in db.list_collection_names():
-        print(db.settings.find_one({}))
         if db.settings.find_one({}) != None:
             studentMode = db.settings.find_one({})["studentMode"]
         else:

@@ -15,9 +15,12 @@ class SelfEvaluationForm extends React.Component {
       confianceDegree: "",
       selfIndcator: [],
       commonIndicator: commonIndicator,
+      videoDifficultyComment: "",
+      videoDifficulty : "",
+      displaySelfIndicator: true,
       displayCommonIndicator: false,
       displayConfianceDegree: false,
-      displaySelfIndicator: true,
+      displayDifficultyVideo: false,
     };
   }
   handleCheckedElement = (event) => {
@@ -55,8 +58,14 @@ class SelfEvaluationForm extends React.Component {
       });
     }
     if (this.state.displayConfianceDegree == true) {
+      this.setState({
+        displayConfianceDegree: false,
+        displayDifficultyVideo: true,
+      });
+    }
+    if (this.state.displayDifficultyVideo == true) {
       const axios = require("axios").default;
-      const { confianceDegree, selfIndcator, commonIndicator } = this.state;
+      const { confianceDegree, selfIndcator, commonIndicator, videoDifficulty,videoDifficultyComment } = this.state;
       const this_contexte = this;
       const videoName = "_" + this.props.videoFolder.split("/").at(-1);
       const data = {};
@@ -77,6 +86,8 @@ class SelfEvaluationForm extends React.Component {
         _confianceDegree: confianceDegree,
         _commonIndicator: commonIndicatorChecked,
         _selfIndcator: selfIndcatorText,
+        _videoDifficulty : videoDifficulty,
+        _videoDifficultyComment : videoDifficultyComment
       };
       api
         .post("output/subject/evaluation/", data)
@@ -105,6 +116,8 @@ class SelfEvaluationForm extends React.Component {
       displayCommonIndicator,
       displayConfianceDegree,
       displaySelfIndicator,
+      displayDifficultyVideo,
+      videoDifficultyComment,
     } = this.state;
     return (
       <Card
@@ -135,12 +148,13 @@ class SelfEvaluationForm extends React.Component {
                   Quels indicateurs du visage avez-vous utilisés pour classer les
                   videos ?
                   <div>
-                    (Plusieurs indicateurs possible à classer dans l'orde
-                    d'importance de gauche à droite, validez avec la touche
-                    "entrer")
+                    Plusieurs indicateurs possible à classer dans l'orde
+                    d'importance de gauche à droite,
                   </div>
                 </Form.Label>
                 <TagInput handleTag={this.handleTag} />
+                <div>&nbsp;</div> <b>Validez avec la touche
+                    <h4>"Entrer ↵"</h4></b>
               </Form.Group>
             ) : null}
             {displayCommonIndicator ? (
@@ -184,7 +198,7 @@ class SelfEvaluationForm extends React.Component {
 
                 {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((type) => (
                   <Form.Check
-                    value={`level-${type}`}
+                    value={type}
                     onChange={this.handleChange}
                     inline
                     label={type}
@@ -193,6 +207,37 @@ class SelfEvaluationForm extends React.Component {
                     key={`level-${type}`}
                   />
                 ))}
+              </Form.Group>
+            ) : null}
+
+              {displayDifficultyVideo ? (
+              <Form.Group as={Col} controlId="formBasicDifficultyVideo">
+                <Form.Label>
+                Comment estimez-vous la difficulté pour retrouver l'ordre des séquences de ce sujet 
+                </Form.Label>
+                <div></div>
+
+                {["Facile", "Intermédiaire", "Difficile"].map((type) => (
+                  <Form.Check
+                    value={type}
+                    onChange={this.handleChange}
+                    inline
+                    label={type}
+                    name="videoDifficulty"
+                    type="radio"
+                    key={`level-${type}`}
+                  />
+                ))}
+                <Form.Label>
+                Pour quelle(s) raison(s) ? 
+                </Form.Label>
+                <Form.Control
+                name="videoDifficultyComment"
+                value={videoDifficultyComment}
+                onChange={this.handleChange}
+                type="text"
+                placeholder="Commentaire(s)"
+              />
               </Form.Group>
             ) : null}
             <Button onClick={this.handleSubmit}>Passer a la suite</Button>
