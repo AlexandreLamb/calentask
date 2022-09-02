@@ -11,9 +11,9 @@ class MainForm extends React.Component {
     super(props);
     this.state = {
       playing: false,
-      displayInformationForm: false,
+      displayInformationForm: true,
       displayVideoForm: false,
-      displaySelfEvaluationForm: true,
+      displaySelfEvaluationForm: false,
       documentID: null,
       videoLetter: "A",
       videoNotAvailable: [],
