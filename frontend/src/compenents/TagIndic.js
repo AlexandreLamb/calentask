@@ -17,13 +17,14 @@ class TagIndic extends React.Component {
               
              ],
             suggestions: [
-                { id: 'Clignement des yeux', text: 'Clignement des yeux' },
              ]
         };
         this.handleDelete = this.handleDelete.bind(this);
         this.handleAddition = this.handleAddition.bind(this);
         this.handleDrag = this.handleDrag.bind(this);
     }
+
+    
 
     handleDelete(i) {
         const { tags } = this.state;
@@ -61,12 +62,12 @@ class TagIndic extends React.Component {
         <div className={styles.ReactTags}>
 
                 <ReactTags tags={tags}
-                    suggestions={this.props.suggestions}
+                    suggestions={this.props.commonIndicator}
                     handleDelete={this.handleDelete}
                     handleAddition={this.handleAddition}
                     handleDrag={this.handleDrag}
                     delimiters={delimiters} 
-                    placeholder="Entrer un indicateur..."
+                    placeholder={"Suggestions:  "  + this.props.commonIndicator.map(a => a.text +" ")}
                     inputFieldPosition="bottom"
                 />
             </div>

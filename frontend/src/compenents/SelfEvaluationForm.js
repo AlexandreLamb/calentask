@@ -68,10 +68,12 @@ class SelfEvaluationForm extends React.Component {
       this.state.displaySelfIndicator == true &&
       this.state.selfIndcator.length != 0
     ) {
+      
       this.setState({
         displaySelfIndicator: false,
         displayCommonIndicator: true,
       });
+
     }
     if (this.state.displayCommonIndicator == true) {
       this.setState({
@@ -82,10 +84,11 @@ class SelfEvaluationForm extends React.Component {
     if (this.state.displayConfianceDegree == true) {
       this.setState({
         displayConfianceDegree: false,
-        displayDifficultyVideo: true,
+        displayDifficultyVideo: true, 
       });
     }
     if (this.state.displayDifficultyVideo == true) {
+
       const axios = require("axios").default;
       const { confianceDegree, selfIndcator, commonIndicator, videoDifficulty, videoDifficultyComment } = this.state;
       const this_contexte = this;
@@ -248,7 +251,6 @@ class SelfEvaluationForm extends React.Component {
                   }}>(Plusieurs items possibles à cocher ):</div>
                 </Form.Label>
                 <div></div>
-
                 {commonIndicator.map(({ id, value, isChecked }) => (
                   <Form.Check className="rounded"
                     style={{
@@ -298,9 +300,8 @@ class SelfEvaluationForm extends React.Component {
                   }}>
                   <TagIndic className="rounded"
                     handleIndic={this.handleIndic}
-                    suggestions={this.state.selfIndcator}
+                    commonIndicator={selfIndcator}
                   />
-                  {this.state.selfIndcator}
                 </Form>
                 <Form className="rounded"
                     style={{
@@ -444,7 +445,7 @@ class SelfEvaluationForm extends React.Component {
                   name="videoDifficultyComment"
                   value={videoDifficultyComment}
                   onChange={this.handleChange}
-                  type="text"
+                  as="textarea"
                   placeholder="Commentaire long"
                 />
               </Form.Group>
