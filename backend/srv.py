@@ -168,7 +168,7 @@ def list_video():
                   },
                   "columnOrder": ['column-1', 'column-2'],
                   "pathToExportData": ""
-            };
+            }
         for (index, video_name) in enumerate(videos_default):
             state["tasks_list"]["task_"+str(index+1)] = {"id": 'task_'+str(index+1), "content" : video_name}
             state["columns"]["column-1"]["taskIds"].append('task_'+str(index+1))
