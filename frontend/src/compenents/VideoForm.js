@@ -190,13 +190,12 @@ class VideoForm extends React.Component {
 
     render() {
         const { displayVideoRate, rateValueChecked, isStopWatchingVideo, videoLetter, classifiedSequence } = this.state;
-        //
-        // const url = this.props.videoFolder + '_' + videoLetter + '-converted.mp4'
-        //
-        const video = "videos/DESFAM_F_Sequences/DESFAM_F_H90_LUNDI/DESFAM_F_H90_LUNDI"
-        const url = "videos/DESFAM_F_Sequences/DESFAM_F_H90_LUNDI/DESFAM_F_H90_LUNDI" + '_' + videoLetter + '-converted.mp4'
-        // const videoName = this.props.videoFolder.split("/").at(-1)
-        const videoName = video.split("/").at(-1)
+        
+        const url = this.props.videoFolder + '_' + videoLetter + '-converted.mp4'
+        
+        
+        const videoName = this.props.videoFolder.split("/").at(-1)
+       
         return (
             <div>
                 <Card
