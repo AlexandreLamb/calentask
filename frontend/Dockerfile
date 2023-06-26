@@ -17,8 +17,10 @@ COPY package-lock.json /frontend/package-lock.json
 RUN npm install
 RUN npm install react-scripts -g
 
+RUN npm install nodemon --save-dev
+
 # Add React app to working directory
 ADD . /frontend
 
 # Start the React app
-CMD ["npm","start"]
+CMD ["nodemon","--exec","npm","start"]

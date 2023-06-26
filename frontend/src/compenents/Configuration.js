@@ -276,7 +276,8 @@ class Configuration extends React.Component {
             fontSize: "2.25rem",
           }}
         >
-          Interface de configuration du Questionnaire
+         CONFIGURATION <br></br> 
+         Interface de configuration du Questionnaire
         </Card.Title>
 
         <Container>

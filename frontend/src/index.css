@@ -1,0 +1,22 @@
+
+  body {
+    font-family: 'Marianne';
+  }
+
+  .MarianneBold {
+    font-family: 'Marianne bold';
+  }
+
+  label {
+    margin-top:"-10px";
+  }
+
+  @font-face {
+    font-family: 'Marianne';
+    src: local('Marianne'), url(./fonts/Marianne/Marianne-Regular.otf) format('OpenType');
+  }
+
+  @font-face {
+    font-family: 'Marianne bold';
+    src: local('Marianne bold'), url(./fonts/Marianne/Marianne-Regular.otf) format('OpenType');
+  }

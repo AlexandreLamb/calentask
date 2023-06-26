@@ -141,17 +141,11 @@ const itemListFatigueLevelTheorical = [
 
 const commonIndicator = [
   { id: 1, value: "Yeux plus ou moins ouverts", isChecked: false },
-  {
-    id: 2,
-    value: "Muscles du visage plus ou moins relâchés",
-    isChecked: false,
-  },
+  { id: 2,value: "Muscles du visage plus ou moins relâchés",isChecked: false,},
   { id: 3, value: "Tête plus ou moins baissée", isChecked: false },
   { id: 4, value: "Clignement des yeux", isChecked: false },
   { id: 5, value: "Bouche plus ou moins ouverte", isChecked: false },
   { id: 6, value: "Front plus ou moins plissé/ridé", isChecked: false },
-  { id: 7, value: "Autres indicateurs ne se trouvant pas dans cette liste", isChecked: false },
-
 ];
 
 const configurationData = {
