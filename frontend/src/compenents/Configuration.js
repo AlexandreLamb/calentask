@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import Card from "react-bootstrap/Card";
+import Tab from "react-bootstrap/Tab";
+import Tabs from "react-bootstrap/Tabs";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import ListGroup from "react-bootstrap/ListGroup";
@@ -280,13 +282,9 @@ class Configuration extends React.Component {
          Interface de configuration du Questionnaire
         </Card.Title>
 
-        <Container>
-          <Row>
-            <Col>
-              <Upload></Upload>
-            </Col>
-            <Col>
-              <DragDropContext onDragEnd={this.handleOnDragEnd}>
+          <Tabs>
+            <Tab eventKey="session" title="Session">
+            <DragDropContext onDragEnd={this.handleOnDragEnd}>
                 {this.state.initiate == "" ? (
                   ""
                 ) : (
@@ -303,50 +301,35 @@ class Configuration extends React.Component {
                   </Container>
                 )}
               </DragDropContext>
-            </Col>
-            {/* <Col>
-                  {this.state.subject_data.map((_subject, index) => (
-
-                  <Card key={index} style={{
-                    margin: 'auto',
-                    marginTop: "1%",
-                    width: '75%',
-                    textAlign: 'center'
-                    }}>
-                    <Card.Title>
-                      {_subject._initialValues + "_" + _subject._id}
-                    </Card.Title>
-                    { filtreTexte(Object.keys(_subject), "DESFAM").map((video, index) => (
-                    <ListGroup.Item key={index}>{video}</ListGroup.Item>
-                    ))}
-                  </Card>
-                  ))}
-                    </Col>*/}
-            <Col>
+            </Tab>
+            <Tab  eventKey="upload" title="Upload">
+              <Upload></Upload>
+            </Tab>
+            <Tab  eventKey="download" title="Téléchargements">
               <Card style={{ width: "18rem" }}>
-                <Card.Body>
-                  <Card.Title>Téléchargement</Card.Title>
-                  <Form.Group controlId="formBasicInitial_1">
-                    <Button
-                      href={api.defaults.baseURL + "/output/export/data"}
-                    >
-                      {" "}
-                      Telecharger les données de reponses
-                    </Button>
-                  </Form.Group>
-                  <Form.Group controlId="formBasicInitial_2">
-                    <Button
-                      href={api.defaults.baseURL + "/output/sequence/order"}
-                    >
-                      {" "}
-                      Telecharger l'ordre reponses
-                    </Button>
-                  </Form.Group>
-                  
-                </Card.Body>
-              </Card>
-            </Col>
-            <Col>
+                  <Card.Body>
+                    <Card.Title>Téléchargement</Card.Title>
+                    <Form.Group controlId="formBasicInitial_1">
+                      <Button
+                        href={api.defaults.baseURL + "/output/export/data"}
+                      >
+                        {" "}
+                        Telecharger les données de reponses
+                      </Button>
+                    </Form.Group>
+                    <Form.Group controlId="formBasicInitial_2">
+                      <Button
+                        href={api.defaults.baseURL + "/output/sequence/order"}
+                      >
+                        {" "}
+                        Telecharger l'ordre reponses
+                      </Button>
+                    </Form.Group>
+                    
+                  </Card.Body>
+                </Card>
+            </Tab>
+            <Tab eventKey="mode" title="Mode">
             <Card style={{ width: "18rem" }}>
                 <Card.Body>
                   <Card.Title>Mode Etudiant</Card.Title>
@@ -357,58 +340,32 @@ class Configuration extends React.Component {
 
                 </Card.Body>
               </Card>
-            </Col>
-          </Row>
-          {/*
-          <Row>
-            <Col>
-              <Card style={{ width: "25rem" }}>
-                <Card.Body>
-                  <Card.Title>Connection WIFI</Card.Title>
-                  <Form>
-                    <Form.Group
-                      as={Row}
-                      className="mb-3"
-                      controlId="formPlaintextSSID"
-                    >
-                      <Form.Label column sm="5">
-                       Nom du Wifi
-                      </Form.Label>
-                      <Col sm="5">
-                        <Form.Control
-                        name="wifi_name"
-                        type="text"
-                        value={this.state.wifi_name}
-                        onChange={this.handleChangeText}
-                        placeholder="Nom du wifi"
-                        />
-                      </Col>
-                    </Form.Group>
+            </Tab>
+            {/*<Tab eventKey="visualisation" title="Visualisation">
+            {this.state.subject_data.map((_subject, index) => (
 
-                    <Form.Group
-                      as={Row}
-                      className="mb-3"
-                      controlId="formPlaintextPassword"
-                    >
-                      <Form.Label column sm="5">
-                        Password
-                      </Form.Label>
-                      <Col sm="5">
-                        <Form.Control 
-                        name="password"
-                        value={this.state.password}
-                        onChange={this.handleChangeText}
-                        type="password" placeholder="Password" />
-                      </Col>
-                    </Form.Group>
-                  </Form>
-                  <Button onClick={this.connecitonWifi} variant="primary">Connection</Button>
-                </Card.Body>
-              </Card>
-            </Col>
-          </Row>
-          */}
-        </Container>
+            <Card key={index} style={{
+              margin: 'auto',
+              marginTop: "1%",
+              width: '75%',
+              textAlign: 'center'
+              }}>
+              <Card.Title>
+                {_subject._initialValues + "_" + _subject._id}
+              </Card.Title>
+              { filtreTexte(Object.keys(_subject), "DESFAM").map((video, index) => (
+              <ListGroup.Item key={index}>{video}</ListGroup.Item>
+              ))}
+            </Card>
+            ))}
+              </Tab>*/}
+          </Tabs>
+
+            
+            {/* <Col>
+                  
+                    </Col>*/}
+          
       </Card>
     );
   }

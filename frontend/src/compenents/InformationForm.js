@@ -930,12 +930,12 @@ class InformationForm extends React.Component {
               className="rounded"
               style={{ textAlign: "center", fontSize: "1rem", marginTop: "2%", width: "100%" }}>
               <Form.Check
-                class="form-check-input"
                 type="checkbox"
                 inline
                 value="1"
                 label="J'accepte les termes et les conditions d'utilisations."
                 id="invalidCheck"
+                key="invalidCheck"
                 required
               />
               <Form.Label
