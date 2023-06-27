@@ -10,7 +10,7 @@ services:
         ports:
             - "80:80"
         environment:
-            REACT_APP_FLASK_URL: "http://$HOSTNAME:5000/"
+            REACT_APP_FLASK_URL: "http://172.19.0.3:5000/"
         volumes: 
             - ./frontend:/frontend
             - /app/node_modules
