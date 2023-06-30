@@ -127,6 +127,7 @@ class Configuration extends React.Component {
     if (
       destination.droppableId === source.droppableId &&
       destination.index === source.index
+      
     ) {
       return;
     }
