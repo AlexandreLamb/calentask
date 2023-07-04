@@ -25,6 +25,8 @@ app = Flask(__name__ )
 MONGO_URI = "mongodb://"+os.environ["MONGODB_USERNAME"]+":"+os.environ["MONGODB_PASSWORD"]+"@"+os.environ["MONGODB_HOST"]+":"+os.environ["MONGODB_PORT"]+"/"+os.environ["MONGODB_DB"]+"?authSource=admin"
 print(MONGO_URI)
 
+
+
 app.config["MONGO_URI"] = MONGO_URI
 
 mongo_client = PyMongo(app)
@@ -111,9 +113,9 @@ def export_sequence_order():
 @app.route("/output/export/data", methods=["GET"])
 def export_data():
     user_information = list( db.user_information.find())
-    
     for user in user_information:
         user["_id"] = str(user["_id"])
+        print( user["_id"])
     def normalize_handmade(json):
         key_list = list(json)
         df_csv = pd.DataFrame(columns=key_list)
@@ -123,16 +125,17 @@ def export_data():
             if type(json[key]) == type([]):
                 df_list = pd.json_normalize(json[key], record_prefix=key).add_prefix(key)
                 df_list = df_list.replace('', np.nan).fillna(method='bfill').iloc[[0]]
-                df_csv = df_csv.append(df_list)
+                df_csv = pd.concat([df_csv,df_list])
             else: 
                 #print(pd.Series(json[key], index=[key]))
-                df_csv = df_csv.append(pd.Series(json[key], index=[key]), ignore_index=True)
+                df_csv = pd.concat([df_csv, pd.Series(json[key], index=[key])], ignore_index=True)
         
         return df_csv.replace('', np.nan).fillna(method='bfill').iloc[[0]]
+    
     df_data = pd.DataFrame()
     for data in user_information:
         print(type(data))
-        df_data = df_data.append(normalize_handmade(data))
+        df_data = pd.concat([df_data,normalize_handmade(data)])
     
     now = datetime.now()
     dt_string = now.strftime("%d_%m_%Y_%H_%M_%S")
