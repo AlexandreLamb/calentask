@@ -301,8 +301,8 @@ class MainForm extends React.Component {
               }}
             >
               <div>
-                <Image fluid={true}
-                  src="logo-fatigue-et-vigilance.png"
+              <Image fluid={true}
+                  src="logo_esco.png"
                   width="16%"
                   alt="logo ufv"
                 ></Image>{" "}
