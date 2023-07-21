@@ -16,6 +16,8 @@ class VideoPlayer extends React.Component {
     return (
       <div ref = {this.ref5}>
         <ReactPlayer
+
+          onContextMenu={e => e.preventDefault()}
           className="rounded shadow"
           style={{padding: "2rem", marginTop:"2%", backgroundColor:"white"}}
           width={this.props.playing ? "100%" : "0"}
