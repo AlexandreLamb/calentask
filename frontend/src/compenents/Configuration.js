@@ -123,7 +123,7 @@ class Configuration extends React.Component {
     //setInterval(this.getSubjectData, 3000)
 
     api.get("/configuration/get/student").then(function(response){
-      console.log(response.data)
+      this_contexte.setState({studentMode: response.data})
     })
   };
   handleChange = (event) => {
@@ -635,7 +635,7 @@ class Configuration extends React.Component {
                    <br></br>Appuyez sur le bouton pour activer / désactiver les modes. 
                    </Form.Label>
                    <Form  style={{ textAlign: "center" }}>
-                   {this.state.studentMode ? (
+                   {this.state.studentMode == true ? (
                     <Button style = {{background: "rgba(49,70,107,1)" }} onClick={this.toggleStates}>
                       Activer le mode étudiant{" "}
                     </Button>
