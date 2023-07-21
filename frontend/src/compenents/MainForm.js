@@ -1,16 +1,15 @@
 import React from "react";
 import InformationForm from "./InformationForm";
 import VideoForm from "./VideoForm";
-import VideoScreen from "./VideoScreen";
+import VideoEndSession from "./VideoEndSession";
 import SelfEvaluationForm from "./SelfEvaluationForm";
 import Card from "react-bootstrap/Card";
 import Button from "@restart/ui/esm/Button";
 import api from "../axiosConfig";
 import Image from 'react-bootstrap/Image'
 import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
-import ReactPlayer from 'react-player';
+
 
 class MainForm extends React.Component {
   constructor(props) {
@@ -241,6 +240,7 @@ class MainForm extends React.Component {
   };
 
   render() {
+    console.log(this.state.videosToPlay)
     const {
       playing,
       displayInformationForm,
@@ -308,6 +308,7 @@ class MainForm extends React.Component {
                 fatigués à l'aide du visionnage de séquences vidéos.
               </div>
             </Card.Title>
+            
           ) : null}
           {displayInformationForm ? (
             <InformationForm
@@ -396,24 +397,24 @@ class MainForm extends React.Component {
                 <Form className="col-5"></Form>
               </Row>
 
-              <Row style={{
-                paddingTop: "1rem",
-                paddingBottom: "1rem",
-              }}>
-                <Form className="col-3">
-                  <VideoScreen alreadySeen="true" url="videos\DESFAM_F_Sequences\DESFAM_F_H90_LUNDI\DESFAM_F_H90_LUNDI_A-converted.mp4" />
-                </Form>
-                <Form className="col-3">
-                  <VideoScreen alreadySeen="true" url="videos\DESFAM_F_Sequences\DESFAM_F_H90_LUNDI\DESFAM_F_H90_LUNDI_B-converted.mp4" />
-                </Form>
-                <Form className="col-3">
-                  <VideoScreen alreadySeen="true" url="videos\DESFAM_F_Sequences\DESFAM_F_H90_LUNDI\DESFAM_F_H90_LUNDI_C-converted.mp4" />
-                </Form>
-                <Form className="col-3">
-                  <VideoScreen alreadySeen="true" url="videos\DESFAM_F_Sequences\DESFAM_F_H90_LUNDI\DESFAM_F_H90_LUNDI_D-converted.mp4" />
-                </Form>
-              </Row>
-              <Form.Label
+              <VideoEndSession seen = "true" video = {this.state.videosToPlay[this.state.currentVideoIndex]} />
+              
+              {videosToPlay.length - 1 == currentVideoIndex ? (
+            <div style = {{
+              textAlign: "center",
+            }}> <Button style = {{
+                padding: "0.5rem",
+                background: "#e7edf6",
+                borderRadius: "O.5rem",
+              }}
+              onClick={this.handleBackToMenue}>
+                {" "}
+               <strong>Quitter la session{" "}</strong> 
+              </Button>
+              </div> 
+              )
+              : (<div>
+                <Form.Label
                 style={{
                   fontSize: "1.5rem",
                   marginTop: "2%",
@@ -431,40 +432,17 @@ class MainForm extends React.Component {
                 </Form>
                 <Form className="col-5"></Form>
               </Row>
-              {videosToPlay.length - 1 == currentVideoIndex ? null : (
                 <div className="lead text-justify" style={{
                   padding: "0.5rem",
                 }}>
                   Avez-vous encore du temps pour une nouvelle session ?
                   <div></div>
                   <Button onClick={this.handleNextVideo}>
-                    <Row style={{
-                      paddingTop: "1rem",
-                      paddingBottom: "1rem",
-                    }}>
-                      <Form className="col-3">
-                        <VideoScreen alreadySeen="false" url="videos\DESFAM_F_Sequences\DESFAM_F_H90_LUNDI\DESFAM_F_H90_LUNDI_D-converted.mp4" />
-                      </Form>
-                      <Form className="col-3">
-                        <VideoScreen alreadySeen="false" url="videos\DESFAM_F_Sequences\DESFAM_F_H90_LUNDI\DESFAM_F_H90_LUNDI_D-converted.mp4" />
-                      </Form>
-                      <Form className="col-3">
-                        <VideoScreen alreadySeen="false" url="videos\DESFAM_F_Sequences\DESFAM_F_H90_LUNDI\DESFAM_F_H90_LUNDI_D-converted.mp4" />
-                      </Form>
-                      <Form className="col-3">
-                        <VideoScreen alreadySeen="false" url="videos\DESFAM_F_Sequences\DESFAM_F_H90_LUNDI\DESFAM_F_H90_LUNDI_D-converted.mp4" />
-                      </Form>
-                    </Row>
+                  <VideoEndSession seen = "false" video = {this.state.videosToPlay[this.state.currentVideoIndex+1]} />
                   </Button>
                 </div>
+                </div>
               )}
-              <br></br>
-
-              {videosToPlay}
-              <Button onClick={this.handleBackToMenue}>
-                {" "}
-                Quitter la session{" "}
-              </Button>
             </Card.Title>
           ) : null}
 

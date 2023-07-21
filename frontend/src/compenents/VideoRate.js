@@ -4,7 +4,6 @@ import Form from "react-bootstrap/Form"
 import Card from "react-bootstrap/Card"
 import api from "../axiosConfig"
 import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
 import Image from 'react-bootstrap/Image'
 import { itemListSequenceLevel } from "./formItems"
 
@@ -17,10 +16,13 @@ class VideoRate extends React.Component {
       timeReflexions: 0,
       interval: null
     }
+    this.refForm = React.createRef();
   }
   componentDidMount = () => {
+   
     const this_contexte = this
     this.setState({ interval: setInterval(this_contexte.countTime, 1000) })
+    this.refForm.current.scrollIntoView();
   }
   componentWillUnmount = () => {
     clearInterval(this.interval)
@@ -72,9 +74,10 @@ class VideoRate extends React.Component {
   }
 
   render() {
+  
     const { rateValue, timeReflexions } = this.state
     return (
-      <div>
+      <div ref = {this.refForm}>
           <Form className="align-items-center"
             style={{
               marginLeft: "5%",

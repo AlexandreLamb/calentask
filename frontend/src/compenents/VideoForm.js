@@ -1,6 +1,7 @@
 import React from 'react';
 import Button from "react-bootstrap/Button"
 import VideoPlayer from './VideoPlayer';
+import UseRef from 'react';
 import Card from "react-bootstrap/Card"
 import Form from "react-bootstrap/Form"
 import Image from 'react-bootstrap/Image'
@@ -21,13 +22,17 @@ class VideoForm extends React.Component {
             classifiedSequence: [],
             backColor: ""
         };
+        this.testRef = React.createRef();
+        this.refSequence2 = React.createRef();
+        this.refSequence3 = React.createRef();
     }
+    
     componentDidMount() {
         this.props.getVideoToLoad()
+        this.refSequence2.current.scrollIntoView();
     }
 
     handleClick = event => {
-
         event.currentTarget.disabled = true;
         console.log('button clicked');
     }
@@ -49,6 +54,7 @@ class VideoForm extends React.Component {
         console.log(totalViews)
         if (totalViews < 4) {
             this.props.handleEnd(this.state.videoLetter)
+            this.testRef.current.scrollIntoView();
         }
         else {
             this.setState({
@@ -56,6 +62,7 @@ class VideoForm extends React.Component {
                 isStopWatchingVideo: rateValueChecked.length === 4 ? true : false
             })
         }
+        
 
         /*
         if (this.props.numberOfView === 0){
@@ -102,8 +109,8 @@ class VideoForm extends React.Component {
         })
     }
     handleLaunchVideo = (letter) => {
+       
         const this_contexte = this
-
         if (letter == 'A') {
             this.state.backColor = "rgba(49,70,107,1)"
         }
@@ -116,7 +123,6 @@ class VideoForm extends React.Component {
         if (letter == 'D') {
             this.state.backColor = "rgba(162, 72, 80, 1)"
         }
-
         this.setState({ videoLetter: letter }, () => {
             this_contexte.props.handlePlay()
         })
@@ -163,8 +169,8 @@ class VideoForm extends React.Component {
 
         if (this.props.sequence['A'].numberOfViews == 1 && this.props.sequence['B'].numberOfViews == 1 && this.props.sequence['C'].numberOfViews == 0 && videoLetter == 'D')
             isSequenceIsViewedOneTime = true
-
-        return isSequenceIsViewedOneTime
+                
+            return isSequenceIsViewedOneTime
 
 
         /*   let isSequenceIsViewedOneTime = this.props.sequence[videoLetter].numberOfViews == 1 ? true : false
@@ -210,6 +216,7 @@ class VideoForm extends React.Component {
                         style={{
                             fontSize: "2rem",
                         }}
+                        ref={this.refSequence2}
                     >
                         <strong>SECTION 2 | VISIONNAGE</strong>
                     </Card.Title>
@@ -297,6 +304,7 @@ class VideoForm extends React.Component {
                             </Form>
                             <Form.Group>
                                 <Form
+                                ref={this.testRef}
                                     style={{
                                         marginTop: "2%",
                                         marginBottom: "2%",
@@ -421,12 +429,13 @@ class VideoForm extends React.Component {
                                     textAlign: "center",
                                 }}>
                                     <Form.Label className="col-2 rounded shadow"
+                                    
                                         style={{
                                             padding: "0.25rem",
                                             backgroundColor: this.state.backColor,
                                             color: "white"
                                         }}>
-                                        <strong>SEQUENCE {videoLetter}</strong>
+                                          <strong>SEQUENCE {videoLetter}</strong>
                                     </Form.Label>
                                     <Form.Label className="col-1 rounded shadow"
                                         style={{
@@ -441,6 +450,7 @@ class VideoForm extends React.Component {
                                     </Form.Label>
                                 </Row>
                                 <VideoPlayer
+                                   
                                     url={url}
                                     playing={this.props.playing}
                                     videoLetter={videoLetter}

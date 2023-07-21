@@ -1,16 +1,13 @@
-import React, { useState } from "react";
+import React from "react";
 import Card from "react-bootstrap/Card";
 import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-import ListGroup from "react-bootstrap/ListGroup";
 import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import Table from "react-bootstrap/Table";
 import styled from "styled-components";
 import Upload from "./Upload";
-import { CSVLink, CSVDownload } from "react-csv";
+import Image from "react-bootstrap/Image";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { configurationData } from "./formItems";
 import Column from "./column";
@@ -35,12 +32,34 @@ class Configuration extends React.Component {
     this.state = {
       initiate: "",
       subject_data: [],
+      user_sequence: [],
       subject_data_csv: [],
-      wifi_name:"", 
-      password:"", 
-
+      wifi_name: "",
+      password: "",
+      user_online: [],
     };
   }
+
+  getUserOnline = () => {
+    const this_contexte = this;
+    api
+      .get("/output/get/users")
+      .then(function (response) {
+        const status_code = response.status;
+        if (parseInt(status_code) === 204) {
+          console.log("form empty");
+        } else if (parseInt(status_code) === 200) {
+          this_contexte.setState({
+            user_online: response.data,
+          });
+        } else {
+          console.log("Error");
+        }
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
 
   getSubjectData = () => {
     const this_contexte = this;
@@ -99,7 +118,7 @@ class Configuration extends React.Component {
         console.log(error);
       });
     //this.getSubjectData();
-
+    this.getUserOnline();
     //setInterval(this.getSubjectData, 3000)
   };
   handleChange = (event) => {
@@ -208,7 +227,6 @@ class Configuration extends React.Component {
         } else if (parseInt(status_code) === 200) {
         } else {
           console.log("Error");
-
         }
       })
       .catch(function (error) {
@@ -220,7 +238,7 @@ class Configuration extends React.Component {
     api
       .post("/connection/wifi", {
         wifi_name: state.wifi_name,
-        password: state.password
+        password: state.password,
       })
       .then(function (response) {
         const status_code = response.status;
@@ -237,54 +255,164 @@ class Configuration extends React.Component {
   };
   handleChangeText = (event) => {
     const target = event.target;
-    console.log(target)
+    console.log(target);
     const value = target.type === "radio" ? target.id : target.value;
     const name = target.name;
     this.setState({ [name]: value });
   };
-  toggleStates = () => {   
-   const this_contexte = this
-   api
-   .get("/configuration/toggle/student")
-   .then(function (response) {
-     const status_code = response.status;
-     if (parseInt(status_code) === 204) {
-       console.log("Request error");
-     } else if (parseInt(status_code) === 200) {
-        console.log(response.data)
-        this_contexte.setState({studentMode : response.data})
-     } else {
-       console.log("Error");
-
-     }
-   })
-   .catch(function (error) {
-     console.log(error);
-   });
+  toggleStates = () => {
+    const this_contexte = this;
+    api
+      .get("/configuration/toggle/student")
+      .then(function (response) {
+        const status_code = response.status;
+        if (parseInt(status_code) === 204) {
+          console.log("Request error");
+        } else if (parseInt(status_code) === 200) {
+          console.log(response.data);
+          this_contexte.setState({ studentMode: response.data });
+        } else {
+          console.log("Error");
+        }
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   };
   render() {
+    
     const date = new Date();
     return (
       <Card
         style={{
-          width: "75%",
-          margin: "auto",
-          marginTop: "1%",
+          width: "100%",
+          height: "100%",
+          backgroundColor: "#e7edf6",
         }}
       >
-        <Card.Title
+        <Card
+          className="shadow align-items-center"
           style={{
-            textAlign: "center",
-            fontSize: "2.25rem",
+            width: "70%",
+            margin: "auto",
+            marginTop: "2%",
+            marginBottom: "2%",
+            padding: "0.2rem",
+            border: "black solid 0px",
           }}
         >
-         CONFIGURATION <br></br> 
-         Interface de configuration du Questionnaire
-        </Card.Title>
+          <Card.Title
+            className="rounded-lg"
+            style={{
+              textAlign: "center",
+              fontSize: "1rem",
+              padding: "1rem",
+              border: "black solid 0px",
+              margin: "3%",
+            }}
+          >
+            <div>
+              <Image
+                fluid={true}
+                src="logo-fatigue-et-vigilance.png"
+                width="16%"
+                alt="logo ufv"
+              ></Image>{" "}
+            </div>
+            <div
+              style={{
+                fontSize: "3rem",
+                padding: "0.5rem",
+              }}
+            >
+              <strong>CONFIGURATION</strong>
+            </div>
+            <div
+              className="lead text-justify"
+              style={{
+                padding: "0.5rem",
+              }}
+            >
+              Interface de configuration du Questionnaire
+            </div>
+          </Card.Title>
 
           <Tabs>
+            <Tab eventKey="Online" title="En cours">
+            <Form.Group style={{
+                        marginLeft: "15%",
+                        marginRight: "15%",
+                        marginTop: "2%",
+                        marginBottom: "2%",
+                        fontSize: "1.5rem",
+                      }}
+                      controlId="formBasicInitial_1">
+                    <Form.Label
+                      style={{
+                        fontSize: "1.5rem",
+                      }}
+                    >
+                      <strong>UTILISATEURS</strong>
+                    </Form.Label>
+                      <Row>
+                        <Form className="col-5"></Form>
+                        <Form className="col-2">
+                          <Image
+                            fluid={true}
+                            src="Picture2.png"
+                            width="100%"
+                            alt="logo ufv"
+                          ></Image>{" "}
+                          </Form>
+                          <Form className="col-5"></Form>
+                      </Row>
+                   <Form.Label style={{
+                        fontSize: "1rem",
+                      }}>
+                    Dans cette section, ajoutez une nouvelle séquence de vidéo. A partir de votre ordinateur, sélectionner une séance de 
+                    4 vidéos, puis valider. 
+                    <br></br> La nouvelle vidéo sera ajouté dans la bibliothèque de données immédiatement. 
+                   </Form.Label>
+                  </Form.Group>
+                 
+              {this.state.user_online.map((value, index) => (
+                <Form.Group style = {{
+                  marginLeft: "15%",
+                        marginRight: "15%",
+                        marginTop: "2%",
+                        marginBottom: "2%",
+                }} key={index}>
+                  <Row
+                    style={{
+                      background: "rgba(12,12,12,0.1)",
+                      padding: "0.5rem",
+                      margin: "0.5rem",
+                      borderRadius: "0.25rem",
+                      width: "100%",
+                    }}
+                  >
+                    <Form.Label className="Col">
+                      User : <strong>{value}</strong>
+                      <br></br>
+                      Status : Connecté
+                      <br></br>
+                      Sequence :
+                    </Form.Label>
+
+                    <Button
+                      className="Col"
+                      href={api.defaults.baseURL + "/output/export/data"}
+                    >
+                      {" "}
+                      Reponses
+                    </Button>
+                  </Row>
+                </Form.Group>
+              ))}
+            </Tab>
+
             <Tab eventKey="session" title="Session">
-            <DragDropContext onDragEnd={this.handleOnDragEnd}>
+              <DragDropContext onDragEnd={this.handleOnDragEnd}>
                 {this.state.initiate == "" ? (
                   ""
                 ) : (
@@ -302,42 +430,216 @@ class Configuration extends React.Component {
                 )}
               </DragDropContext>
             </Tab>
-            <Tab  eventKey="upload" title="Upload">
-              <Upload></Upload>
-            </Tab>
-            <Tab  eventKey="download" title="Téléchargements">
-              <Card style={{ width: "18rem" }}>
-                  <Card.Body>
-                    <Card.Title>Téléchargement</Card.Title>
-                    <Form.Group controlId="formBasicInitial_1">
-                      <Button
-                        href={api.defaults.baseURL + "/output/export/data"}
-                      >
-                        {" "}
-                        Telecharger les données de reponses
-                      </Button>
-                    </Form.Group>
-                    <Form.Group controlId="formBasicInitial_2">
-                      <Button
-                        href={api.defaults.baseURL + "/output/sequence/order"}
-                      >
-                        {" "}
-                        Telecharger l'ordre reponses
-                      </Button>
-                    </Form.Group>
-                    
-                  </Card.Body>
-                </Card>
-            </Tab>
-            <Tab eventKey="mode" title="Mode">
-            <Card style={{ width: "18rem" }}>
-                <Card.Body>
-                  <Card.Title>Mode Etudiant</Card.Title>
-                  {this.state.studentMode ? 
-                  <Button onClick={this.toggleStates}>Activer mode etudiant </Button> : 
-                  <Button onClick={this.toggleStates}>Désactiver mode etudiant </Button>
-                  }  
 
+            <Tab eventKey="createSession" title="Créer">
+              <DragDropContext onDragEnd={this.handleOnDragEnd}>
+                {this.state.initiate == "" ? (
+                  ""
+                ) : (
+                  <Container>
+                    {this.state.columnOrder.map((columnId) => {
+                      const column = this.state.columns[columnId];
+                      const tasks = column.taskIds.map(
+                        (taskId) => this.state.tasks_list[taskId]
+                      );
+                      return (
+                        <Column key={column.id} column={column} tasks={tasks} />
+                      );
+                    })}
+                  </Container>
+                )}
+              </DragDropContext>
+            </Tab>
+
+
+
+            <Tab eventKey="upload" title="Upload">
+            <Form.Group style={{
+                        marginLeft: "15%",
+                        marginRight: "15%",
+                        marginTop: "2%",
+                        marginBottom: "2%",
+                        fontSize: "1.5rem",
+                      }}
+                      controlId="formBasicInitial_1">
+                    <Form.Label
+                      style={{
+                        fontSize: "1.5rem",
+                      }}
+                    >
+                      <strong>AJOUT DE VIDEO</strong>
+                    </Form.Label>
+                      <Row>
+                        <Form className="col-5"></Form>
+                        <Form className="col-2">
+                          <Image
+                            fluid={true}
+                            src="Picture2.png"
+                            width="100%"
+                            alt="logo ufv"
+                          ></Image>{" "}
+                          </Form>
+                        <Form className="col-5"></Form>
+                      </Row>
+                   <Form.Label style={{
+                        fontSize: "1rem",
+                      }}>
+                    Dans cette section, ajoutez une nouvelle séquence de vidéo. A partir de votre ordinateur, sélectionner une séance de 
+                    4 vidéos, puis valider. 
+                    <br></br> La nouvelle vidéo sera ajouté dans la bibliothèque de données immédiatement. 
+                   </Form.Label>
+                   <Form  style={{ textAlign: "center" }}>
+                   <Upload></Upload>
+                    </Form>
+                  </Form.Group>
+              
+            </Tab>
+
+            <Tab eventKey="download" title="Téléchargements">
+              <Card style={{ width: "100%" }}>
+                <Card.Body>
+                  <Form.Group style={{
+                        marginLeft: "15%",
+                        marginRight: "15%",
+                        marginTop: "2%",
+                        marginBottom: "2%",
+                        fontSize: "1.5rem",
+                      }}
+                      controlId="formBasicInitial_1">
+                    <Form.Label
+                      style={{
+                        fontSize: "1.5rem",
+                      }}
+                    >
+                      <strong>1. REPONSE DE LA SEANCE</strong>
+                    </Form.Label>
+                      <Row>
+                        <Form className="col-5"></Form>
+                        <Form className="col-2">
+                          <Image
+                            fluid={true}
+                            src="Picture2.png"
+                            width="100%"
+                            alt="logo ufv"
+                          ></Image>{" "}
+                        </Form>
+                        <Form className="col-5"></Form>
+                      </Row>
+                   <Form.Label style={{
+                        fontSize: "1rem",
+                      }}>
+                    Télécharger les réponses des utilisateurs de la séance réalisées. Vous vous retrouvez
+                    avec un fichier Excel (format CSV). 
+                   </Form.Label>
+                   <Form  style={{ textAlign: "center", }}>
+                    <Button
+                     style = {{background: "rgba(49,70,107,1)" }}
+                      href={api.defaults.baseURL + "/output/export/data"}
+                    >
+                      {" "}
+                      Télécharger
+                    </Button>
+                    </Form>
+                  </Form.Group>
+
+                  <Form.Group style={{
+                        marginLeft: "15%",
+                        marginRight: "15%",
+                        marginTop: "2%",
+                        marginBottom: "2%",
+                        fontSize: "1.5rem",
+                      }}
+                      controlId="formBasicInitial_2">
+                    <Form.Label
+                      style={{
+                        fontSize: "1.5rem",
+                      }}
+                    >
+                      <strong>2. 0RDRE DES REPONSES</strong>
+                    </Form.Label>
+                      <Row>
+                        <Form className="col-5"></Form>
+                        <Form className="col-2">
+                          <Image
+                            fluid={true}
+                            src="Picture2.png"
+                            width="100%"
+                            alt="logo ufv"
+                          ></Image>{" "}
+                        </Form>
+                        <Form className="col-5"></Form>
+                      </Row>
+                   <Form.Label style={{
+                        fontSize: "1rem",
+                      }}>
+                    Télécharger l'ordre des réponpes des utilisateurs de la séance réalisées. Vous vous retrouvez
+                    avec un fichier Excel (format CSV). 
+                   </Form.Label>
+                   <Form  style={{ textAlign: "center" }}>
+                    <Button
+                     style = {{background : "rgba(162, 72, 80, 1)"}}
+                     href={api.defaults.baseURL + "/output/sequence/order"}
+                     >
+                       {" "}
+                       Télécharger
+                    </Button>
+                    </Form>
+                  </Form.Group>
+                </Card.Body>
+              </Card>
+            </Tab>
+
+            <Tab eventKey="mode" title="Mode">
+              <Card style={{ width: "100%" }}>
+                <Card.Body>
+
+                <Form.Group style={{
+                        marginLeft: "15%",
+                        marginRight: "15%",
+                        marginTop: "2%",
+                        marginBottom: "2%",
+                        fontSize: "1.5rem",
+                      }}
+                      controlId="formBasicInitial_1">
+                    <Form.Label
+                      style={{
+                        fontSize: "1.5rem",
+                      }}
+                    >
+                      <strong> MODE DE LA SEANCE</strong>
+                    </Form.Label>
+                      <Row>
+                        <Form className="col-5"></Form>
+                        <Form className="col-2">
+                          <Image
+                            fluid={true}
+                            src="Picture2.png"
+                            width="100%"
+                            alt="logo ufv"
+                          ></Image>{" "}
+                        </Form>
+                        <Form className="col-5"></Form>
+                      </Row>
+                   <Form.Label style={{
+                        fontSize: "1rem",
+                      }}>
+                   Definisez le mode de la séance voulue en fonction de la population de vos utlisateurs pour la séance en cours. 
+                   Vous avez le choix entre le mode militaire et le mode étudiant. 
+                   <br></br>La différence se situe dans la définition des informations personnelles demandées en cours de séance. 
+                   <br></br>Appuyez sur le bouton pour activer / désactiver les modes. 
+                   </Form.Label>
+                   <Form  style={{ textAlign: "center" }}>
+                   {this.state.studentMode ? (
+                    <Button style = {{background: "rgba(49,70,107,1)" }} onClick={this.toggleStates}>
+                      Activer le mode étudiant{" "}
+                    </Button>
+                  ) : (
+                    <Button style = {{background : "rgba(162, 72, 80, 1)"}} onClick={this.toggleStates}>
+                      Activer le mode militaire{" "}
+                    </Button>
+                  )}
+                    </Form>
+                  </Form.Group>
                 </Card.Body>
               </Card>
             </Tab>
@@ -361,11 +663,10 @@ class Configuration extends React.Component {
               </Tab>*/}
           </Tabs>
 
-            
-            {/* <Col>
+          {/* <Col>
                   
                     </Col>*/}
-          
+        </Card>
       </Card>
     );
   }
