@@ -110,6 +110,16 @@ def export_sequence_order():
        headers={"Content-disposition":
        "attachment; filename=sequence_order.csv"})
 
+
+@app.route("/output/get/users", methods=["GET"])
+def get_users():
+    listUser = []  
+    user_information = list( db.user_information.find())
+    for user in user_information:
+        user["_id"] = str(user["_id"])
+        listUser.append(user["_initialValues"])
+    return listUser
+
 @app.route("/output/export/data", methods=["GET"])
 def export_data():
     user_information = list( db.user_information.find())
@@ -252,7 +262,6 @@ def upload_video():
         db.video_use.find_one_and_update({}, {"$set" :video_use})
         return "video upload"
   
-
 @app.route("/fix/bug/upload", methods=["GET"])
 def fix_bug():
     backup_file = db.video_use.find_one()

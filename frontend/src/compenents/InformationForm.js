@@ -40,6 +40,9 @@ class InformationForm extends React.Component {
       bgColor: "#f8f3f3",
       check: ""
     };
+    this.ref1 = React.createRef();
+    this.ref2 = React.createRef();
+    this.ref3 = React.createRef();
   }
   componentDidMount = () => {
     if (this.props.clearLocalStorage) {
@@ -87,6 +90,10 @@ class InformationForm extends React.Component {
 
 
   handleSubmit = (event) => {
+    var ref1 =0;
+    var ref2 =0;
+    var ref3 =0;
+  
     const {
       initialValues,
       age,
@@ -104,105 +111,131 @@ class InformationForm extends React.Component {
     } = this.state;
     const this_contexte = this;
 
-    if (this.state.initialValues == null || this.state.initialValues == "") {
+    if (this.state.initialValues == null || this.state.initialValues === "") {
       document.getElementById('initialValues').style.backgroundColor = '#e8a8a8';
       document.getElementById("errorInitiale").style.display = "block";
+      ref1=1;
     } else {
       document.getElementById('initialValues').style.backgroundColor = '#f8f3f3';
       document.getElementById("errorInitiale").style.display = "none";
     }
 
-    if (this.state.age == "") {
+    if (this.state.age === "") {
       document.getElementById('ageValues').style.backgroundColor = '#e8a8a8';
       document.getElementById("errorAge").style.display = "block";
+      ref1=1;
     } else {
       document.getElementById('ageValues').style.backgroundColor = '#f8f3f3';
       document.getElementById("errorAge").style.display = "none";
     }
 
-    if (this.state.gender == "") {
+    if (this.state.gender === "default") {
       document.getElementById('genderValues').style.backgroundColor = '#e8a8a8';
       document.getElementById("errorGender").style.display = "block";
+      ref1=1;
     } else {
       document.getElementById('genderValues').style.backgroundColor = '#f8f3f3';
       document.getElementById("errorGender").style.display = "none";
     }
 
-    console.log("fatigue" + this.state.fatigueLevelTheorical)
-
-    if (this.state.studieLevel == "default") {
+    if (this.state.studieLevel === "default") {
       document.getElementById('studieLevelValues').style.backgroundColor = '#e8a8a8';
       document.getElementById("errorStudieLevel").style.display = "block";
+      ref2=1;
     } else {
       document.getElementById('studieLevelValues').style.backgroundColor = '#f8f3f3';
       document.getElementById("errorStudieLevel").style.display = "none";
     }
-    if (this.state.studieArea == "") {
+    if (this.state.studieArea === "") {
       document.getElementById('studieAreaValues').style.backgroundColor = '#e8a8a8';
       document.getElementById("errorStudieArea").style.display = "block";
+      ref2=1;
     } else {
       document.getElementById('studieAreaValues').style.backgroundColor = '#f8f3f3';
       document.getElementById("errorStudieArea").style.display = "none";
     }
 
-    if (this.state.typeOfJob == "") {
+    if (this.state.typeOfJob === "" && this.props.studentMode === true ) {
       document.getElementById('typeOfJobValues').style.backgroundColor = '#e8a8a8';
       document.getElementById("errorTypeOfJob").style.display = "block";
-    } else {
+      ref2=1;
+    } else if (this.props.studentMode === true){
       document.getElementById('typeOfJobValues').style.backgroundColor = '#f8f3f3';
       document.getElementById("errorTypeOfJob").style.display = "none";
     }
 
-    if (this.state.peopleCommand == "") {
+    if (this.state.peopleCommand === "" && this.props.studentMode === true ) {
       document.getElementById('peopleCommandValues').style.backgroundColor = '#e8a8a8';
       document.getElementById("errorPeopleCommand").style.display = "block";
-    } else {
+      ref2=1;
+    } else if (this.props.studentMode === true){
       document.getElementById('peopleCommandValues').style.backgroundColor = '#f8f3f3';
       document.getElementById("errorPeopleCommand").style.display = "none";
     }
 
-    if (this.state.grade == "") {
+    if (this.state.grade === "default" && this.props.studentMode === true ) {
       document.getElementById('gradeValues').style.backgroundColor = '#e8a8a8';
       document.getElementById("errorGrade").style.display = "block";
-    } else {
+      ref2=1;
+    } else if (this.props.studentMode === true){
       document.getElementById('gradeValues').style.backgroundColor = '#f8f3f3';
       document.getElementById("errorGrade").style.display = "none";
     }
 
-    if (this.state.jobLengthOfService == "") {
+    if (this.state.jobLengthOfService === "" && this.props.studentMode === true) {
       document.getElementById('jobLengthOfServiceValues').style.backgroundColor = '#e8a8a8';
       document.getElementById("errorJobLengthOfService").style.display = "block";
-    } else {
+      ref2=1;
+    } else if (this.props.studentMode === true){
       document.getElementById('jobLengthOfServiceValues').style.backgroundColor = '#f8f3f3';
       document.getElementById("errorJobLengthOfService").style.display = "none";
     }
 
-    if (this.state.headquarters == "default") {
+    if (this.state.headquarters === "default"  && this.props.studentMode === true )  {
       document.getElementById('headquartersValues').style.backgroundColor = '#e8a8a8';
       document.getElementById("errorHeadquarters").style.display = "block";
-    } else {
+      ref2=1;
+    } else if (this.props.studentMode === true){
       document.getElementById('headquartersValues').style.backgroundColor = '#f8f3f3';
       document.getElementById("errorHeadquarters").style.display = "none";
     }
 
-    if (this.state.armyLengthOfService == "") {
+    if (this.state.armyLengthOfService === "" && this.props.studentMode === true ) {
       document.getElementById('armyLengthOfServiceValues').style.backgroundColor = '#e8a8a8';
       document.getElementById("errorArmyLengthOfService").style.display = "block";
-    } else {
+      ref2=1;
+    } else if (this.props.studentMode === true){
       document.getElementById('armyLengthOfServiceValues').style.backgroundColor = '#f8f3f3';
       document.getElementById("errorArmyLengthOfService").style.display = "none";
     }
+    if (this.state.fatigueLevelTheorical == null )  {
+      document.getElementById('test').style.backgroundColor = '#e8a8a8';
+      document.getElementById("errorfatigueLevelTheorical ").style.display = "block";
+      ref3 = 1;
+    } else  {
+      document.getElementById('test').style.backgroundColor = 'rgba(41, 128, 185, 0)';
+      document.getElementById("errorfatigueLevelTheorical ").style.display = "none";
+    } 
 
+    if (this.state.fatigueLevelPratical == null )  {
+      document.getElementById('testest').style.backgroundColor = '#e8a8a8';
+      document.getElementById("errorFatigueLevel").style.display = "block";
+      ref3 = 1;
+    } else  {
+      document.getElementById('testest').style.backgroundColor = 'rgba(41, 128, 185, 0)';
+      document.getElementById("errorFatigueLevel").style.display = "none";
+    } 
 
-    /* if ( != "") {
-       document.getElementById("conditions").style.display = "block";
-       document.getElementById("ContainerConditions").style.border = "solid 2px #e8a8a8";
-     } else {
-       document.getElementById("conditions").style.display = "none";
-       document.getElementById("ContainerConditions").style.border = "solid 0px #e8a8a8";
-     }*/
-    console.log(fatigueLevelPratical);
-    console.log(fatigueLevelTheorical);
+    if (ref1 == 1) {
+      this.ref1.current.scrollIntoView();
+    } 
+    if (ref2 == 1 && ref1 == 0) {
+      this.ref2.current.scrollIntoView();
+    } 
+    if (ref3 == 1 && ref1 == 0 && ref2 == 0) {
+      this.ref3.current.scrollIntoView();
+    } 
+
     api
       .post("output/subject/information/", {
         _initialValues: initialValues,
@@ -286,7 +319,7 @@ class InformationForm extends React.Component {
             fontSize: "1 rem",
           }}
         >
-          <Form>
+          <Form  ref={this.ref1}>
             <Form.Label
               style={{
                 marginLeft: "5%",
@@ -299,6 +332,7 @@ class InformationForm extends React.Component {
               <strong>INFORMATIONS PERSONNELLES</strong>
             </Form.Label>
           </Form>
+         
           <Form
             className="mb-3 rounded shadow"
             style={{
@@ -307,6 +341,7 @@ class InformationForm extends React.Component {
               padding: "1rem",
               backgroundColor: "rgba(41, 128, 185, 0.1)",
             }}
+           
           >
 
             <Row
@@ -465,7 +500,7 @@ class InformationForm extends React.Component {
             </Row>
           </Form>
 
-          <Form>
+          <Form  ref={this.ref2}>
             <Form.Label
               style={{
                 marginTop: "2%",
@@ -474,6 +509,7 @@ class InformationForm extends React.Component {
                 marginRight: "5%",
                 fontSize: "1.5rem"
               }}
+
             >
               <strong>PARCOURS PROFESSIONNEL</strong>
             </Form.Label>
@@ -502,7 +538,7 @@ class InformationForm extends React.Component {
                 }}>
                 <Form.Label
                   style={{
-                    marginTop: "1%"
+                  
                   }}>
                   <strong>Etat-major</strong>
                 </Form.Label>
@@ -544,7 +580,7 @@ class InformationForm extends React.Component {
                   }}>
                   <Form.Label
                     style={{
-                      marginTop: "1%"
+                      
                     }}>
                     <strong>Grade</strong>
                   </Form.Label>
@@ -580,7 +616,7 @@ class InformationForm extends React.Component {
               {this.props.studentMode ? <Form.Group as={Col} controlId="formBasicPeopleCommand">
                 <Form.Label
                   style={{
-                    marginTop: "1%"
+                  
                   }}>
                   <strong>Commandement</strong>
                 </Form.Label>
@@ -617,7 +653,6 @@ class InformationForm extends React.Component {
               <Form.Group as={Col} controlId="formBasicStudieArea">
                 <Form.Label
                   style={{
-                    marginTop: "1%",
                     fontSize: "1rem",
                   }}>
                   <strong>Spécialité</strong></Form.Label>
@@ -646,13 +681,11 @@ class InformationForm extends React.Component {
 
               {this.props.studentMode ? <Form.Group as={Col} controlId="formBasicTypeOfJob"
                 style={{
-                  width: "100%",
-                  margin: "auto",
                   fontSize: "1rem",
                 }}>
                 <Form.Label
                   style={{
-                    marginTop: "1%",
+                   
                   }}>
                   <strong>Intitulé de spécialité</strong></Form.Label>
                 <Form.Control
@@ -681,7 +714,7 @@ class InformationForm extends React.Component {
               <Form.Group as={Col} controlId="formBasicStudiesLevel">
                 <Form.Label
                   style={{
-                    marginTop: "1%"
+                   
                   }}>
                   <strong>Niveau d'étude</strong>
                 </Form.Label>
@@ -805,6 +838,7 @@ class InformationForm extends React.Component {
               <Form className="col-5"></Form>
             </Row>
           </Form>
+
           <Form.Label
             style={{
               marginLeft: "5%",
@@ -813,6 +847,7 @@ class InformationForm extends React.Component {
               marginBottom: "2%",
               fontSize: "1.5rem",
             }}
+            ref={this.ref3}
           >
             <strong>QUESTIONS PRELIMINAIRES</strong>
           </Form.Label>
@@ -829,7 +864,7 @@ class InformationForm extends React.Component {
             }}
           >
             <Row>
-              <Form.Group as={Col} controlId="formBasicFatigueTheoricalEva">
+              <Form.Group as={Col} class = "rounded" controlId="formBasicFatigueTheoricalEva" id="testest">
                 <Form.Label>
                   <strong>Comment estimez-vous votre connaissance théorique de la fatigue mentale ?</strong>
                   <div>
@@ -841,7 +876,7 @@ class InformationForm extends React.Component {
                   <Row style={{ marginLeft: "10%", marginRight: "10%" }}>
                     <Form className="col">Ignorant</Form>
                     {itemListFatigueLevelTheorical.map(({ id, key, label }) => (
-                      <Form.Check className="col" id="testets">
+                      <Form.Check className="col">
                         <Form.Check.Label><strong>{label}</strong></Form.Check.Label>
                         <br></br>
                         <Form.Check.Input
@@ -860,7 +895,7 @@ class InformationForm extends React.Component {
                   </Row>
                 </Form.Group>
                 <Form.Label
-                  id="errorInitiale"
+                  id="errorFatigueLevel"
                   style={{
                     display: "none",
                     color: "#aa4646",
@@ -872,6 +907,7 @@ class InformationForm extends React.Component {
               <div>&nbsp;</div>
 
               <Form.Group as={Col} controlId="formBasicFatiguePraticalEva"
+              id = "test"
                 style={{
                   fontSize: "1rem",
                 }}>
@@ -906,7 +942,7 @@ class InformationForm extends React.Component {
                   </Row>
                 </Form.Group>
                 <Form.Label
-                  id="errorInitiale"
+                  id="errorfatigueLevelTheorical "
                   style={{
                     display: "none",
                     color: "#aa4646",

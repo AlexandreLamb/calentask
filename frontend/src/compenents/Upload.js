@@ -3,6 +3,10 @@ import Button from "react-bootstrap/Button";
 import ListGroup from "react-bootstrap/ListGroup";
 import Badge from "react-bootstrap/Badge";
 import api from "../axiosConfig";
+import Image from 'react-bootstrap/Image'
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import Form from "react-bootstrap/Form";
 
 export default class Upload extends React.Component {
   constructor(props) {
@@ -86,7 +90,7 @@ export default class Upload extends React.Component {
     } else {
       return (
         <div>
-          Veuillez renseigner les 4 fichiers d'une meme video (format :
+          Veuillez renseigner les 4 fichiers d'une même video (format :
           EXPERIENCE_SUJET_JOUR)
         </div>
       );
@@ -95,11 +99,19 @@ export default class Upload extends React.Component {
 
   render() {
     return (
-      <div>
+      <Form classname = "shadow" style = {{
+        textAlign:"center",
+        marginTop: "10%",
+      }}>
           {[0, 15, 30, 45].map((key) => (
-            <div key={key}>
+            <Form key={key} style = {{
+              border: "solid black 2px",
+              borderRadius: "5px",
+              padding: "30px",
+              margin: "10px"
+            }}>
               <label>
-                Video {key} min: <br />
+                <strong> Sélectionner la video {key} min</strong><br />
                 <br />
                 <input
                   type="file"
@@ -109,13 +121,13 @@ export default class Upload extends React.Component {
               </label>
               <br />
               <br />
-            </div>
+            </Form>
           ))}
           {Object.keys(this.state.selectedFiles).length >= 1
             ? this.displayVideoFolder()
             : ""}
           <Button onClick={this.handleSubmit}>Upload</Button>
-      </div>
+      </Form>
     );
   }
 }
