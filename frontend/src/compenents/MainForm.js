@@ -417,14 +417,13 @@ class MainForm extends React.Component {
                 <Form className="col-5"></Form>
               </Row>
 
-              <VideoEndSession seen = "true" video = {this.state.videosToPlay[this.state.currentVideoIndex]} />
+              <VideoEndSession seen = {true} video = {this.state.videosToPlay[this.state.currentVideoIndex]} />
               
               {videosToPlay.length - 1 == currentVideoIndex ? (
             <div style = {{
               textAlign: "center",
             }}> <Button style = {{
                 padding: "0.5rem",
-                background: "#e7edf6",
                 borderRadius: "O.5rem",
               }}
               onClick={this.handleBackToMenue}>
@@ -455,10 +454,16 @@ class MainForm extends React.Component {
                 <div className="lead text-justify" style={{
                   padding: "0.5rem",
                 }}>
-                  Avez-vous encore du temps pour une nouvelle session ?
+                  Avez-vous encore du temps pour une nouvelle session ? (Cliquez sur les sequences ci-desous)
+                  <br></br>
+                  <br></br>
                   <div></div>
-                  <Button onClick={this.handleNextVideo}>
-                  <VideoEndSession seen = "false" video = {this.state.videosToPlay[this.state.currentVideoIndex+1]} />
+                  <Button
+                  style = {{
+                    padding: "0.5rem",
+                  }}
+                  onClick={this.handleNextVideo}>
+                  <VideoEndSession seen ={false} video = {this.state.videosToPlay[this.state.currentVideoIndex+1]} />
                   </Button>
                 </div>
                 </div>
@@ -479,7 +484,7 @@ class MainForm extends React.Component {
                 fontSize: "2rem",
                 marginTop: "2%",
               }}>
-                <strong>En attente de video pour votre session ... 
+                <strong>En attente de vidéos pour votre session ... 
                   <br></br>
                     <Spinner animation="border" role="status">
                         <span className="visually-hidden">Loading...</span>

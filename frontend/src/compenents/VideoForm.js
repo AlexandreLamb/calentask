@@ -241,19 +241,19 @@ class VideoForm extends React.Component {
                                     marginBottom: "2%",
                                     fontSize: "1.5rem"
                                 }}>
-                                <strong>REGLE DE CLASSEMENT</strong>
+                                <strong>RÈGLES DE CLASSEMENTS</strong>
                             </Card.Title>
                             <Form className='rounded shadow lead' style={{
                                 backgroundColor: "rgba(41, 128, 185, 0.1)",
                                 padding: "1em",
                             }}>
                                 <Card.Body >
-                                    L’objectif de cette étude est de vous demandé de classer dans l'ordre chronologique 4 séquences
+                                    L’objectif de cette étude est de vous demander de classer dans l'ordre chronologique 4 séquences
                                     vidéos de 10 secondes (A, B, C, D), qui correspondent à 4 moments dans une tâche fatigante :
                                     <br></br> <br></br>
                                     <div className='rounded SequenceTime'
-                                        style={{ fontWeight: "bold", textAlign: "center", fontSize: "1.2rem", marginLeft: "35%" }}>
-                                        <div className='rounded SequenceTime'
+                                        style={{ fontWeight: "bold", textAlign: "center", fontSize: "1.2rem", marginLeft: "0%" }}>
+                                        {/*<div className='rounded SequenceTime'
                                             style={{ padding: "1'rem", marginTop: "1%", marginbottom: "1%", backgroundColor: "white", width: "50%" }}>
                                             0 min
                                         </div>
@@ -268,16 +268,24 @@ class VideoForm extends React.Component {
                                         <div className='rounded SequenceTime'
                                             style={{ padding: "1'rem", marginTop: "1%", marginbottom: "1%", backgroundColor: "white", width: "50%" }}>
                                             45 min
-                                        </div>
+                                        </div> */}
+                                        <Image fluid={true}
+                                            src="explication_clavif.png"
+                                            width="100%"
+                                            alt="logo ufv"
+                                    ></Image>{" "}
                                     </div>
 
                                     <br></br>
-                                    Les 4 sequences vidéos durent 10 secondes chacune.
-                                    Il vous est demander de visionner une fois les 4 séquences vidéos
-                                    avant de commencer à les classer.
-                                    <br></br> <br></br>
-                                    A l'issue du premier visionnage des 4 séquences vous pouvez commencer à les classer
-                                    ou bien décider de revisionner les 4 séquences.
+                                    Les 4 séquences vidéo durent 10 secondes chacune.
+                                    Il vous est demandé: <br></br>
+                                    1) Visionner une fois les 4 séquences vidéo dans l'ordre suivant : A,B,C puis D.
+                                    <br></br> 
+                                    2) Sélectionner une des 4 séquences vidéo (A,B,C,D)
+                                    <br></br>
+                                    3) Classer le moment (0 min, 15 min, 30 min ou 45 min) de la séquence vidéo selectionnée ou bien décider de la revisionner.
+                                    <br></br>
+                                    4) Recommencer à l'étape 2) pour les séquences restantes
                                     <br></br> <br></br>
                                 </Card.Body>
                             </Form>
@@ -386,7 +394,7 @@ class VideoForm extends React.Component {
                                     </Form>
                                     <Form className="col-4" style={{ alignItems: "center" }}>
                                         <Button disabled={this.manageButton("C")} variant="secondary"
-                                            style={{ width: "80%", marginBottom: "1%", backgroundColor: this.manageButton("C") ? "rgba(238,235,224,0.5)" : "rgba(238,235,224,1)" }}
+                                            style={{ width: "80%", marginBottom: "1%", backgroundColor: this.manageButton("C") ? "rgba(238,235,224,0.5)" : "rgba(238,235,224,1)", color: this.manageButton("C") ? "white" : "black" }}
                                             onClick={() => this.handleLaunchVideo("C")}>
                                             {this.manageTextButton("C")}
                                         </Button>
@@ -433,11 +441,11 @@ class VideoForm extends React.Component {
                                         style={{
                                             padding: "0.25rem",
                                             backgroundColor: this.state.backColor,
-                                            color: "white"
+                                            color: videoLetter === "C" ? "black":"white"
                                         }}>
                                           <strong>SEQUENCE {videoLetter}</strong>
                                     </Form.Label>
-                                    <Form.Label className="col-1 rounded shadow"
+                                    {/*<Form.Label className="col-1 rounded shadow"
                                         style={{
                                             display: (this.props.sequence[videoLetter].numberOfViews>0) ? "block" : "none",
                                             padding: "0.25rem",
@@ -447,7 +455,7 @@ class VideoForm extends React.Component {
                                             color: "white"
                                         }}>
                                         <strong>{this.props.sequence[videoLetter].numberOfViews + 1} vue</strong>
-                                    </Form.Label>
+                                    </Form.Label>*/}
                                 </Row>
                                 <VideoPlayer
                                    

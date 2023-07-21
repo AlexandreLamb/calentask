@@ -37,6 +37,7 @@ class Configuration extends React.Component {
       wifi_name: "",
       password: "",
       user_online: [],
+      studentMode:""
     };
   }
 
@@ -120,6 +121,10 @@ class Configuration extends React.Component {
     //this.getSubjectData();
     this.getUserOnline();
     //setInterval(this.getSubjectData, 3000)
+
+    api.get("/configuration/get/student").then(function(response){
+      console.log(response.data)
+    })
   };
   handleChange = (event) => {
     const target = event.target;
@@ -315,7 +320,7 @@ class Configuration extends React.Component {
             <div>
               <Image
                 fluid={true}
-                src="logo-fatigue-et-vigilance.png"
+                src="logo_esco.png"
                 width="16%"
                 alt="logo ufv"
               ></Image>{" "}

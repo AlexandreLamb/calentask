@@ -131,6 +131,7 @@ def export_data():
         df_csv = pd.DataFrame(columns=key_list)
         #print(key_list)
         for key in key_list:
+            print(key)
             #print(key + " = " + str(type(json[key])))
             if type(json[key]) == type([]):
                 df_list = pd.json_normalize(json[key], record_prefix=key).add_prefix(key)
@@ -145,6 +146,7 @@ def export_data():
     df_data = pd.DataFrame()
     for data in user_information:
         print(type(data))
+        print(data)
         df_data = pd.concat([df_data,normalize_handmade(data)])
     
     now = datetime.now()

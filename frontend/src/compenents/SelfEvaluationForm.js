@@ -239,7 +239,7 @@ class SelfEvaluationForm extends React.Component {
                   Afin de mieux comprendre votre processus de classification des
                   vidéos, veuillez nous indiquer quels sont les indicateurs du
                   visage que vous avez utilisés. Vous pouvez lister l'ensemble
-                  des indicateurs que vous avez utilisé pour classer les 4
+                  des indicateurs que vous avez utilisés pour classer les 4
                   séquences.
                   <br></br>
                   Lister par ordre d'importance vos indicateurs, du plus
@@ -256,7 +256,7 @@ class SelfEvaluationForm extends React.Component {
                   <strong>
                     {" "}
                     Quels indicateurs du visage avez-vous utilisés pour classer
-                    les videos ?
+                    les vidéos ?
                   </strong>
                 </Form.Label>
                 <div style={{}}>

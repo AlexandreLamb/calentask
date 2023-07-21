@@ -120,7 +120,7 @@ class InformationForm extends React.Component {
       document.getElementById("errorInitiale").style.display = "none";
     }
 
-    if (this.state.age === "") {
+    if ((this.state.age === "") || (this.state.age < 0)) {
       document.getElementById('ageValues').style.backgroundColor = '#e8a8a8';
       document.getElementById("errorAge").style.display = "block";
       ref1=1;
@@ -461,6 +461,8 @@ class InformationForm extends React.Component {
                   onChange={this.handleChange}
                   type="number"
                   placeholder="Age"
+                  min="0"
+                  max="110"
                   style={{
                     border: "solid black 2px",
                     background: this.state.bgColor
@@ -473,7 +475,7 @@ class InformationForm extends React.Component {
                     color: "#aa4646",
                     fontSize: "0.75rem",
                   }}>
-                  <strong>Nous avons besoin de cette information. Merci de la renseigner.</strong>
+                  <strong>Nous avons besoin de cette information. Merci de renseigner un age valide.</strong>
                 </Form.Label>
               </Form.Group>
             </Row>
@@ -626,6 +628,7 @@ class InformationForm extends React.Component {
                   value={peopleCommand}
                   onChange={this.handleChange}
                   type="number"
+                  min="0"
                   placeholder="Nombre de personne sous votre commandement"
                   style={{
                     border: "solid black 2px",
@@ -771,6 +774,7 @@ class InformationForm extends React.Component {
                   value={armyLengthOfService}
                   onChange={this.handleChange}
                   type="number"
+                  min="0"
                   placeholder="Année de service"
                   style={{
                     border: "solid black 2px",
@@ -799,6 +803,7 @@ class InformationForm extends React.Component {
                     value={jobLengthOfService}
                     onChange={this.handleChange}
                     type="number"
+                    min="0"
                     placeholder="Année dans votre poste"
                     style={{
                       border: "solid black 2px",
