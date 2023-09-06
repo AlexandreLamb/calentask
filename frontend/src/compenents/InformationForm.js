@@ -208,21 +208,22 @@ class InformationForm extends React.Component {
       document.getElementById('armyLengthOfServiceValues').style.backgroundColor = '#f8f3f3';
       document.getElementById("errorArmyLengthOfService").style.display = "none";
     }
-    if (this.state.fatigueLevelTheorical == null )  {
-      document.getElementById('test').style.backgroundColor = '#e8a8a8';
-      document.getElementById("errorfatigueLevelTheorical ").style.display = "block";
-      ref3 = 1;
-    } else  {
-      document.getElementById('test').style.backgroundColor = 'rgba(41, 128, 185, 0)';
-      document.getElementById("errorfatigueLevelTheorical ").style.display = "none";
-    } 
-
-    if (this.state.fatigueLevelPratical == null )  {
+    if (this.state.fatigueLevelTheorical === "" )  {
       document.getElementById('testest').style.backgroundColor = '#e8a8a8';
-      document.getElementById("errorFatigueLevel").style.display = "block";
+      document.getElementById("errorfatigueLevelTheorical").style.display = "block";
       ref3 = 1;
     } else  {
       document.getElementById('testest').style.backgroundColor = 'rgba(41, 128, 185, 0)';
+      document.getElementById("errorfatigueLevelTheorical").style.display = "none";
+    } 
+
+    if (this.state.fatigueLevelPratical === "" )  {
+
+      document.getElementById('test').style.backgroundColor = '#e8a8a8';
+      document.getElementById("errorFatigueLevel").style.display = "block";
+      ref3 = 1;
+    } else  {
+      document.getElementById('test').style.backgroundColor = 'rgba(41, 128, 185, 0)';
       document.getElementById("errorFatigueLevel").style.display = "none";
     } 
 
@@ -900,7 +901,7 @@ class InformationForm extends React.Component {
                   </Row>
                 </Form.Group>
                 <Form.Label
-                  id="errorFatigueLevel"
+                  id="errorfatigueLevelTheorical"
                   style={{
                     display: "none",
                     color: "#aa4646",
@@ -947,7 +948,7 @@ class InformationForm extends React.Component {
                   </Row>
                 </Form.Group>
                 <Form.Label
-                  id="errorfatigueLevelTheorical "
+                  id="errorFatigueLevel"
                   style={{
                     display: "none",
                     color: "#aa4646",

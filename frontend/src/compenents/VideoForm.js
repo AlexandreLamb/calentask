@@ -248,11 +248,12 @@ class VideoForm extends React.Component {
                                 padding: "1em",
                             }}>
                                 <Card.Body >
+                                <div className='rounded SequenceTime'
+                                        style={{ fontWeight: "bold", textAlign: "left", fontSize: "1.2rem", marginLeft: "0%" }}>
                                     L’objectif de cette étude est de vous demander de classer dans l'ordre chronologique 4 séquences
                                     vidéos de 10 secondes (A, B, C, D), qui correspondent à 4 moments dans une tâche fatigante :
                                     <br></br> <br></br>
-                                    <div className='rounded SequenceTime'
-                                        style={{ fontWeight: "bold", textAlign: "center", fontSize: "1.2rem", marginLeft: "0%" }}>
+                                
                                         {/*<div className='rounded SequenceTime'
                                             style={{ padding: "1'rem", marginTop: "1%", marginbottom: "1%", backgroundColor: "white", width: "50%" }}>
                                             0 min
@@ -274,7 +275,6 @@ class VideoForm extends React.Component {
                                             width="100%"
                                             alt="logo ufv"
                                     ></Image>{" "}
-                                    </div>
 
                                     <br></br>
                                     Les 4 séquences vidéo durent 10 secondes chacune.
@@ -287,6 +287,8 @@ class VideoForm extends React.Component {
                                     <br></br>
                                     4) Recommencer à l'étape 2) pour les séquences restantes
                                     <br></br> <br></br>
+                                    </div>
+
                                 </Card.Body>
                             </Form>
 
@@ -323,7 +325,7 @@ class VideoForm extends React.Component {
                                 <Form style={{
                                     marginBottom: "2%",
                                     fontWeight: "bold",
-                                    fontSize: "1rem",
+                                    fontSize: "1.4rem",
                                     color: "#32486E"
                                 }} className='lead'>
                                     Attention : une fois que vous avez classé une vidéo , il ne vous sera pas possible de revenir en arrière !

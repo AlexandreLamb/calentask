@@ -344,7 +344,7 @@ class Configuration extends React.Component {
           </Card.Title>
 
           <Tabs>
-            <Tab eventKey="Online" title="En cours">
+            {/*<Tab eventKey="Online" title="En cours">
             <Form.Group style={{
                         marginLeft: "15%",
                         marginRight: "15%",
@@ -415,7 +415,7 @@ class Configuration extends React.Component {
                   </Row>
                 </Form.Group>
               ))}
-            </Tab>
+                  </Tab>*/}
 
             <Tab eventKey="session" title="Session">
               <DragDropContext onDragEnd={this.handleOnDragEnd}>
@@ -437,7 +437,7 @@ class Configuration extends React.Component {
               </DragDropContext>
             </Tab>
 
-            <Tab eventKey="createSession" title="Créer">
+            {/*<Tab eventKey="createSession" title="Créer">
               <DragDropContext onDragEnd={this.handleOnDragEnd}>
                 {this.state.initiate == "" ? (
                   ""
@@ -455,7 +455,7 @@ class Configuration extends React.Component {
                   </Container>
                 )}
               </DragDropContext>
-            </Tab>
+                  </Tab>*/}
 
 
 
