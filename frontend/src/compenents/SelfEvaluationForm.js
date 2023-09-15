@@ -394,8 +394,8 @@ class SelfEvaluationForm extends React.Component {
                   }}
                 >
                   <strong>
-                    Vous pouvez ajouter des indicateur ne se trouvant pas la
-                    liste ce-dessus
+                    Vous pouvez ajouter des indicateurs ne se trouvant pas la
+                    liste ci-dessus :
                   </strong>
                 </Form.Label>
                 <Form

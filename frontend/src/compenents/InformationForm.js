@@ -4,9 +4,9 @@ import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import Image from 'react-bootstrap/Image'
+import Image from "react-bootstrap/Image";
 
-import '../App.css';
+import "../App.css";
 
 import {
   itemListGender,
@@ -38,7 +38,7 @@ class InformationForm extends React.Component {
       jobLengthOfService: getLocalState("jobLengthOfService", ""),
       grade: getLocalState("grade", "default"),
       bgColor: "#f8f3f3",
-      check: ""
+      check: "",
     };
     this.ref1 = React.createRef();
     this.ref2 = React.createRef();
@@ -86,14 +86,11 @@ class InformationForm extends React.Component {
     return mm + "/" + dd + "/" + yyyy;
   };
 
-
-
-
   handleSubmit = (event) => {
-    var ref1 =0;
-    var ref2 =0;
-    var ref3 =0;
-  
+    var ref1 = 0;
+    var ref2 = 0;
+    var ref3 = 0;
+
     const {
       initialValues,
       age,
@@ -112,131 +109,176 @@ class InformationForm extends React.Component {
     const this_contexte = this;
 
     if (this.state.initialValues == null || this.state.initialValues === "") {
-      document.getElementById('initialValues').style.backgroundColor = '#e8a8a8';
+      document.getElementById("initialValues").style.backgroundColor =
+        "#e8a8a8";
       document.getElementById("errorInitiale").style.display = "block";
-      ref1=1;
+      ref1 = 1;
     } else {
-      document.getElementById('initialValues').style.backgroundColor = '#f8f3f3';
+      document.getElementById("initialValues").style.backgroundColor =
+        "#f8f3f3";
       document.getElementById("errorInitiale").style.display = "none";
     }
 
-    if ((this.state.age === "") || (this.state.age < 0)) {
-      document.getElementById('ageValues').style.backgroundColor = '#e8a8a8';
+    if (this.state.age === "" || this.state.age < 0) {
+      document.getElementById("ageValues").style.backgroundColor = "#e8a8a8";
       document.getElementById("errorAge").style.display = "block";
-      ref1=1;
+      ref1 = 1;
     } else {
-      document.getElementById('ageValues').style.backgroundColor = '#f8f3f3';
+      document.getElementById("ageValues").style.backgroundColor = "#f8f3f3";
       document.getElementById("errorAge").style.display = "none";
     }
 
     if (this.state.gender === "default") {
-      document.getElementById('genderValues').style.backgroundColor = '#e8a8a8';
+      document.getElementById("genderValues").style.backgroundColor = "#e8a8a8";
       document.getElementById("errorGender").style.display = "block";
-      ref1=1;
+      ref1 = 1;
     } else {
-      document.getElementById('genderValues').style.backgroundColor = '#f8f3f3';
+      document.getElementById("genderValues").style.backgroundColor = "#f8f3f3";
       document.getElementById("errorGender").style.display = "none";
     }
 
     if (this.state.studieLevel === "default") {
-      document.getElementById('studieLevelValues').style.backgroundColor = '#e8a8a8';
+      document.getElementById("studieLevelValues").style.backgroundColor =
+        "#e8a8a8";
       document.getElementById("errorStudieLevel").style.display = "block";
-      ref2=1;
+      ref2 = 1;
     } else {
-      document.getElementById('studieLevelValues').style.backgroundColor = '#f8f3f3';
+      document.getElementById("studieLevelValues").style.backgroundColor =
+        "#f8f3f3";
       document.getElementById("errorStudieLevel").style.display = "none";
     }
     if (this.state.studieArea === "") {
-      document.getElementById('studieAreaValues').style.backgroundColor = '#e8a8a8';
+      document.getElementById("studieAreaValues").style.backgroundColor =
+        "#e8a8a8";
       document.getElementById("errorStudieArea").style.display = "block";
-      ref2=1;
+      ref2 = 1;
     } else {
-      document.getElementById('studieAreaValues').style.backgroundColor = '#f8f3f3';
+      document.getElementById("studieAreaValues").style.backgroundColor =
+        "#f8f3f3";
       document.getElementById("errorStudieArea").style.display = "none";
     }
 
-    if (this.state.typeOfJob === "" && this.props.studentMode === true ) {
-      document.getElementById('typeOfJobValues').style.backgroundColor = '#e8a8a8';
+    if (this.state.typeOfJob === "") {
+      document.getElementById("typeOfJobValues").style.backgroundColor =
+        "#e8a8a8";
       document.getElementById("errorTypeOfJob").style.display = "block";
-      ref2=1;
-    } else if (this.props.studentMode === true){
-      document.getElementById('typeOfJobValues').style.backgroundColor = '#f8f3f3';
+      ref2 = 1;
+    } else  {
+      document.getElementById("typeOfJobValues").style.backgroundColor =
+        "#f8f3f3";
       document.getElementById("errorTypeOfJob").style.display = "none";
     }
 
-    if (this.state.peopleCommand === "" && this.props.studentMode === true ) {
-      document.getElementById('peopleCommandValues').style.backgroundColor = '#e8a8a8';
+    if (this.state.peopleCommand === "" && this.props.studentMode === true) {
+      document.getElementById("peopleCommandValues").style.backgroundColor =
+        "#e8a8a8";
       document.getElementById("errorPeopleCommand").style.display = "block";
-      ref2=1;
-    } else if (this.props.studentMode === true){
-      document.getElementById('peopleCommandValues').style.backgroundColor = '#f8f3f3';
+      ref2 = 1;
+    } else if (this.props.studentMode === true) {
+      document.getElementById("peopleCommandValues").style.backgroundColor =
+        "#f8f3f3";
       document.getElementById("errorPeopleCommand").style.display = "none";
     }
 
-    if (this.state.grade === "default" && this.props.studentMode === true ) {
-      document.getElementById('gradeValues').style.backgroundColor = '#e8a8a8';
+    if (this.state.grade === "default" && this.props.studentMode === true) {
+      document.getElementById("gradeValues").style.backgroundColor = "#e8a8a8";
       document.getElementById("errorGrade").style.display = "block";
-      ref2=1;
-    } else if (this.props.studentMode === true){
-      document.getElementById('gradeValues').style.backgroundColor = '#f8f3f3';
+      ref2 = 1;
+    } else if (this.props.studentMode === true) {
+      document.getElementById("gradeValues").style.backgroundColor = "#f8f3f3";
       document.getElementById("errorGrade").style.display = "none";
     }
 
-    if (this.state.jobLengthOfService === "" && this.props.studentMode === true) {
-      document.getElementById('jobLengthOfServiceValues').style.backgroundColor = '#e8a8a8';
-      document.getElementById("errorJobLengthOfService").style.display = "block";
-      ref2=1;
-    } else if (this.props.studentMode === true){
-      document.getElementById('jobLengthOfServiceValues').style.backgroundColor = '#f8f3f3';
+    if (
+      this.state.jobLengthOfService === "" &&
+      this.props.studentMode === true
+    ) {
+      document.getElementById(
+        "jobLengthOfServiceValues"
+      ).style.backgroundColor = "#e8a8a8";
+      document.getElementById("errorJobLengthOfService").style.display =
+        "block";
+      ref2 = 1;
+    } else if (this.props.studentMode === true) {
+      document.getElementById(
+        "jobLengthOfServiceValues"
+      ).style.backgroundColor = "#f8f3f3";
       document.getElementById("errorJobLengthOfService").style.display = "none";
     }
 
-    if (this.state.headquarters === "default"  && this.props.studentMode === true )  {
-      document.getElementById('headquartersValues').style.backgroundColor = '#e8a8a8';
+    if (
+      this.state.headquarters === "default" &&
+      this.props.studentMode === true
+    ) {
+      document.getElementById("headquartersValues").style.backgroundColor =
+        "#e8a8a8";
       document.getElementById("errorHeadquarters").style.display = "block";
-      ref2=1;
-    } else if (this.props.studentMode === true){
-      document.getElementById('headquartersValues').style.backgroundColor = '#f8f3f3';
+      ref2 = 1;
+    } else if (this.props.studentMode === true) {
+      document.getElementById("headquartersValues").style.backgroundColor =
+        "#f8f3f3";
       document.getElementById("errorHeadquarters").style.display = "none";
     }
 
-    if (this.state.armyLengthOfService === "" && this.props.studentMode === true ) {
-      document.getElementById('armyLengthOfServiceValues').style.backgroundColor = '#e8a8a8';
-      document.getElementById("errorArmyLengthOfService").style.display = "block";
-      ref2=1;
-    } else if (this.props.studentMode === true){
-      document.getElementById('armyLengthOfServiceValues').style.backgroundColor = '#f8f3f3';
-      document.getElementById("errorArmyLengthOfService").style.display = "none";
+    if (
+      this.state.armyLengthOfService === ""){
+      document.getElementById(
+        "armyLengthOfServiceValues"
+      ).style.backgroundColor = "#e8a8a8";
+      document.getElementById("errorArmyLengthOfService").style.display =
+        "block";
+      ref2 = 1;
+    } else {
+      document.getElementById(
+        "armyLengthOfServiceValues"
+      ).style.backgroundColor = "#f8f3f3";
+      document.getElementById("errorArmyLengthOfService").style.display =
+        "none";
     }
-    if (this.state.fatigueLevelTheorical === "" )  {
-      document.getElementById('testest').style.backgroundColor = '#e8a8a8';
-      document.getElementById("errorfatigueLevelTheorical").style.display = "block";
+    if (this.state.fatigueLevelTheorical === "") {
+      document.getElementById("testest").style.backgroundColor = "#e8a8a8";
+      document.getElementById("errorfatigueLevelTheorical").style.display =
+        "block";
       ref3 = 1;
-    } else  {
-      document.getElementById('testest').style.backgroundColor = 'rgba(41, 128, 185, 0)';
-      document.getElementById("errorfatigueLevelTheorical").style.display = "none";
-    } 
+    } else {
+      document.getElementById("testest").style.backgroundColor =
+        "rgba(41, 128, 185, 0)";
+      document.getElementById("errorfatigueLevelTheorical").style.display =
+        "none";
+    }
 
-    if (this.state.fatigueLevelPratical === "" )  {
-
-      document.getElementById('test').style.backgroundColor = '#e8a8a8';
+    if (this.state.fatigueLevelPratical === "") {
+      document.getElementById("test").style.backgroundColor = "#e8a8a8";
       document.getElementById("errorFatigueLevel").style.display = "block";
       ref3 = 1;
-    } else  {
-      document.getElementById('test').style.backgroundColor = 'rgba(41, 128, 185, 0)';
+    } else {
+      document.getElementById("test").style.backgroundColor =
+        "rgba(41, 128, 185, 0)";
       document.getElementById("errorFatigueLevel").style.display = "none";
-    } 
+    }
+
+    if (document.getElementById("invalidCheck").checked === false) {
+      document.getElementById("invalidCheck").style.backgroundColor = "#e8a8a8";
+      document.getElementById("conditions").style.display = "block";
+      ref2 = 3;
+    } else {
+      document.getElementById("invalidCheck").style.backgroundColor =
+        "rgba(41, 128, 185, 0)";
+      document.getElementById("conditions").style.display = "none";
+    }
+
+
 
     if (ref1 == 1) {
       this.ref1.current.scrollIntoView();
-    } 
+    }
     if (ref2 == 1 && ref1 == 0) {
       this.ref2.current.scrollIntoView();
-    } 
+    }
     if (ref3 == 1 && ref1 == 0 && ref2 == 0) {
       this.ref3.current.scrollIntoView();
-    } 
-
+    }
+    if (document.getElementById("invalidCheck").checked === true) {
     api
       .post("output/subject/information/", {
         _initialValues: initialValues,
@@ -267,7 +309,9 @@ class InformationForm extends React.Component {
       .catch(function (error) {
         console.log(error);
       });
+    
     event.preventDefault();
+  }
   };
   render() {
     const {
@@ -305,8 +349,10 @@ class InformationForm extends React.Component {
           style={{
             marginLeft: "5%",
             marginRight: "5%",
-          }}>
-          <Image fluid={true}
+          }}
+        >
+          <Image
+            fluid={true}
             src="Picture1.png"
             width="100%"
             alt="logo ufv"
@@ -320,20 +366,20 @@ class InformationForm extends React.Component {
             fontSize: "1 rem",
           }}
         >
-          <Form  ref={this.ref1}>
+          <Form ref={this.ref1}>
             <Form.Label
               style={{
                 marginLeft: "5%",
                 marginRight: "5%",
                 marginTop: "2%",
                 marginBottom: "2%",
-                fontSize: "1.5rem"
+                fontSize: "1.5rem",
               }}
             >
               <strong>INFORMATIONS PERSONNELLES</strong>
             </Form.Label>
           </Form>
-         
+
           <Form
             className="mb-3 rounded shadow"
             style={{
@@ -342,9 +388,7 @@ class InformationForm extends React.Component {
               padding: "1rem",
               backgroundColor: "rgba(41, 128, 185, 0.1)",
             }}
-           
           >
-
             <Row
               className="mb-3 rounded"
               style={{
@@ -352,7 +396,9 @@ class InformationForm extends React.Component {
                 marginRight: "3%",
               }}
             >
-              <Form.Group as={Col} controlId="formBasicInitial"
+              <Form.Group
+                as={Col}
+                controlId="formBasicInitial"
                 style={{
                   width: "97%",
                   margin: "auto",
@@ -362,10 +408,9 @@ class InformationForm extends React.Component {
               >
                 <Form.Label
                   style={{
-                    marginTop: "3%"
+                    marginTop: "3%",
                   }}
                 >
-
                   <strong>Initiales</strong>
                 </Form.Label>
                 <Form.Control
@@ -377,13 +422,15 @@ class InformationForm extends React.Component {
                   placeholder="Ex : ML (Martin Latouche)"
                   style={{
                     border: "solid black 2px",
-                    background: this.state.bgColor
+                    background: this.state.bgColor,
                   }}
                 />
-                <Form.Text className="text-muted"
+                <Form.Text
+                  className="text-muted"
                   style={{
                     fontSize: "0.75rem",
-                  }}>
+                  }}
+                >
                   Les initiales seront conservées de manière anonyme
                 </Form.Text>
                 <Form.Label
@@ -392,12 +439,18 @@ class InformationForm extends React.Component {
                     display: "none",
                     color: "#aa4646",
                     fontSize: "0.75rem",
-                  }}>
-                  <strong>Nous avons besoin de cette information. Merci de la renseigner.</strong>
+                  }}
+                >
+                  <strong>
+                    Nous avons besoin de cette information. Merci de la
+                    renseigner.
+                  </strong>
                 </Form.Label>
               </Form.Group>
 
-              <Form.Group as={Col} controlId="formBasicGender"
+              <Form.Group
+                as={Col}
+                controlId="formBasicGender"
                 style={{
                   width: "100%",
                   margin: "auto",
@@ -407,7 +460,7 @@ class InformationForm extends React.Component {
               >
                 <Form.Label
                   style={{
-                    marginTop: "3%"
+                    marginTop: "3%",
                   }}
                 >
                   <strong>Genre</strong>
@@ -419,7 +472,7 @@ class InformationForm extends React.Component {
                   onChange={this.handleChange}
                   style={{
                     border: "solid black 2px",
-                    background: this.state.bgColor
+                    background: this.state.bgColor,
                   }}
                 >
                   {itemListGender.map(({ id, key, value, text, disabled }) => (
@@ -434,12 +487,18 @@ class InformationForm extends React.Component {
                     display: "none",
                     color: "#aa4646",
                     fontSize: "0.75rem",
-                  }}>
-                  <strong>Nous avons besoin de cette information. Merci de la renseigner.</strong>
+                  }}
+                >
+                  <strong>
+                    Nous avons besoin de cette information. Merci de la
+                    renseigner.
+                  </strong>
                 </Form.Label>
               </Form.Group>
 
-              <Form.Group as={Col} controlId="formBasicAge"
+              <Form.Group
+                as={Col}
+                controlId="formBasicAge"
                 style={{
                   width: "100%",
                   margin: "auto",
@@ -450,7 +509,7 @@ class InformationForm extends React.Component {
                 <Form.Label
                   className="MarianneBold"
                   style={{
-                    marginTop: "3%"
+                    marginTop: "3%",
                   }}
                 >
                   <strong>Age</strong>
@@ -466,7 +525,7 @@ class InformationForm extends React.Component {
                   max="110"
                   style={{
                     border: "solid black 2px",
-                    background: this.state.bgColor
+                    background: this.state.bgColor,
                   }}
                 />
                 <Form.Label
@@ -475,25 +534,32 @@ class InformationForm extends React.Component {
                     display: "none",
                     color: "#aa4646",
                     fontSize: "0.75rem",
-                  }}>
-                  <strong>Nous avons besoin de cette information. Merci de renseigner un age valide.</strong>
+                  }}
+                >
+                  <strong>
+                    Nous avons besoin de cette information. Merci de renseigner
+                    un age valide.
+                  </strong>
                 </Form.Label>
               </Form.Group>
             </Row>
           </Form>
 
-          <Form className="align-items-center"
+          <Form
+            className="align-items-center"
             style={{
               marginLeft: "5%",
               marginRight: "5%",
               textAlign: "center",
               marginTop: "4%",
               marginBottom: "1%",
-            }}>
+            }}
+          >
             <Row>
               <Form className="col-5"></Form>
               <Form className="col-2">
-                <Image fluid={true}
+                <Image
+                  fluid={true}
                   src="Picture2.png"
                   width="100%"
                   alt="logo ufv"
@@ -503,22 +569,22 @@ class InformationForm extends React.Component {
             </Row>
           </Form>
 
-          <Form  ref={this.ref2}>
+          <Form ref={this.ref2}>
             <Form.Label
               style={{
                 marginTop: "2%",
                 marginBottom: "1%",
                 marginLeft: "5%",
                 marginRight: "5%",
-                fontSize: "1.5rem"
+                fontSize: "1.5rem",
               }}
-
             >
               <strong>PARCOURS PROFESSIONNEL</strong>
             </Form.Label>
           </Form>
 
-          <Form className="rounded shadow"
+          <Form
+            className="rounded shadow"
             style={{
               marginLeft: "5%",
               marginRight: "5%",
@@ -533,58 +599,69 @@ class InformationForm extends React.Component {
                 margin: "0.1rem",
               }}
             >
-              {this.props.studentMode ? <Form.Group as={Col} controlId="formBasicHeadquarters"
-                style={{
-                  width: "100%",
-                  margin: "auto",
-                  fontSize: "1rem",
-                }}>
-                <Form.Label
-                  style={{
-                  
-                  }}>
-                  <strong>Etat-major</strong>
-                </Form.Label>
-                <Form.Select
-                  name="headquarters"
-                  id="headquartersValues"
-                  value={headquarters}
-                  onChange={this.handleChange}
-                  style={{
-                    border: "solid black 2px",
-                    background: this.state.bgColor
-                  }}
-                >
-                  {iemListHeadquarters.map(
-                    ({ id, key, value, text, disabled }) => (
-                      <option id={id} key={key} value={value} disabled={disabled}>
-                        {text}{" "}
-                      </option>
-                    )
-                  )}
-                </Form.Select>
-                <Form.Label
-                  id="errorHeadquarters"
-                  style={{
-                    display: "none",
-                    color: "#aa4646",
-                    fontSize: "0.75rem",
-                  }}>
-                  <strong>Nous avons besoin de cette information. Merci de la renseigner.</strong>
-                </Form.Label>
-              </Form.Group> : null}
-
-              {this.props.studentMode ?
-                <Form.Group as={Col} controlId="formBasicGrade"
+              {this.props.studentMode ? (
+                <Form.Group
+                  as={Col}
+                  controlId="formBasicHeadquarters"
                   style={{
                     width: "100%",
                     margin: "auto",
                     fontSize: "1rem",
-                  }}>
-                  <Form.Label
+                  }}
+                >
+                  <Form.Label style={{}}>
+                    <strong>Etat-major</strong>
+                  </Form.Label>
+                  <Form.Select
+                    name="headquarters"
+                    id="headquartersValues"
+                    value={headquarters}
+                    onChange={this.handleChange}
                     style={{
-                      
-                    }}>
+                      border: "solid black 2px",
+                      background: this.state.bgColor,
+                    }}
+                  >
+                    {iemListHeadquarters.map(
+                      ({ id, key, value, text, disabled }) => (
+                        <option
+                          id={id}
+                          key={key}
+                          value={value}
+                          disabled={disabled}
+                        >
+                          {text}{" "}
+                        </option>
+                      )
+                    )}
+                  </Form.Select>
+                  <Form.Label
+                    id="errorHeadquarters"
+                    style={{
+                      display: "none",
+                      color: "#aa4646",
+                      fontSize: "0.75rem",
+                    }}
+                  >
+                    <strong>
+                      Nous avons besoin de cette information. Merci de la
+                      renseigner.
+                    </strong>
+                  </Form.Label>
+                </Form.Group>
+              ) : null}
+
+              {this.props.studentMode ? (
+                <Form.Group
+                  as={Col}
+                  controlId="formBasicGrade"
+                  style={{
+                    width: "100%",
+                    margin: "auto",
+                    fontSize: "1rem",
+                  }}
+                >
+                  <Form.Label style={{}}>
                     <strong>Grade</strong>
                   </Form.Label>
                   <Form.Select
@@ -594,16 +671,19 @@ class InformationForm extends React.Component {
                     onChange={this.handleChange}
                     style={{
                       border: "solid black 2px",
-                      background: this.state.bgColor
+                      background: this.state.bgColor,
                     }}
                   >
-                    {iemListGrade.map(
-                      ({ id, key, value, text, disabled }) => (
-                        <option id={id} key={key} value={value} disabled={disabled}>
-                          {text}{" "}
-                        </option>
-                      )
-                    )}
+                    {iemListGrade.map(({ id, key, value, text, disabled }) => (
+                      <option
+                        id={id}
+                        key={key}
+                        value={value}
+                        disabled={disabled}
+                      >
+                        {text}{" "}
+                      </option>
+                    ))}
                   </Form.Select>
                   <Form.Label
                     id="errorGrade"
@@ -611,41 +691,49 @@ class InformationForm extends React.Component {
                       display: "none",
                       color: "#aa4646",
                       fontSize: "0.75rem",
-                    }}>
-                    <strong>Nous avons besoin de cette information. Merci de la renseigner.</strong>
+                    }}
+                  >
+                    <strong>
+                      Nous avons besoin de cette information. Merci de la
+                      renseigner.
+                    </strong>
                   </Form.Label>
-                </Form.Group> : null}
+                </Form.Group>
+              ) : null}
 
-              {this.props.studentMode ? <Form.Group as={Col} controlId="formBasicPeopleCommand">
-                <Form.Label
-                  style={{
-                  
-                  }}>
-                  <strong>Commandement</strong>
-                </Form.Label>
-                <Form.Control
-                  name="peopleCommand"
-                  id="peopleCommandValues"
-                  value={peopleCommand}
-                  onChange={this.handleChange}
-                  type="number"
-                  min="0"
-                  placeholder="Nombre de personne sous votre commandement"
-                  style={{
-                    border: "solid black 2px",
-                    background: this.state.bgColor
-                  }}
-                />
-                <Form.Label
-                  id="errorPeopleCommand"
-                  style={{
-                    display: "none",
-                    color: "#aa4646",
-                    fontSize: "0.75rem",
-                  }}>
-                  <strong>Nous avons besoin de cette information. Merci de la renseigner.</strong>
-                </Form.Label>
-              </Form.Group> : null}
+              {this.props.studentMode ? (
+                <Form.Group as={Col} controlId="formBasicPeopleCommand">
+                  <Form.Label style={{}}>
+                    <strong>Commandement</strong>
+                  </Form.Label>
+                  <Form.Control
+                    name="peopleCommand"
+                    id="peopleCommandValues"
+                    value={peopleCommand}
+                    onChange={this.handleChange}
+                    type="number"
+                    min="0"
+                    placeholder="Nombre de personne sous votre commandement"
+                    style={{
+                      border: "solid black 2px",
+                      background: this.state.bgColor,
+                    }}
+                  />
+                  <Form.Label
+                    id="errorPeopleCommand"
+                    style={{
+                      display: "none",
+                      color: "#aa4646",
+                      fontSize: "0.75rem",
+                    }}
+                  >
+                    <strong>
+                      Nous avons besoin de cette information. Merci de la
+                      renseigner.
+                    </strong>
+                  </Form.Label>
+                </Form.Group>
+              ) : null}
             </Row>
 
             <Row
@@ -658,18 +746,20 @@ class InformationForm extends React.Component {
                 <Form.Label
                   style={{
                     fontSize: "1rem",
-                  }}>
-                  <strong>Spécialité</strong></Form.Label>
+                  }}
+                >
+                  <strong>Diplôme</strong>
+                </Form.Label>
                 <Form.Control
                   name="studieArea"
                   id="studieAreaValues"
                   value={studieArea}
                   onChange={this.handleChange}
                   type="text"
-                  placeholder="Etudes"
+                  placeholder="Diplôme"
                   style={{
                     border: "solid black 2px",
-                    background: this.state.bgColor
+                    background: this.state.bgColor,
                   }}
                 />
                 <Form.Label
@@ -678,48 +768,56 @@ class InformationForm extends React.Component {
                     display: "none",
                     color: "#aa4646",
                     fontSize: "0.75rem",
-                  }}>
-                  <strong>Nous avons besoin de cette information. Merci de la renseigner.</strong>
+                  }}
+                >
+                  <strong>
+                    Nous avons besoin de cette information. Merci de la
+                    renseigner.
+                  </strong>
                 </Form.Label>
               </Form.Group>
 
-              {this.props.studentMode ? <Form.Group as={Col} controlId="formBasicTypeOfJob"
-                style={{
-                  fontSize: "1rem",
-                }}>
-                <Form.Label
+              {this.props.studentMode ? (
+                <Form.Group
+                  as={Col}
+                  controlId="formBasicTypeOfJob"
                   style={{
-                   
-                  }}>
-                  <strong>Intitulé de spécialité</strong></Form.Label>
-                <Form.Control
-                  name="typeOfJob"
-                  id="typeOfJobValues"
-                  value={typeOfJob}
-                  onChange={this.handleChange}
-                  type="text"
-                  placeholder="Intitulé de votre spécialité"
-                  style={{
-                    border: "solid black 2px",
-                    background: this.state.bgColor
+                    fontSize: "1rem",
                   }}
-                />
-                <Form.Label
-                  id="errorTypeOfJob"
-                  style={{
-                    display: "none",
-                    color: "#aa4646",
-                    fontSize: "0.75rem",
-                  }}>
-                  <strong>Nous avons besoin de cette information. Merci de la renseigner.</strong>
-                </Form.Label>
-              </Form.Group> : null}
+                >
+                  <Form.Label style={{}}>
+                    <strong>Intitulé de spécialité</strong>
+                  </Form.Label>
+                  <Form.Control
+                    name="typeOfJob"
+                    id="typeOfJobValues"
+                    value={typeOfJob}
+                    onChange={this.handleChange}
+                    type="text"
+                    placeholder="Intitulé de votre spécialité"
+                    style={{
+                      border: "solid black 2px",
+                      background: this.state.bgColor,
+                    }}
+                  />
+                  <Form.Label
+                    id="errorTypeOfJob"
+                    style={{
+                      display: "none",
+                      color: "#aa4646",
+                      fontSize: "0.75rem",
+                    }}
+                  >
+                    <strong>
+                      Nous avons besoin de cette information. Merci de la
+                      renseigner.
+                    </strong>
+                  </Form.Label>
+                </Form.Group>
+              ) : null}
 
               <Form.Group as={Col} controlId="formBasicStudiesLevel">
-                <Form.Label
-                  style={{
-                   
-                  }}>
+                <Form.Label style={{}}>
                   <strong>Niveau d'étude</strong>
                 </Form.Label>
                 <Form.Select
@@ -729,23 +827,34 @@ class InformationForm extends React.Component {
                   onChange={this.handleChange}
                   style={{
                     border: "solid black 2px",
-                    background: this.state.bgColor
+                    background: this.state.bgColor,
                   }}
                 >
-                  {this.props.studentMode ? iemListStudieLevel.map(
-                    ({ id, key, value, text, disabled }) => (
-                      <option id={id} key={key} value={value} disabled={disabled}>
-                        {text}{" "}
-                      </option>
-                    )
-                  ) : iemListStudieLevelStudent.map(
-                    ({ id, key, value, text, disabled }) => (
-                      <option id={id} key={key} value={value} disabled={disabled}>
-                        {text}{" "}
-                      </option>
-                    )
-                  )
-                  }
+                  {this.props.studentMode
+                    ? iemListStudieLevel.map(
+                        ({ id, key, value, text, disabled }) => (
+                          <option
+                            id={id}
+                            key={key}
+                            value={value}
+                            disabled={disabled}
+                          >
+                            {text}{" "}
+                          </option>
+                        )
+                      )
+                    : iemListStudieLevelStudent.map(
+                        ({ id, key, value, text, disabled }) => (
+                          <option
+                            id={id}
+                            key={key}
+                            value={value}
+                            disabled={disabled}
+                          >
+                            {text}{" "}
+                          </option>
+                        )
+                      )}
                 </Form.Select>
                 <Form.Label
                   id="errorStudieLevel"
@@ -753,8 +862,12 @@ class InformationForm extends React.Component {
                     display: "none",
                     color: "#aa4646",
                     fontSize: "0.75rem",
-                  }}>
-                  <strong>Nous avons besoin de cette information. Merci de la renseigner.</strong>
+                  }}
+                >
+                  <strong>
+                    Nous avons besoin de cette information. Merci de la
+                    renseigner.
+                  </strong>
                 </Form.Label>
               </Form.Group>
             </Row>
@@ -763,38 +876,120 @@ class InformationForm extends React.Component {
               className="mb-3"
               style={{
                 margin: "0.1rem",
-              }}>
-
-              {this.props.studentMode ? <Form.Group as={Col} controlId="formBasicarmyLengthOfService">
-                <Form.Label>
-                  <strong>Année de service</strong>
-                </Form.Label>
-                <Form.Control
-                  name="armyLengthOfService"
-                  id="armyLengthOfServiceValues"
-                  value={armyLengthOfService}
-                  onChange={this.handleChange}
-                  type="number"
-                  min="0"
-                  placeholder="Année de service"
+              }}
+            >
+              {this.props.studentMode ? null : (
+                <Form.Group
+                  as={Col}
+                  controlId="formBasicTypeOfJob"
                   style={{
-                    border: "solid black 2px",
-                    background: this.state.bgColor
+                    fontSize: "1rem",
                   }}
-                />
-                <Form.Label
-                  id="errorArmyLengthOfService"
-                  style={{
-                    display: "none",
-                    color: "#aa4646",
-                    fontSize: "0.75rem",
-                  }}>
-                  <strong>Nous avons besoin de cette information. Merci de la renseigner.</strong>
-                </Form.Label>
-              </Form.Group> : null}
+                >
+                  <Form.Label style={{}}>
+                    <strong>Intitulé de votre métier</strong>
+                  </Form.Label>
+                  <Form.Control
+                    name="typeOfJob"
+                    id="typeOfJobValues"
+                    value={typeOfJob}
+                    onChange={this.handleChange}
+                    type="text"
+                    placeholder="Intitulé de votre métier"
+                    style={{
+                      border: "solid black 2px",
+                      background: this.state.bgColor,
+                    }}
+                  />
+                  <Form.Label
+                    id="errorTypeOfJob"
+                    style={{
+                      display: "none",
+                      color: "#aa4646",
+                      fontSize: "0.75rem",
+                    }}
+                  >
+                    <strong>
+                      Nous avons besoin de cette information. Merci de la
+                      renseigner.
+                    </strong>
+                  </Form.Label>
+                </Form.Group>
+              )}
 
-              {this.props.studentMode ?
-                <Form.Group as={Col} controlId="formBasicArmyJobLengthOfService">
+              {this.props.studentMode ? null : (
+                <Form.Group as={Col} controlId="formBasicarmyLengthOfService">
+                  <Form.Label>
+                    <strong>Année d'expérience professionelle</strong>
+                  </Form.Label>
+                  <Form.Control
+                    name="armyLengthOfService"
+                    id="armyLengthOfServiceValues"
+                    value={armyLengthOfService}
+                    onChange={this.handleChange}
+                    type="number"
+                    min="0"
+                    placeholder="Année d'expérience professionelle"
+                    style={{
+                      border: "solid black 2px",
+                      background: this.state.bgColor,
+                    }}
+                  />
+                  <Form.Label
+                    id="errorArmyLengthOfService"
+                    style={{
+                      display: "none",
+                      color: "#aa4646",
+                      fontSize: "0.75rem",
+                    }}
+                  >
+                    <strong>
+                      Nous avons besoin de cette information. Merci de la
+                      renseigner.
+                    </strong>
+                  </Form.Label>
+                </Form.Group>
+              )}
+
+              {this.props.studentMode ? (
+                <Form.Group as={Col} controlId="formBasicarmyLengthOfService">
+                  <Form.Label>
+                    <strong>Année de service</strong>
+                  </Form.Label>
+                  <Form.Control
+                    name="armyLengthOfService"
+                    id="armyLengthOfServiceValues"
+                    value={armyLengthOfService}
+                    onChange={this.handleChange}
+                    type="number"
+                    min="0"
+                    placeholder="Année de service"
+                    style={{
+                      border: "solid black 2px",
+                      background: this.state.bgColor,
+                    }}
+                  />
+                  <Form.Label
+                    id="errorArmyLengthOfService"
+                    style={{
+                      display: "none",
+                      color: "#aa4646",
+                      fontSize: "0.75rem",
+                    }}
+                  >
+                    <strong>
+                      Nous avons besoin de cette information. Merci de la
+                      renseigner.
+                    </strong>
+                  </Form.Label>
+                </Form.Group>
+              ) : null}
+
+              {this.props.studentMode ? (
+                <Form.Group
+                  as={Col}
+                  controlId="formBasicArmyJobLengthOfService"
+                >
                   <Form.Label>
                     <strong>Année dans votre poste</strong>
                   </Form.Label>
@@ -808,7 +1003,7 @@ class InformationForm extends React.Component {
                     placeholder="Année dans votre poste"
                     style={{
                       border: "solid black 2px",
-                      background: this.state.bgColor
+                      background: this.state.bgColor,
                     }}
                   />
                   <Form.Label
@@ -817,25 +1012,33 @@ class InformationForm extends React.Component {
                       display: "none",
                       color: "#aa4646",
                       fontSize: "0.75rem",
-                    }}>
-                    <strong>Nous avons besoin de cette information. Merci de la renseigner.</strong>
+                    }}
+                  >
+                    <strong>
+                      Nous avons besoin de cette information. Merci de la
+                      renseigner.
+                    </strong>
                   </Form.Label>
-                </Form.Group> : null}
+                </Form.Group>
+              ) : null}
             </Row>
           </Form>
 
-          <Form className="align-items-center"
+          <Form
+            className="align-items-center"
             style={{
               marginLeft: "5%",
               marginRight: "5%",
               textAlign: "center",
               marginTop: "4%",
               marginBottom: "1%",
-            }}>
+            }}
+          >
             <Row>
               <Form className="col-5"></Form>
               <Form className="col-2">
-                <Image fluid={true}
+                <Image
+                  fluid={true}
                   src="Picture2.png"
                   width="100%"
                   alt="logo ufv"
@@ -858,21 +1061,29 @@ class InformationForm extends React.Component {
             <strong>QUESTIONS PRELIMINAIRES</strong>
           </Form.Label>
 
-
-          <Form className="rounded shadow"
+          <Form
+            className="rounded shadow"
             style={{
               marginLeft: "5%",
               marginRight: "5%",
               fontSize: "1rem",
               padding: "1rem",
               backgroundColor: "rgba(41, 128, 185, 0.1)",
-              textAlign: "center"
+              textAlign: "center",
             }}
           >
             <Row>
-              <Form.Group as={Col} class = "rounded" controlId="formBasicFatigueTheoricalEva" id="testest">
+              <Form.Group
+                as={Col}
+                class="rounded"
+                controlId="formBasicFatigueTheoricalEva"
+                id="testest"
+              >
                 <Form.Label>
-                  <strong>Comment estimez-vous votre connaissance théorique de la fatigue mentale ?</strong>
+                  <strong>
+                    Comment estimez-vous votre connaissance théorique de la
+                    fatigue mentale ?
+                  </strong>
                   <div>
                     (EVA ou echelle allant de 1 à 10 de «Ignorant» à «Expert»)
                   </div>
@@ -883,7 +1094,9 @@ class InformationForm extends React.Component {
                     <Form className="col">Ignorant</Form>
                     {itemListFatigueLevelTheorical.map(({ id, key, label }) => (
                       <Form.Check className="col">
-                        <Form.Check.Label><strong>{label}</strong></Form.Check.Label>
+                        <Form.Check.Label>
+                          <strong>{label}</strong>
+                        </Form.Check.Label>
                         <br></br>
                         <Form.Check.Input
                           value={fatigueLevelTheorical}
@@ -893,8 +1106,8 @@ class InformationForm extends React.Component {
                           key={key}
                           name="fatigueLevelTheorical"
                           type="radio"
-                          id={id}>
-                        </Form.Check.Input>
+                          id={id}
+                        ></Form.Check.Input>
                       </Form.Check>
                     ))}
                     <Form className="col">Expert</Form>
@@ -906,19 +1119,29 @@ class InformationForm extends React.Component {
                     display: "none",
                     color: "#aa4646",
                     fontSize: "0.75rem",
-                  }}>
-                  <strong>Nous avons besoin de cette information. Merci de la renseigner.</strong>
+                  }}
+                >
+                  <strong>
+                    Nous avons besoin de cette information. Merci de la
+                    renseigner.
+                  </strong>
                 </Form.Label>
               </Form.Group>
               <div>&nbsp;</div>
 
-              <Form.Group as={Col} controlId="formBasicFatiguePraticalEva"
-              id = "test"
+              <Form.Group
+                as={Col}
+                controlId="formBasicFatiguePraticalEva"
+                id="test"
                 style={{
                   fontSize: "1rem",
-                }}>
+                }}
+              >
                 <Form.Label>
-                  <strong>Comment estimez-vous votre connaissance pratique de la fatigue mentale ?</strong>
+                  <strong>
+                    Comment estimez-vous votre connaissance pratique de la
+                    fatigue mentale ?
+                  </strong>
                   <div>
                     (EVA ou echelle allant de 1 à 10 de «Ignorant» à «Expert»)
                   </div>
@@ -929,7 +1152,9 @@ class InformationForm extends React.Component {
                     <Form className="col">Ignorant</Form>
                     {itemListFatigueLevelPratical.map(({ id, key, label }) => (
                       <Form.Check className="col">
-                        <Form.Check.Label><strong>{label}</strong></Form.Check.Label>
+                        <Form.Check.Label>
+                          <strong>{label}</strong>
+                        </Form.Check.Label>
                         <br></br>
                         <Form.Check.Input
                           type="radio"
@@ -940,8 +1165,7 @@ class InformationForm extends React.Component {
                           key={key}
                           name="fatigueLevelPratical"
                           inline
-                        >
-                        </Form.Check.Input>
+                        ></Form.Check.Input>
                       </Form.Check>
                     ))}
                     <Form className="col">Expert</Form>
@@ -953,29 +1177,41 @@ class InformationForm extends React.Component {
                     display: "none",
                     color: "#aa4646",
                     fontSize: "0.75rem",
-                  }}>
-                  <strong>Nous avons besoin de cette information. Merci de la renseigner.</strong>
+                  }}
+                >
+                  <strong>
+                    Nous avons besoin de cette information. Merci de la
+                    renseigner.
+                  </strong>
                 </Form.Label>
               </Form.Group>
             </Row>
           </Form>
 
-          <Form.Group style={{
-            width: "auto",
-            marginLeft: "5%",
-            marginTop: "4%",
-            marginRight: "5%",
-            textAlign: "center"
-          }}>
+          <Form.Group
+            style={{
+              width: "auto",
+              marginLeft: "5%",
+              marginTop: "4%",
+              marginRight: "5%",
+              textAlign: "center",
+            }}
+          >
             <Form
               id="ContainerConditions"
               className="rounded"
-              style={{ textAlign: "center", fontSize: "1rem", marginTop: "2%", width: "100%" }}>
+              style={{
+                textAlign: "center",
+                fontSize: "1rem",
+                marginTop: "2%",
+                width: "100%",
+              }}
+            >
               <Form.Check
                 type="checkbox"
                 inline
-                value="1"
-                label="J'accepte les termes et les conditions d'utilisations."
+                value=""
+                label="J'accepte de participer à cette étude en tant que collaborateurs. J'ai compris que je vais participer à étude, que je vais être évaluer et que mes résultas pourront être utilisés dans le cadre de publications scientifiques de facons anonymes."
                 id="invalidCheck"
                 key="invalidCheck"
                 required
@@ -985,10 +1221,13 @@ class InformationForm extends React.Component {
                 style={{
                   display: "none",
                   color: "#aa4646",
-                }}>
-                <strong>Vous devez accepter les conditions d'utilisations. Merci.</strong>
+                }}
+              >
+                <strong>
+                  Vous devez accepter les conditions d'utilisations. Merci.
+                </strong>
               </Form.Label>
-            </Form >
+            </Form>
           </Form.Group>
 
           <Form
@@ -997,27 +1236,28 @@ class InformationForm extends React.Component {
               marginLeft: "5%",
               marginTop: "3%",
               marginRight: "5%",
-              textAlign: "center"
-            }}>
-
+              textAlign: "center",
+            }}
+          >
             <Button
               style={{
                 backgroundColor: "white",
                 border: "solid 0px black",
                 width: "8rem",
               }}
-              onClick={this.handleSubmit}>
-              <Image fluid={true}
+              onClick={this.handleSubmit}
+            >
+              <Image
+                fluid={true}
                 src="Picture3.png"
                 width="100%"
                 alt="logo ufv"
               ></Image>{" "}
-            
             </Button>
             Page suivante
           </Form>
         </Form>
-      </Card >
+      </Card>
     );
   }
 }
