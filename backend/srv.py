@@ -343,14 +343,16 @@ def getIndicators():
 @app.route("/configuration/add/indicators", methods=["POST"])
 def addIndicators():
     response = fl.Response()
-    data = check_form(fl.request.get_json())
+    data = fl.request.get_json()
+    print(data["newIndicators"])
     if data is None:
         response.status_code=400  
         return  response
     else:
-        db.settings.find_one_and_update({},{"$push":{"indicators":data}})
+        db.settings.find_one_and_update({},{"$push":{"indicators":data["newIndicators"]}})
         response.status_code=200
-        return response
+        indicators = db.settings.find_one({})["indicators"]
+        return fl.jsonify(indicators)
     
 @app.route("/configuration/delete/indicators", methods=["POST"])
 def deleteIndicators():

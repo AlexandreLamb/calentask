@@ -43,7 +43,6 @@ class TagGestionIndic extends React.Component {
           .catch(function (error) {
             console.log(error);
           });
-          this_contexte.setState({indicators:[1,2,3]});
         }
 
     handleDelete(i) {
@@ -63,6 +62,27 @@ class TagGestionIndic extends React.Component {
     }
     addIncator = () => {
 
+
+      const newIndicators = {"id" : this.state.indicators.length,"value" :this.state.inputIndicator}
+      const this_contexte = this
+      api
+      .post("/configuration/add/indicators", {
+       newIndicators,
+      })
+      .then(function (response) {
+        const status_code = response.status;
+        if (parseInt(status_code) === 204) {
+          console.log("form empty");
+        } else if (parseInt(status_code) === 200) {
+          console.log(response)
+          this_contexte.setState({indicators:response.data});
+        } else {
+          console.log("Error");
+        }
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
     }
 
     handleChange = (event) => {
