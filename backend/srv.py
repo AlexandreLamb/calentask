@@ -322,3 +322,44 @@ def getStudentMode():
     else:   
         studentMode = False
     return fl.jsonify(studentMode)
+
+
+@app.route("/configuration/get/indicators", methods=["GET"])
+def getIndicators():
+    col_name="settings"
+
+    if col_name in db.list_collection_names():
+        # check if indicators exist
+        if db.settings.find_one({"indicators" : {"$exists" : True}}) != None:
+            indicators = db.settings.find_one({})["indicators"]
+        else:   
+            indicators = [{ "id": 1, "value": "Yeux plus ou moins ouverts"},{ "id": 2,"value": "Muscles du visage plus ou moins relâchés"},{ "id": 3, "value": "Tête plus ou moins baissée"}, { "id": 4, "value": "Clignement des yeux"}, { "id": 5, "value": "Bouche plus ou moins ouverte"}, { "id": 6, "value": "Front plus ou moins plissé/ridé"}];
+            db.settings.find_one_and_update({},{"$set":{"indicators": indicators}})
+            indicators = db.settings.find_one({})["indicators"]
+    else:
+        indicators = []
+    return fl.jsonify(indicators)
+    
+@app.route("/configuration/add/indicators", methods=["POST"])
+def addIndicators():
+    response = fl.Response()
+    data = check_form(fl.request.get_json())
+    if data is None:
+        response.status_code=400  
+        return  response
+    else:
+        db.settings.find_one_and_update({},{"$push":{"indicators":data}})
+        response.status_code=200
+        return response
+    
+@app.route("/configuration/delete/indicators", methods=["POST"])
+def deleteIndicators():
+    response = fl.Response()
+    data = check_form(fl.request.get_json())
+    if data is None:
+        response.status_code=400  
+        return  response
+    else:
+        db.settings.find_one_and_update({},{"$pull":{"indicators":data}})
+        response.status_code=200
+        return response

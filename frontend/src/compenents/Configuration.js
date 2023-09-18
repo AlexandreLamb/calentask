@@ -482,19 +482,7 @@ class Configuration extends React.Component {
                     commonIndicator={commonIndicator}
                   />
 
-                {commonIndicator.map(({ id, value }) => (
-                  <Form
-                    style={{
-                      fontSize: "1rem",
-                      textAlign: "initial",
-                      backgroundColor: "white",
-                    }}
-                  >
-                    <Form.Label id={id}> {id} {value}</Form.Label>
-                    <br></br>
-                    <Form.Label id={id}> Supprimer </Form.Label>
-                  </Form>
-                ))}
+               
 
 
               </Form.Group>

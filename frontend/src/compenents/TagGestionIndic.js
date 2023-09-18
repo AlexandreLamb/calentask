@@ -1,7 +1,11 @@
 import React from 'react';
 import { WithContext as ReactTags } from 'react-tag-input';
 import styles from "./ReactTagsIndicateur.module.scss";
+import Button from "react-bootstrap/Button";
+import Form from "react-bootstrap/Form";
 import { commonIndicator } from "./formItems";
+import api from "../axiosConfig";
+
 const KeyCodes = {
   comma: 188,
   enter: [10, 13],
@@ -13,12 +17,34 @@ class TagGestionIndic extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            tags: []
+            tags: [], 
+            inputIndicator : "", 
+            indicators  : []
         };
         this.handleDelete = this.handleDelete.bind(this);
         this.handleAddition = this.handleAddition.bind(this);
     }
 
+    componentDidMount = () => {
+        const this_contexte = this;
+        api
+          .get("/configuration/get/indicators")
+          .then(function (response) {
+            const status_code = response.status;
+            if (parseInt(status_code) === 204) {
+              console.log("error");
+            } else if (parseInt(status_code) === 200) {
+              this_contexte.setState({indicators:response.data});
+             
+            } else {
+              console.log("Error");
+            }
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+          this_contexte.setState({indicators:[1,2,3]});
+        }
 
     handleDelete(i) {
         const { tags } = this.state;
@@ -35,16 +61,56 @@ class TagGestionIndic extends React.Component {
             this.props.handleIndic(this.state.tags)
         });
     }
+    addIncator = () => {
 
+    }
+
+    handleChange = (event) => {
+        const target = event.target;
+        const value = target.type === "radio" ? target.id : target.value;
+        const name = target.name;
+        console.log(name, value)
+        this.setState({ [name]: value });
+
+      };
     
 
     render() {
        
-        const {tags} = this.state;
+        const {tags, inputIndicator, indicators} = this.state;
     
         return (
+            <div>
+                <Form.Group>
+                <Form.Label>Ajouter un indcateur</Form.Label>
+                <Form.Control
+                    name="inputIndicator"
+                    type="text"
+                    id="inputIndicator"
+                    value={inputIndicator}
+                    onChange={this.handleChange}
 
-        <div className={styles.ReactTags}>
+                />
+                <Button onClick={this.addIncator}>Ajouter</Button>
+                </Form.Group>
+                <br></br>
+                <br></br>
+                {
+                indicators.map(({ id, value }) => (
+                    <Form
+                        style={{
+                                fontSize: "1rem",
+                                textAlign: "initial",
+                                backgroundColor: "white",
+                                border : "solid"
+                        }}>
+                        <Form.Label id={id}> {id} {value}</Form.Label>
+                        <Button> X </Button>
+                    </Form>
+                                ))}
+
+
+       {/* <div className={styles.ReactTags}>
 
                 <ReactTags tags={tags}
                     handleDelete={this.handleDelete}
@@ -53,7 +119,9 @@ class TagGestionIndic extends React.Component {
                     delimiters={delimiters}
                     inputFieldPosition="bottom"
                 />
+        </div>*/}
             </div>
+
         )
     }
 };
