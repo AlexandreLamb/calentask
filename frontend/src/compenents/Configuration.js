@@ -41,8 +41,14 @@ class Configuration extends React.Component {
       user_online: [],
       studentMode: "",
       commonIndicator: commonIndicator,
+      backColor: [
+        "white",
+        "rgba(49,70,107,1)",
+        "rgba(106,129,158,1)",
+        "rgba(238,235,224,1)",
+        "rgba(162, 72, 80, 1)",
+      ],
     };
-    
   }
 
   getUserOnline = () => {
@@ -134,7 +140,6 @@ class Configuration extends React.Component {
   handleIndic = (tag) => {
     this.setState({ selfIndicfromSuggestions: tag });
   };
-
 
   handleChange = (event) => {
     const target = event.target;
@@ -294,6 +299,7 @@ class Configuration extends React.Component {
         console.log(error);
       });
   };
+
   render() {
     const date = new Date();
     return (
@@ -426,23 +432,59 @@ class Configuration extends React.Component {
                   </Tab>*/}
 
             <Tab eventKey="session" title="Session">
-              <DragDropContext onDragEnd={this.handleOnDragEnd}>
-                {this.state.initiate == "" ? (
-                  ""
-                ) : (
-                  <Container>
-                    {this.state.columnOrder.map((columnId) => {
-                      const column = this.state.columns[columnId];
-                      const tasks = column.taskIds.map(
-                        (taskId) => this.state.tasks_list[taskId]
-                      );
-                      return (
-                        <Column key={column.id} column={column} tasks={tasks} />
-                      );
-                    })}
-                  </Container>
-                )}
-              </DragDropContext>
+              <Form.Group
+                style={{
+                  marginLeft: "15%",
+                  marginRight: "15%",
+                  marginTop: "2%",
+                  marginBottom: "2%",
+                  fontSize: "1.5rem",
+                }}
+                controlId="formBasicInitial_1"
+              >
+                <Form.Label
+                  style={{
+                    fontSize: "1.5rem",
+                  }}
+                >
+                  <strong>GESTION DE LA SESSION </strong>
+                </Form.Label>
+                <Row>
+                      <Form className="col-5"></Form>
+                      <Form className="col-2">
+                        <Image
+                          fluid={true}
+                          src="Picture2.png"
+                          width="100%"
+                          alt="logo ufv"
+                        ></Image>{" "}
+                      </Form>
+                      <Form className="col-5"></Form>
+                    </Row>
+
+                <DragDropContext onDragEnd={this.handleOnDragEnd}>
+                  {this.state.initiate == "" ? (
+                    ""
+                  ) : (
+                    <Container>
+                      {this.state.columnOrder.map((columnId) => {
+                        const column = this.state.columns[columnId];
+                        const tasks = column.taskIds.map(
+                          (taskId) => this.state.tasks_list[taskId]
+                        );
+                        return (
+                          <Column
+                            key={column.id}
+                            column={column}
+                            tasks={tasks}
+                            color = "red"
+                          />
+                        );
+                      })}
+                    </Container>
+                  )}
+                </DragDropContext>
+              </Form.Group>
             </Tab>
 
             <Tab eventKey="indicateurs" title="Indicateurs">
@@ -452,7 +494,7 @@ class Configuration extends React.Component {
                   marginRight: "15%",
                   marginTop: "2%",
                   marginBottom: "2%",
-                  fontSize: "1rem",
+                  fontSize: "1.5rem",
                 }}
                 controlId="formBasicInitial_1"
               >
@@ -477,14 +519,10 @@ class Configuration extends React.Component {
                 </Row>
 
                 <TagGestionIndic
-                    className="rounded"
-                    handleIndic={this.handleIndic}
-                    commonIndicator={commonIndicator}
-                  />
-
-               
-
-
+                  className="rounded"
+                  handleIndic={this.handleIndic}
+                  commonIndicator={commonIndicator}
+                />
               </Form.Group>
             </Tab>
 
