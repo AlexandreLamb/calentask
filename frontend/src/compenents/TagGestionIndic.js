@@ -23,6 +23,9 @@ class TagGestionIndic extends React.Component {
         };
         this.handleDelete = this.handleDelete.bind(this);
         this.handleAddition = this.handleAddition.bind(this);
+        this.addIncator = this.addIncator.bind(this);
+        this.deleteIncator = this.deleteIncator.bind(this);
+        this.handleChange = this.handleChange.bind(this);
     }
 
     componentDidMount = () => {
@@ -84,6 +87,30 @@ class TagGestionIndic extends React.Component {
         console.log(error);
       });
     }
+    deleteIncator = (event) => {
+      
+      const idToDelete =  event.target.value
+      const deleteIndicators = {"id_to_delete" : idToDelete, "indicators" :this.state.indicators}
+      const this_contexte = this
+      api
+      .post("/configuration/delete/indicators", {
+        deleteIndicators,
+      })
+      .then(function (response) {
+        const status_code = response.status;
+        if (parseInt(status_code) === 204) {
+          console.log("form empty");
+        } else if (parseInt(status_code) === 200) {
+          console.log(response)
+          this_contexte.setState({indicators:response.data});
+        } else {
+          console.log("Error");
+        }
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+    }
 
     handleChange = (event) => {
         const target = event.target;
@@ -125,7 +152,7 @@ class TagGestionIndic extends React.Component {
                                 border : "solid"
                         }}>
                         <Form.Label id={id}> {id} {value}</Form.Label>
-                        <Button> X </Button>
+                        <Button value={id} onClick={this.deleteIncator}> X </Button>
                     </Form>
                                 ))}
 

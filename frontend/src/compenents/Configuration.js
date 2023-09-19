@@ -123,7 +123,7 @@ class Configuration extends React.Component {
         console.log(error);
       });
     //this.getSubjectData();
-    this.getUserOnline();
+    //this.getUserOnline();
     //setInterval(this.getSubjectData, 3000)
 
     api.get("/configuration/get/student").then(function (response) {

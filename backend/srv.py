@@ -344,7 +344,6 @@ def getIndicators():
 def addIndicators():
     response = fl.Response()
     data = fl.request.get_json()
-    print(data["newIndicators"])
     if data is None:
         response.status_code=400  
         return  response
@@ -357,11 +356,18 @@ def addIndicators():
 @app.route("/configuration/delete/indicators", methods=["POST"])
 def deleteIndicators():
     response = fl.Response()
-    data = check_form(fl.request.get_json())
+    data = fl.request.get_json()
     if data is None:
         response.status_code=400  
         return  response
     else:
-        db.settings.find_one_and_update({},{"$pull":{"indicators":data}})
+        update_data = []
+        id_update = 1
+        data = data["deleteIndicators"]  
+        for indicator in data["indicators"]:
+            if int(indicator["id"]) != int(data["id_to_delete"]):
+                update_data.append({"id": id_update,"value":indicator["value"]})
+                id_update += 1
+        db.settings.find_one_and_update({},{"$set":{"indicators":update_data}})
         response.status_code=200
-        return response
+        return fl.jsonify(update_data)
