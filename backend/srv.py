@@ -331,8 +331,13 @@ def getIndicators():
     if col_name in db.list_collection_names():
         # check if indicators exist
         if db.settings.find_one({"indicators" : {"$exists" : True}}) != None:
-            indicators = db.settings.find_one({})["indicators"]
-        else:   
+            if db.settings.find_one({})["indicators"] != []:
+                indicators = db.settings.find_one({})["indicators"]
+            else:   
+                indicators = [{ "id": 1, "value": "Yeux plus ou moins ouverts"},{ "id": 2,"value": "Muscles du visage plus ou moins relâchés"},{ "id": 3, "value": "Tête plus ou moins baissée"}, { "id": 4, "value": "Clignement des yeux"}, { "id": 5, "value": "Bouche plus ou moins ouverte"}, { "id": 6, "value": "Front plus ou moins plissé/ridé"}];
+                db.settings.find_one_and_update({},{"$set":{"indicators": indicators}})
+                indicators = db.settings.find_one({})["indicators"]
+        else: 
             indicators = [{ "id": 1, "value": "Yeux plus ou moins ouverts"},{ "id": 2,"value": "Muscles du visage plus ou moins relâchés"},{ "id": 3, "value": "Tête plus ou moins baissée"}, { "id": 4, "value": "Clignement des yeux"}, { "id": 5, "value": "Bouche plus ou moins ouverte"}, { "id": 6, "value": "Front plus ou moins plissé/ridé"}];
             db.settings.find_one_and_update({},{"$set":{"indicators": indicators}})
             indicators = db.settings.find_one({})["indicators"]

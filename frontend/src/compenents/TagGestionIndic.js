@@ -64,9 +64,12 @@ class TagGestionIndic extends React.Component {
         });
     }
     addIncator = () => {
-
-
-      const newIndicators = {"id" : this.state.indicators.length,"value" :this.state.inputIndicator}
+      let length_indicators = this.state.indicators.length
+      if(length_indicators == 0 ){
+        length_indicators = 1
+      }
+      console.log(length_indicators)
+      const newIndicators = {"id" : length_indicators,"value" :this.state.inputIndicator}
       const this_contexte = this
       api
       .post("/configuration/add/indicators", {
@@ -79,6 +82,7 @@ class TagGestionIndic extends React.Component {
         } else if (parseInt(status_code) === 200) {
           console.log(response)
           this_contexte.setState({indicators:response.data});
+          this_contexte.setState({inputIndicator :""})
         } else {
           console.log("Error");
         }
