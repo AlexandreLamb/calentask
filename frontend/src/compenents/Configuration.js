@@ -679,8 +679,7 @@ class Configuration extends React.Component {
                         fontSize: "1rem",
                       }}
                     >
-                      Télécharger l'ordre des réponpes des utilisateurs de la
-                      séance réalisées. Vous vous retrouvez avec un fichier
+                      Télécharger l'ordre des réponpes des videos. Vous vous retrouvez avec un fichier
                       Excel (format CSV).
                     </Form.Label>
                     <Form style={{ textAlign: "center" }}>

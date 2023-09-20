@@ -131,16 +131,19 @@ def export_data():
         df_csv = pd.DataFrame(columns=key_list)
         #print(key_list)
         for key in key_list:
-            print(key)
+            print("key : ", key)
             #print(key + " = " + str(type(json[key])))
             if type(json[key]) == type([]):
                 df_list = pd.json_normalize(json[key], record_prefix=key).add_prefix(key)
                 df_list = df_list.replace('', np.nan).fillna(method='bfill').iloc[[0]]
+                print("df list : "  , df_list)
                 df_csv = pd.concat([df_csv,df_list])
             else: 
                 #print(pd.Series(json[key], index=[key]))
-                df_csv = pd.concat([df_csv, pd.Series(json[key], index=[key])], ignore_index=True)
-        
+                #df_csv = pd.concat([df_csv, pd.Series(json[key], index=[key])], ignore_index=True)
+                print("json key ",json[key])
+                df_csv.loc[0,key] = json[key]
+                print("df csv : "  , df_csv)
         return df_csv.replace('', np.nan).fillna(method='bfill').iloc[[0]]
     
     df_data = pd.DataFrame()
