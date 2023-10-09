@@ -1,0 +1,24 @@
+Information personnelles   
+    ajouter j'accepte de participer a cette étude en tant qu'organisateurs 
+    terme et condition : accepte l'idée d'avoir l'évaluation et qu'on puisse utilisé les resultats dans le cadre de publications scientifique mais ques les données sont annonimisé
+    
+Video form
+    changer les photos de la rpesetnation par le sujet H122
+    Retrouver le bonne ordre chronologiques (ajouter chronologique) des 4 sequences 
+    mettre en rouge et gras : Attention : une fois que vous avez classé une vidéo , il ne vous sera pas possible de revenir en arrière ! (enlever l'espace avece la virgule )
+    enelver corespond 'elle 
+    emttre en rouge et gars attention choix definitif mettre un espace pour deteacher
+    mettre a la ligne dans ACTION : apres 4 sequence proposé
+
+    autot _evaluation : 
+        Vous pouvez ajouter des indicateur ne se trouvant pas la liste ce-dessus | ajouter s a indicateur, liste ci dessus
+
+
+        Features : 
+            Ajouter la possibilité d'ajouter/supprimer des indicateurs dans la liste auto _evaluation etape 2, a mettre dans la page configuration
+
+Mode etudiant : remplacer par civil 
+    rajouter un indications sur le metier/profession de la personne 
+    rajouter l'ancineté dans le poste
+    rempalcer niveau d'etude par des BAC +1 ...
+     

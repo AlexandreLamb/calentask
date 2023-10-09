@@ -3,12 +3,31 @@ import Button from "react-bootstrap/Button";
 import ListGroup from "react-bootstrap/ListGroup";
 import Badge from "react-bootstrap/Badge";
 import api from "../axiosConfig";
+import Image from "react-bootstrap/Image";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import Form from "react-bootstrap/Form";
 
+function defineColor(key) {
+  var color = 0;
+  if (key === 0) color = 1;
+  else if (key === 15) color = 2;
+  else if (key === 30) color = 3;
+  else if (key === 45) color = 4;
+  return color;
+}
 export default class Upload extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       selectedFiles: {},
+      backColor: [
+        "white",
+        "rgba(49,70,107,1)",
+        "rgba(106,129,158,1)",
+        "rgba(238,235,224,1)",
+        "rgba(162, 72, 80, 1)",
+      ],
     };
   }
   onChangeHandler = (event) => {
@@ -69,10 +88,10 @@ export default class Upload extends React.Component {
             <div>
               <ListGroup as="ol" numbered={true}>
                 {Object.keys(selectedFiles).map((key, index) => (
-                  <ListGroup.Item key={index}  as="li">
-                      <Badge bg="primary" pill>
-                  {index+1}
-                </Badge>
+                  <ListGroup.Item key={index} as="li">
+                    <Badge bg="primary" pill>
+                      {index + 1}
+                    </Badge>
                     {selectedFiles[key].name}
                   </ListGroup.Item>
                 ))}
@@ -86,7 +105,7 @@ export default class Upload extends React.Component {
     } else {
       return (
         <div>
-          Veuillez renseigner les 4 fichiers d'une meme video (format :
+          Veuillez renseigner les 4 fichiers d'une même video (format :
           EXPERIENCE_SUJET_JOUR)
         </div>
       );
@@ -95,27 +114,91 @@ export default class Upload extends React.Component {
 
   render() {
     return (
-      <div>
-          {[0, 15, 30, 45].map((key) => (
-            <div key={key}>
+      <Form classname="shadow" style={{}}>
+        <Row>
+          <Form className="col-1"></Form>
+          {[0, 15].map((key) => (
+            <Form
+              key={key}
+              className="col-5"
+              style={{
+                border: "solid black 2px",
+                margin: "0.5rem",
+                borderRadius: "5px",
+                fontSize: "0.9rem",
+                backgroundColor: this.state.backColor[defineColor(key)],
+                display: "flex",
+                flexWrap: "wrap",
+                justifyContent: "space-between",
+              }}
+            >
               <label>
-                Video {key} min: <br />
-                <br />
+                <br></br>
+                <Form style={{ fontSize: "1.25rem" }}>
+                 <strong> VIDEO {key} MIN</strong>
+                </Form>
+                <Form style={{ fontSize: "0.75rem" }}>
+                  Importer la video depuis votre ordinateur
+                </Form>
+                <br></br>
                 <input
+                  style={{ fontSize: "0.75rem" }}
                   type="file"
                   name={"file_" + key}
                   onChange={this.onChangeHandler}
                 />
+                <br></br>
+                <br></br>
+              </label>
+
+              <br />
+            </Form>
+          ))}
+        </Row>
+        <Row>
+          <Form className="col-1"></Form>
+          {[30, 45].map((key) => (
+            <Form
+              key={key}
+              className="col-5"
+              style={{
+                border: "solid black 2px",
+                margin: "0.5rem",
+                borderRadius: "5px",
+                fontSize: "0.9rem",
+                backgroundColor: this.state.backColor[defineColor(key)],
+                display: "flex",
+                flexWrap: "wrap",
+                justifyContent: "space-between",
+              }}
+            >
+              <label>
+                <br></br>
+                <Form style={{ fontSize: "1.25rem" }}>
+                 <strong> VIDEO {key} MIN</strong>
+                </Form>
+                <Form style={{ fontSize: "0.75rem" }}>
+                  Importer la video depuis votre ordinateur
+                </Form>
+                <br></br>
+                <input
+                  style={{ fontSize: "0.75rem" }}
+                  type="file"
+                  name={"file_" + key}
+                  onChange={this.onChangeHandler}
+                />
+                <br></br>
+                <br></br>
               </label>
               <br />
-              <br />
-            </div>
+            </Form>
           ))}
-          {Object.keys(this.state.selectedFiles).length >= 1
-            ? this.displayVideoFolder()
-            : ""}
-          <Button onClick={this.handleSubmit}>Upload</Button>
-      </div>
+        </Row>
+        {Object.keys(this.state.selectedFiles).length >= 1
+          ? this.displayVideoFolder()
+          : ""}
+        <Button onClick={this.handleSubmit}>Upload</Button>
+      </Form>
     );
   }
 }

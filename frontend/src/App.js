@@ -1,7 +1,7 @@
 import "./App.css";
 import React from "react";
 
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Redirect, Route, Link } from "react-router-dom";
 import MainForm from "./compenents/MainForm.js";
 import Configuration from "./compenents/Configuration";
 const VIDEO_FOLDER = "videos/DESFAM_F_Sequences/";

@@ -18,7 +18,19 @@ class TagInput extends React.Component {
              ],
             suggestions: [
                 { id: 'Clignement des yeux', text: 'Clignement des yeux' },
-                { id: 'Baillement', text: 'Baillement' }
+                { id: 'Baillement', text: 'Baillement', },
+                { id: 'Paupières lourdes', text: 'Paupières lourdes', },
+                { id: 'Perte de coordination', text: 'Perte de coordination' },
+                { id: 'Maux de tête', text: 'Maux de tête', },
+                { id: 'Muscles endolories', text: 'Muscles endolories' },
+                { id: 'Yeux irrités', text: 'Yeux irrités', },
+                { id: 'Cernes sous les yeux', text: 'Cernes sous les yeux', },
+                { id: 'Paleur de la peau', text: 'Paleur de la peau', },
+                { id: 'Mouvement ralentis', text: 'Mouvement ralentis', },
+                { id: 'Posture affaissé', text: 'Posture affaissé', },
+                { id: 'Yeux rouges', text: 'Yeux rouges', },
+                { id: 'Difficultés de concentrations', text: 'Difficultés de concentrations', },
+                { id: 'Tremblements musculaires', text: 'Tremblements musculaires', },
              ]
         };
         this.handleDelete = this.handleDelete.bind(this);
@@ -68,6 +80,7 @@ class TagInput extends React.Component {
                     handleDrag={this.handleDrag}
                     delimiters={delimiters} 
                     placeholder="Entrer un indicateur..."
+                    inputFieldPosition="bottom"
                 />
             </div>
         )
