@@ -1,16 +1,17 @@
 import React from "react";
 import InformationForm from "./InformationForm";
 import VideoForm from "./VideoForm";
-import VideoScreen from "./VideoScreen";
+import VideoEndSession from "./VideoEndSession";
 import SelfEvaluationForm from "./SelfEvaluationForm";
 import Card from "react-bootstrap/Card";
 import Button from "@restart/ui/esm/Button";
 import api from "../axiosConfig";
 import Image from 'react-bootstrap/Image'
 import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
+
 import ReactPlayer from 'react-player';
+import Spinner from 'react-bootstrap/Spinner';
 
 class MainForm extends React.Component {
   constructor(props) {
@@ -20,6 +21,7 @@ class MainForm extends React.Component {
       displayInformationForm: true,
       displayVideoForm: false,
       displaySelfEvaluationForm: false,
+      displayScreenNoVideo: false,
       documentID: null,
       videoLetter: "A",
       videoNotAvailable: [],
@@ -72,12 +74,19 @@ class MainForm extends React.Component {
       .then(function (response) {
         const status_code = response.status;
         if (parseInt(status_code) === 204) {
-          console.log("form empty");
+          console.log("No video in list");
         } else if (parseInt(status_code) === 200) {
           this_contexte.setState({
             videosToPlay: response.data
           });
+          if (response.data.length == 0){
+            this_contexte.setState({
+              displayInformationForm : false,
+              displayScreenNoVideo : true
+            })
+          }
           console.log("Video to play:" + response.data)
+
         } else {
           console.log("Error");
         }
@@ -89,6 +98,7 @@ class MainForm extends React.Component {
   componentDidMount = () => {
     this.getVideoToLoad();
     this.getStudentMode();
+ 
     console.log(process.env.REACT_APP_FLASK_URL)
   };
   handleChange = (event) => {
@@ -240,12 +250,19 @@ class MainForm extends React.Component {
     this.setState(state);
   };
 
+  checkVideoList = () => {
+  this.getVideoToLoad()
+  };
+
+
   render() {
+    console.log(this.state.videosToPlay)
     const {
       playing,
       displayInformationForm,
       displayVideoForm,
       displaySelfEvaluationForm,
+      displayScreenNoVideo,
       documentID,
       videoLetter,
       numberOfView,
@@ -285,8 +302,8 @@ class MainForm extends React.Component {
               }}
             >
               <div>
-                <Image fluid={true}
-                  src="logo-fatigue-et-vigilance.png"
+              <Image fluid={true}
+                  src="logo_esco.png"
                   width="16%"
                   alt="logo ufv"
                 ></Image>{" "}
@@ -308,7 +325,9 @@ class MainForm extends React.Component {
                 fatigués à l'aide du visionnage de séquences vidéos.
               </div>
             </Card.Title>
+            
           ) : null}
+
           {displayInformationForm ? (
             <InformationForm
               studentMode={this.state.studentMode}
@@ -349,7 +368,9 @@ class MainForm extends React.Component {
           ) : null}
           {displayVideoForm === false &&
             displayInformationForm === false &&
-            displaySelfEvaluationForm === false ? (
+            displaySelfEvaluationForm === false &&
+            displayScreenNoVideo === false
+            ? (
 
             <Card.Title className="rounded shadow"
               style={{
@@ -396,24 +417,23 @@ class MainForm extends React.Component {
                 <Form className="col-5"></Form>
               </Row>
 
-              <Row style={{
-                paddingTop: "1rem",
-                paddingBottom: "1rem",
-              }}>
-                <Form className="col-3">
-                  <VideoScreen alreadySeen="true" url="videos\DESFAM_F_Sequences\DESFAM_F_H90_LUNDI\DESFAM_F_H90_LUNDI_A-converted.mp4" />
-                </Form>
-                <Form className="col-3">
-                  <VideoScreen alreadySeen="true" url="videos\DESFAM_F_Sequences\DESFAM_F_H90_LUNDI\DESFAM_F_H90_LUNDI_B-converted.mp4" />
-                </Form>
-                <Form className="col-3">
-                  <VideoScreen alreadySeen="true" url="videos\DESFAM_F_Sequences\DESFAM_F_H90_LUNDI\DESFAM_F_H90_LUNDI_C-converted.mp4" />
-                </Form>
-                <Form className="col-3">
-                  <VideoScreen alreadySeen="true" url="videos\DESFAM_F_Sequences\DESFAM_F_H90_LUNDI\DESFAM_F_H90_LUNDI_D-converted.mp4" />
-                </Form>
-              </Row>
-              <Form.Label
+              <VideoEndSession seen = {true} video = {this.state.videosToPlay[this.state.currentVideoIndex]} />
+              
+              {videosToPlay.length - 1 == currentVideoIndex ? (
+            <div style = {{
+              textAlign: "center",
+            }}> <Button style = {{
+                padding: "0.5rem",
+                borderRadius: "O.5rem",
+              }}
+              onClick={this.handleBackToMenue}>
+                {" "}
+               <strong>Quitter la session{" "}</strong> 
+              </Button>
+              </div> 
+              )
+              : (<div>
+                <Form.Label
                 style={{
                   fontSize: "1.5rem",
                   marginTop: "2%",
@@ -431,42 +451,47 @@ class MainForm extends React.Component {
                 </Form>
                 <Form className="col-5"></Form>
               </Row>
-              {videosToPlay.length - 1 == currentVideoIndex ? null : (
                 <div className="lead text-justify" style={{
                   padding: "0.5rem",
                 }}>
-                  Avez-vous encore du temps pour une nouvelle session ?
+                  Avez-vous encore du temps pour une nouvelle session ? (Cliquez sur les sequences ci-desous)
+                  <br></br>
+                  <br></br>
                   <div></div>
-                  <Button onClick={this.handleNextVideo}>
-                    <Row style={{
-                      paddingTop: "1rem",
-                      paddingBottom: "1rem",
-                    }}>
-                      <Form className="col-3">
-                        <VideoScreen alreadySeen="false" url="videos\DESFAM_F_Sequences\DESFAM_F_H90_LUNDI\DESFAM_F_H90_LUNDI_D-converted.mp4" />
-                      </Form>
-                      <Form className="col-3">
-                        <VideoScreen alreadySeen="false" url="videos\DESFAM_F_Sequences\DESFAM_F_H90_LUNDI\DESFAM_F_H90_LUNDI_D-converted.mp4" />
-                      </Form>
-                      <Form className="col-3">
-                        <VideoScreen alreadySeen="false" url="videos\DESFAM_F_Sequences\DESFAM_F_H90_LUNDI\DESFAM_F_H90_LUNDI_D-converted.mp4" />
-                      </Form>
-                      <Form className="col-3">
-                        <VideoScreen alreadySeen="false" url="videos\DESFAM_F_Sequences\DESFAM_F_H90_LUNDI\DESFAM_F_H90_LUNDI_D-converted.mp4" />
-                      </Form>
-                    </Row>
+                  <Button
+                  style = {{
+                    padding: "0.5rem",
+                  }}
+                  onClick={this.handleNextVideo}>
+                  <VideoEndSession seen ={false} video = {this.state.videosToPlay[this.state.currentVideoIndex+1]} />
                   </Button>
                 </div>
+                </div>
               )}
-              <br></br>
-
-              {videosToPlay}
-              <Button onClick={this.handleBackToMenue}>
-                {" "}
-                Quitter la session{" "}
-              </Button>
             </Card.Title>
           ) : null}
+
+         {displayScreenNoVideo ?  <Card.Title className="rounded shadow"
+              style={{
+                marginLeft: "10%",
+                marginRight: "10%",
+                fontSize: "1rem",
+                padding: "1rem",
+                backgroundColor: "rgba(41, 128, 185, 0.1)",
+              }}
+            ><Form.Label
+              style={{
+                fontSize: "2rem",
+                marginTop: "2%",
+              }}>
+                <strong>En attente de vidéos pour votre session ... 
+                  <br></br>
+                    <Spinner animation="border" role="status">
+                        <span className="visually-hidden">Loading...</span>
+                    </Spinner>
+                </strong>
+              </Form.Label>
+              </Card.Title>: null}
 
           <Card style={{
             fontSize: "1rem",

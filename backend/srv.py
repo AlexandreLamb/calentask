@@ -9,7 +9,7 @@ from flask_cors import CORS
 from flask_mongoengine import MongoEngine
 from flask_pymongo import PyMongo
 from bson.objectid import ObjectId
-from bson import json_util
+from bson import json_util  
 import json
 from werkzeug.utils import secure_filename
 import random
@@ -24,6 +24,8 @@ app = Flask(__name__ )
 
 MONGO_URI = "mongodb://"+os.environ["MONGODB_USERNAME"]+":"+os.environ["MONGODB_PASSWORD"]+"@"+os.environ["MONGODB_HOST"]+":"+os.environ["MONGODB_PORT"]+"/"+os.environ["MONGODB_DB"]+"?authSource=admin"
 print(MONGO_URI)
+
+
 
 app.config["MONGO_URI"] = MONGO_URI
 
@@ -108,31 +110,47 @@ def export_sequence_order():
        headers={"Content-disposition":
        "attachment; filename=sequence_order.csv"})
 
+
+@app.route("/output/get/users", methods=["GET"])
+def get_users():
+    listUser = []  
+    user_information = list( db.user_information.find())
+    for user in user_information:
+        user["_id"] = str(user["_id"])
+        listUser.append(user["_initialValues"])
+    return listUser
+
 @app.route("/output/export/data", methods=["GET"])
 def export_data():
     user_information = list( db.user_information.find())
-    
     for user in user_information:
         user["_id"] = str(user["_id"])
+        print( user["_id"])
     def normalize_handmade(json):
         key_list = list(json)
         df_csv = pd.DataFrame(columns=key_list)
         #print(key_list)
         for key in key_list:
+            print("key : ", key)
             #print(key + " = " + str(type(json[key])))
             if type(json[key]) == type([]):
                 df_list = pd.json_normalize(json[key], record_prefix=key).add_prefix(key)
                 df_list = df_list.replace('', np.nan).fillna(method='bfill').iloc[[0]]
-                df_csv = df_csv.append(df_list)
+                print("df list : "  , df_list)
+                df_csv = pd.concat([df_csv,df_list])
             else: 
                 #print(pd.Series(json[key], index=[key]))
-                df_csv = df_csv.append(pd.Series(json[key], index=[key]), ignore_index=True)
-        
+                #df_csv = pd.concat([df_csv, pd.Series(json[key], index=[key])], ignore_index=True)
+                print("json key ",json[key])
+                df_csv.loc[0,key] = json[key]
+                print("df csv : "  , df_csv)
         return df_csv.replace('', np.nan).fillna(method='bfill').iloc[[0]]
+    
     df_data = pd.DataFrame()
     for data in user_information:
         print(type(data))
-        df_data = df_data.append(normalize_handmade(data))
+        print(data)
+        df_data = pd.concat([df_data,normalize_handmade(data)])
     
     now = datetime.now()
     dt_string = now.strftime("%d_%m_%Y_%H_%M_%S")
@@ -249,7 +267,6 @@ def upload_video():
         db.video_use.find_one_and_update({}, {"$set" :video_use})
         return "video upload"
   
-
 @app.route("/fix/bug/upload", methods=["GET"])
 def fix_bug():
     backup_file = db.video_use.find_one()
@@ -308,3 +325,57 @@ def getStudentMode():
     else:   
         studentMode = False
     return fl.jsonify(studentMode)
+
+
+@app.route("/configuration/get/indicators", methods=["GET"])
+def getIndicators():
+    col_name="settings"
+
+    if col_name in db.list_collection_names():
+        # check if indicators exist
+        if db.settings.find_one({"indicators" : {"$exists" : True}}) != None:
+            if db.settings.find_one({})["indicators"] != []:
+                indicators = db.settings.find_one({})["indicators"]
+            else:   
+                indicators = [{ "id": 1, "value": "Yeux plus ou moins ouverts"},{ "id": 2,"value": "Muscles du visage plus ou moins relâchés"},{ "id": 3, "value": "Tête plus ou moins baissée"}, { "id": 4, "value": "Clignement des yeux"}, { "id": 5, "value": "Bouche plus ou moins ouverte"}, { "id": 6, "value": "Front plus ou moins plissé/ridé"}];
+                db.settings.find_one_and_update({},{"$set":{"indicators": indicators}})
+                indicators = db.settings.find_one({})["indicators"]
+        else: 
+            indicators = [{ "id": 1, "value": "Yeux plus ou moins ouverts"},{ "id": 2,"value": "Muscles du visage plus ou moins relâchés"},{ "id": 3, "value": "Tête plus ou moins baissée"}, { "id": 4, "value": "Clignement des yeux"}, { "id": 5, "value": "Bouche plus ou moins ouverte"}, { "id": 6, "value": "Front plus ou moins plissé/ridé"}];
+            db.settings.find_one_and_update({},{"$set":{"indicators": indicators}})
+            indicators = db.settings.find_one({})["indicators"]
+    else:
+        indicators = []
+    return fl.jsonify(indicators)
+    
+@app.route("/configuration/add/indicators", methods=["POST"])
+def addIndicators():
+    response = fl.Response()
+    data = fl.request.get_json()
+    if data is None:
+        response.status_code=400  
+        return  response
+    else:
+        db.settings.find_one_and_update({},{"$push":{"indicators":data["newIndicators"]}})
+        response.status_code=200
+        indicators = db.settings.find_one({})["indicators"]
+        return fl.jsonify(indicators)
+    
+@app.route("/configuration/delete/indicators", methods=["POST"])
+def deleteIndicators():
+    response = fl.Response()
+    data = fl.request.get_json()
+    if data is None:
+        response.status_code=400  
+        return  response
+    else:
+        update_data = []
+        id_update = 1
+        data = data["deleteIndicators"]  
+        for indicator in data["indicators"]:
+            if int(indicator["id"]) != int(data["id_to_delete"]):
+                update_data.append({"id": id_update,"value":indicator["value"]})
+                id_update += 1
+        db.settings.find_one_and_update({},{"$set":{"indicators":update_data}})
+        response.status_code=200
+        return fl.jsonify(update_data)

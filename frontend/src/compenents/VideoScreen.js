@@ -1,14 +1,6 @@
 import React from 'react';
-import Button from "react-bootstrap/Button"
-import VideoPlayer from './VideoPlayer';
 import ReactPlayer from 'react-player';
-import Card from "react-bootstrap/Card"
 import Form from "react-bootstrap/Form"
-import Image from 'react-bootstrap/Image'
-import Container from 'react-bootstrap/Container'
-import Row from "react-bootstrap/Row"
-import Col from "react-bootstrap/Col"
-import VideoRate from "./VideoRate"
 import './css/VideoForm.css'
 
 class VideoScreen extends React.Component {
@@ -17,13 +9,6 @@ class VideoScreen extends React.Component {
         this.state = {
         };
     }
-    componentDidMount() {
-    }
-
-    handleClick = event => {
-    }
-
-
     render() {
         return (
             <Form>
@@ -39,5 +24,4 @@ class VideoScreen extends React.Component {
         )
     }
 }
-//"videos\DESFAM_F_Sequences\DESFAM_F_H90_LUNDI\DESFAM_F_H90_LUNDI_A-converted.mp4
 export default VideoScreen;
