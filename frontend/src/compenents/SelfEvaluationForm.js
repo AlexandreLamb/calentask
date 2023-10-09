@@ -22,6 +22,7 @@ class SelfEvaluationForm extends React.Component {
       commonIndicator: commonIndicator,
       videoDifficultyComment: "",
       videoDifficulty: "",
+      videoDifficultyReasons: "",
       displaySelfIndicator: true,
       displayCommonIndicator: false,
       displayConfianceDegree: false,
@@ -129,6 +130,7 @@ class SelfEvaluationForm extends React.Component {
         commonIndicator,
         videoDifficulty,
         videoDifficultyComment,
+        videoDifficultyReasons,
       } = this.state;
       const this_contexte = this;
       const videoName = "_" + this.props.videoFolder.split("/").at(-1);
@@ -156,6 +158,7 @@ class SelfEvaluationForm extends React.Component {
         _selfIndcator: selfIndcatorText,
         _videoDifficulty: videoDifficulty,
         _videoDifficultyComment: videoDifficultyComment,
+        _videoDifficultyReasons: videoDifficultyReasons,
       };
       api
         .post("output/subject/evaluation/", data)
@@ -178,7 +181,6 @@ class SelfEvaluationForm extends React.Component {
     event.preventDefault();
   };
   render() {
-    console.log(this.state.videoDifficulty);
     const {
       confianceDegree,
       selfIndcator,
@@ -189,6 +191,7 @@ class SelfEvaluationForm extends React.Component {
       displayDifficultyVideo,
       videoDifficultyComment,
       videoDifficulty,
+      videoDifficultyReasons
     } = this.state;
     return (
       <Card
@@ -394,8 +397,8 @@ class SelfEvaluationForm extends React.Component {
                   }}
                 >
                   <strong>
-                    Vous pouvez ajouter des indicateur ne se trouvant pas la
-                    liste ce-dessus
+                    Vous pouvez ajouter des indicateurs ne se trouvant pas la
+                    liste ci-dessus :
                   </strong>
                 </Form.Label>
                 <Form
@@ -575,12 +578,19 @@ class SelfEvaluationForm extends React.Component {
                 <Form.Label>
                   <strong>Pour quelle(s) raison(s) ?</strong>
                 </Form.Label>
-                <Form>
-                  <TagComments
-                    className="rounded"
-                    handleComments={this.hangleComments}
-                  />
-                </Form>
+                <Form.Control
+                  style={{
+                    margin: "0.5rem",
+                    borderRadius: "0.5rem",
+                    border: "solid 0px#165b0a",
+                    with: "70%",
+                  }}
+                  name="videoDifficultyReasons"
+                  value={videoDifficultyReasons}
+                  onChange={this.handleChange}
+                  type="text"
+                  placeholder="Vos raisons"
+                />
 
                 <Row>
                   <Form className="col-5"></Form>

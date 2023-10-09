@@ -131,16 +131,19 @@ def export_data():
         df_csv = pd.DataFrame(columns=key_list)
         #print(key_list)
         for key in key_list:
-            print(key)
+            print("key : ", key)
             #print(key + " = " + str(type(json[key])))
             if type(json[key]) == type([]):
                 df_list = pd.json_normalize(json[key], record_prefix=key).add_prefix(key)
                 df_list = df_list.replace('', np.nan).fillna(method='bfill').iloc[[0]]
+                print("df list : "  , df_list)
                 df_csv = pd.concat([df_csv,df_list])
             else: 
                 #print(pd.Series(json[key], index=[key]))
-                df_csv = pd.concat([df_csv, pd.Series(json[key], index=[key])], ignore_index=True)
-        
+                #df_csv = pd.concat([df_csv, pd.Series(json[key], index=[key])], ignore_index=True)
+                print("json key ",json[key])
+                df_csv.loc[0,key] = json[key]
+                print("df csv : "  , df_csv)
         return df_csv.replace('', np.nan).fillna(method='bfill').iloc[[0]]
     
     df_data = pd.DataFrame()
@@ -322,3 +325,57 @@ def getStudentMode():
     else:   
         studentMode = False
     return fl.jsonify(studentMode)
+
+
+@app.route("/configuration/get/indicators", methods=["GET"])
+def getIndicators():
+    col_name="settings"
+
+    if col_name in db.list_collection_names():
+        # check if indicators exist
+        if db.settings.find_one({"indicators" : {"$exists" : True}}) != None:
+            if db.settings.find_one({})["indicators"] != []:
+                indicators = db.settings.find_one({})["indicators"]
+            else:   
+                indicators = [{ "id": 1, "value": "Yeux plus ou moins ouverts"},{ "id": 2,"value": "Muscles du visage plus ou moins relâchés"},{ "id": 3, "value": "Tête plus ou moins baissée"}, { "id": 4, "value": "Clignement des yeux"}, { "id": 5, "value": "Bouche plus ou moins ouverte"}, { "id": 6, "value": "Front plus ou moins plissé/ridé"}];
+                db.settings.find_one_and_update({},{"$set":{"indicators": indicators}})
+                indicators = db.settings.find_one({})["indicators"]
+        else: 
+            indicators = [{ "id": 1, "value": "Yeux plus ou moins ouverts"},{ "id": 2,"value": "Muscles du visage plus ou moins relâchés"},{ "id": 3, "value": "Tête plus ou moins baissée"}, { "id": 4, "value": "Clignement des yeux"}, { "id": 5, "value": "Bouche plus ou moins ouverte"}, { "id": 6, "value": "Front plus ou moins plissé/ridé"}];
+            db.settings.find_one_and_update({},{"$set":{"indicators": indicators}})
+            indicators = db.settings.find_one({})["indicators"]
+    else:
+        indicators = []
+    return fl.jsonify(indicators)
+    
+@app.route("/configuration/add/indicators", methods=["POST"])
+def addIndicators():
+    response = fl.Response()
+    data = fl.request.get_json()
+    if data is None:
+        response.status_code=400  
+        return  response
+    else:
+        db.settings.find_one_and_update({},{"$push":{"indicators":data["newIndicators"]}})
+        response.status_code=200
+        indicators = db.settings.find_one({})["indicators"]
+        return fl.jsonify(indicators)
+    
+@app.route("/configuration/delete/indicators", methods=["POST"])
+def deleteIndicators():
+    response = fl.Response()
+    data = fl.request.get_json()
+    if data is None:
+        response.status_code=400  
+        return  response
+    else:
+        update_data = []
+        id_update = 1
+        data = data["deleteIndicators"]  
+        for indicator in data["indicators"]:
+            if int(indicator["id"]) != int(data["id_to_delete"]):
+                update_data.append({"id": id_update,"value":indicator["value"]})
+                id_update += 1
+        db.settings.find_one_and_update({},{"$set":{"indicators":update_data}})
+        response.status_code=200
+        return fl.jsonify(update_data)

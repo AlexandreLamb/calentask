@@ -49,12 +49,17 @@ const iemListStudieLevelStudent = [
     id: 1,
     key: "studieLevel-0",
     value: "studieLevel-0",
-    text: "ING 1 (L1)",
+    text: "BAC (ou Équivalent du BAC)",
   },
-  { id: 1, key: "studieLevel-1", value: "studieLevel-1", text: "ING 2 (L2)" },
-  { id: 2, key: "studieLevel-2", value: "studieLevel-2", text: "ING 3 (L3)" },
-  { id: 3, key: "studieLevel-3", value: "studieLevel-3", text: "ING 4 (M1)" },
-  { id: 4, key: "studieLevel-4", value: "studieLevel-4", text: "ING 5 (M2)" },
+  { id: 1, key: "studieLevel-pro", value: "studieLevel-pro", text: "BAC PRO" },
+  { id: 2, key: "studieLevel-1", value: "studieLevel-1", text: "BAC +1" },
+  { id: 3, key: "studieLevel-2", value: "studieLevel-2", text: "BAC +2" },
+  { id: 4, key: "studieLevel-3", value: "studieLevel-3", text: "BAC +3" },
+  { id: 5, key: "studieLevel-4", value: "studieLevel-4", text: "BAC +4" },
+  { id: 6, key: "studieLevel-5", value: "studieLevel-5", text: "BAC +5" },
+  { id: 7, key: "studieLevel-6", value: "studieLevel-6", text: "Superieur a BAC +5" },
+  { id: 8, key: "studieLevel-bepcap", value: "studieLevel-bepcap", text: "BEP ou CAP" },
+
 ];
 
 const iemListGrade = [

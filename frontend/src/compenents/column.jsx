@@ -28,8 +28,14 @@ const TaskList = styled.div`
 export default class Column extends React.Component {
   render() {
     return (
-      <Container>
-        <Title>{this.props.column.title}</Title>
+      <Container style = {{
+      fontSize: "1rem", 
+      marginTop: "2%",
+      marginBottom: "2%",
+      }}>
+
+        <Title style = {{fontSize: "1rem"}}><strong>{this.props.column.id.split("column-")}. {this.props.column.title}</strong></Title>
+        
         <Droppable droppableId={this.props.column.id}>
           {(provided, snapshot) => (
             <TaskList
@@ -38,12 +44,16 @@ export default class Column extends React.Component {
               isDraggingOver={snapshot.isDraggingOver}
             >
               {this.props.tasks.map((task, index) => (
-                <Task key={task.id} task={task} index={index} />
+                <Task style = {{
+                  backgroundColor: this.props.column.color,
+                }}
+                key={task.id} task={task} index={index} />
               ))}
               {provided.placeholder}
             </TaskList>
           )}
         </Droppable>
+      
       </Container>
     );
   }
