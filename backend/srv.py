@@ -46,7 +46,7 @@ def index():
 def put_personal_information():
     data = check_form(fl.request.get_json())
     response = fl.Response()
-    print(data)
+    #print(data)
     if data is None:
         response.status_code=204
         return response
@@ -59,10 +59,10 @@ def put_personal_information():
 
 @app.route("/output/subject/evaluation/", methods=["POST"])
 def put_personal_evaluation():
-    print(fl.request.get_json())
+    #print(fl.request.get_json())
     data = check_form(fl.request.get_json())
     response = fl.Response()
-    print(response)
+    #print(response)
     if data is None:
         response.status_code=204
         return response
@@ -74,7 +74,7 @@ def put_personal_evaluation():
 
 @app.route("/output/subject/rate/", methods=["POST"])
 def put_personal_rate():
-    print(fl.request.get_json())
+    #print(fl.request.get_json())
     response = fl.Response()
     data = check_form(fl.request.get_json())
     if data is None:
@@ -125,31 +125,29 @@ def export_data():
     user_information = list( db.user_information.find())
     for user in user_information:
         user["_id"] = str(user["_id"])
-        print( user["_id"])
+        #print( user["_id"])
     def normalize_handmade(json):
         key_list = list(json)
         df_csv = pd.DataFrame(columns=key_list)
         #print(key_list)
         for key in key_list:
-            print("key : ", key)
+            #print("key : ", key)
             #print(key + " = " + str(type(json[key])))
             if type(json[key]) == type([]):
                 df_list = pd.json_normalize(json[key], record_prefix=key).add_prefix(key)
                 df_list = df_list.replace('', np.nan).fillna(method='bfill').iloc[[0]]
-                print("df list : "  , df_list)
+                #print("df list : "  , df_list)
                 df_csv = pd.concat([df_csv,df_list])
             else: 
                 #print(pd.Series(json[key], index=[key]))
                 #df_csv = pd.concat([df_csv, pd.Series(json[key], index=[key])], ignore_index=True)
-                print("json key ",json[key])
+                #print("json key ",json[key])
                 df_csv.loc[0,key] = json[key]
-                print("df csv : "  , df_csv)
+                #print("df csv : "  , df_csv)
         return df_csv.replace('', np.nan).fillna(method='bfill').iloc[[0]]
     
     df_data = pd.DataFrame()
     for data in user_information:
-        print(type(data))
-        print(data)
         df_data = pd.concat([df_data,normalize_handmade(data)])
     
     now = datetime.now()
@@ -165,7 +163,7 @@ def list_video():
     if list(db.video_use.find({})) != [] :
         video_use = db.video_use.find_one()
         video_use["_id"] = str(video_use["_id"])
-        print(video_use)
+        #print(video_use)
         
         return fl.jsonify(video_use)
     else :
@@ -215,12 +213,12 @@ def get_video_list():
     video_to_play = []
     for id in tasksIds :
         video_to_play.append(video_use["tasks_list"][id]["content"])
-    print(video_to_play)
+    #print(video_to_play)
     return fl.jsonify(video_to_play)
 
 @app.route('/configuration/post/video', methods=['POST'])
 def upload_video():
-    print(fl.request.files)
+    #print(fl.request.files)
     sequence_order = [chr(el) for el in random.sample(range(65,69),4)]
     if os.path.exists("../frontend/public/videos/sequence_order.csv"):
         df_sequence = pd.read_csv("../frontend/public/videos/sequence_order.csv",index_col=["subject","day"])
@@ -233,9 +231,9 @@ def upload_video():
 	    return "Miss video file"
     else:
         for index, file in enumerate(fl.request.files):
-            print(file)
+            #print(file)
             filename = fl.request.files[file].filename
-            print(filename)
+            #print(filename)
             if filename.split(".")[-1] != "mp4":
                 return "Wrong file format, only mp4 file accepts"           
             else:
