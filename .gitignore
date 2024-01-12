@@ -37,3 +37,5 @@ backend/.env
 backend/build
 
 backend/data
+frontend/public/videos/sequence_order.csv
+frontend/public/videos/sequence_order.csv

@@ -154,6 +154,10 @@ const commonIndicator = [
   { id: 4, value: "Clignement des yeux", isChecked: false },
   { id: 5, value: "Bouche plus ou moins ouverte", isChecked: false },
   { id: 6, value: "Front plus ou moins plissé/ridé", isChecked: false },
+  { id: 7, value: "Position du torse (+ ou - droit ou penché)", isChecked: false },
+  { id: 8, value: "Position des épaules (+ ou - alignées ou inclinées)", isChecked: false },
+  { id: 9, value: "Mouvements corporels et/ou déplacements du corps sur le siège", isChecked: false },
+  { id: 10, value: "Mouvements/Fréquences respiratoires et/ou soupirs", isChecked: false },
 ];
 
 const configurationData = {
